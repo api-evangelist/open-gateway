@@ -1,0 +1,56 @@
+generated: '2026-07-25'
+method: searched
+source: live probe of every GSMA Open Gateway host in apis.yml
+note: >-
+  GSMA Open Gateway publishes no callable API of its own, so there is no API host to probe. The hosts
+  below are the GSMA corporate site and the Open Gateway directory/sandbox host. open-gateway.gsma.com
+  sits behind a Cloudflare bot challenge that returns 403 to automated clients; the 404s recorded for
+  that host are the challenge page, not a confirmed absence. The CAMARA specifications this provider
+  certifies declare an openIdConnect scheme whose openIdConnectUrl is a per-operator
+  /.well-known/openid-configuration document — that discovery document lives on each certified
+  operator's authorization server, never on a GSMA host.
+hosts:
+- host: https://www.gsma.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    file: open-gateway-security.txt
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /llms.txt
+    status: 404
+- host: https://open-gateway.gsma.com
+  note: Cloudflare bot challenge; all automated requests to this host return 403 or a challenge page.
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /llms.txt
+    status: 404
+- host: https://gsma.com
+  note: 301 redirect to https://www.gsma.com for every path.
+  documents:
+  - path: /.well-known/security.txt
+    status: 301
+operator_discovery:
+  note: >-
+    Every CAMARA specification in this repo declares securitySchemes.openId of type openIdConnect with
+    openIdConnectUrl https://example.com/.well-known/openid-configuration as a placeholder. The real
+    OIDC discovery document is supplied by the certified operator, aggregator or channel partner that
+    hosts the apiRoot, and is resolved at onboarding time via TMF931.
+  scheme: openIdConnect
+  placeholder_url: https://example.com/.well-known/openid-configuration
+  specs_declaring_it: 21

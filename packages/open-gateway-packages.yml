@@ -1,0 +1,47 @@
+generated: '2026-07-25'
+method: searched
+source: npm, PyPI, Maven Central, NuGet, pkg.go.dev, RubyGems, Packagist, crates.io registry search
+note: >-
+  Neither the GSMA nor the CAMARA Project publishes a first-party client library for Open Gateway
+  APIs. This is structural, not an oversight: GSMA is a trade association that certifies operator
+  implementations, and CAMARA ships OpenAPI definitions rather than code. Client libraries for these
+  APIs are published by the operators, aggregators and channel partners that actually host an apiRoot
+  (Vonage, Infobip, Sinch, Twilio, Nokia, Aduna, Telefonica, Orange, Deutsche Telekom), and are
+  catalogued in those providers' own repositories rather than here.
+packages: []
+registries_probed:
+- registry: npm
+  result: no first-party GSMA or CAMARA client library
+  detail: >-
+    The one CAMARA-hosted npm-shaped artifact is @zodiac/network-api-mcp in
+    camaraproject/MCPEnablement_PI1, an Orange-contributed MCP server. It is source-only and returns
+    404 on the npm registry, so it is not an installable package.
+- registry: pypi
+  result: no first-party package
+  detail: >-
+    pypi.org/project/camara/ and pypi.org/project/opengateway/ both exist at version 0.1.0 with no
+    summary, no homepage and an unrelated author. Neither is published by GSMA or CAMARA; both are
+    treated as name placeholders and are NOT recorded as packages.
+- registry: maven-central
+  result: no first-party package
+- registry: nuget
+  result: no first-party package
+- registry: pkg.go.dev
+  result: no first-party package
+- registry: rubygems
+  result: no first-party package
+- registry: packagist
+  result: no first-party package
+- registry: crates.io
+  result: no first-party package
+where_sdks_live:
+- name: CAMARA MCP Enablement provider implementation (Orange)
+  url: https://github.com/camaraproject/MCPEnablement_PI1
+  language: typescript
+  install: git clone + yarn build (not published to a registry)
+  official: false
+  note: Community provider implementation hosted in the CAMARA org, not a GSMA product.
+- name: Operator and aggregator SDKs
+  note: >-
+    Callable Open Gateway endpoints, and therefore the SDKs that wrap them, belong to certified
+    operators and channel partners. See the per-provider repos in this catalog.

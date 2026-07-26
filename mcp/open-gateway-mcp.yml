@@ -1,0 +1,187 @@
+generated: '2026-07-25'
+method: searched
+status: reference-implementation
+source: https://github.com/camaraproject/MCPEnablement_PI1
+first_party: false
+first_party_note: >-
+  The GSMA hosts no MCP server. The MCP surface for Open Gateway APIs is being defined inside CAMARA,
+  the Linux Foundation project that authors the specifications GSMA certifies. In January 2026 CAMARA
+  published the white paper "Bridging AI Systems and Network Infrastructure through MCP", and in June
+  2026 the Commonalities Working Group opened MCPEnablement_PI1 to hold provider implementations. The
+  server catalogued here is the Orange SA contribution to that repository. It is Apache-2.0 licensed,
+  it is explicitly NOT a normative CAMARA MCP specification, and it is not hosted by anyone as a
+  remote endpoint.
+server:
+  name: orange-network-api
+  transport: stdio
+  url: null
+  url_note: No hosted or remote MCP endpoint is published. The server runs locally over stdio.
+  command: node /absolute/path/to/project/dist/index.js
+  package: '@zodiac/network-api-mcp'
+  package_registry_status: not published to npm (404); build from source
+  sdk: '@modelcontextprotocol/sdk ^1.29.0'
+  runtime: Node.js >= 24
+  license: Apache-2.0
+  repository: https://github.com/camaraproject/MCPEnablement_PI1
+  maintainer: Orange SA, contributed to the CAMARA Commonalities Working Group
+authentication:
+  type: oauth2-client-credentials
+  env:
+  - CLIENT_ID
+  - CLIENT_SECRET
+  provisioning: https://developer.orange.com/apis/camara-playground
+  note: >-
+    Credentials are Orange CAMARA Playground credentials, not GSMA credentials. The server calls a
+    single operator playground; it is not multi-operator and does not route through GSMA Open Gateway.
+specification_work:
+  white_paper: https://camaraproject.org/wp-content/uploads/sites/12/2026/01/camara_wp_mcp_011226.pdf
+  announcement: https://camaraproject.org/2026/01/12/camara-charts-a-path-for-network-aware-ai-applications-with-mcp/
+  working_group: CAMARA Commonalities — MCP Enablement
+tools:
+- name: get-device-location
+  title: Get device location
+  description: Retrieve the geographical location (area) where a device is currently localized
+  inputs: [phoneNumber, maxAge]
+  source_operation: openapi/camara-location-retrieval-openapi.yml#retrieveLocation
+- name: verify-device-location
+  title: Verify device location
+  description: Verify if a device is within a specified circular area
+  inputs: [phoneNumber, latitude, longitude, radius, maxAge]
+  source_operation: openapi/camara-location-verification-openapi.yml#verifyLocation
+- name: get-device-reachability-status
+  title: Get device reachability status
+  description: Retrieve the current reachability status (connectivity) of a device/phone number
+  inputs: [phoneNumber]
+  source_operation: openapi/camara-device-reachability-status-openapi.yml#getReachabilityStatus
+- name: get-device-roaming-status
+  title: Get device roaming status
+  description: Retrieve roaming status and country information for a device/phone number
+  inputs: [phoneNumber]
+  source_operation: openapi/camara-device-roaming-status-openapi.yml#getRoamingStatus
+- name: kyc-match
+  title: KYC Match
+  description: Compare user information with verified data from the operator for identity verification
+  inputs: [phoneNumber]
+  source_operation: openapi/camara-kyc-match-openapi.yml#KYC_Match
+- name: get-population-density-data
+  title: Get population density data
+  description: Retrieve population density estimations for a specified polygonal area and time interval
+  inputs: [latitude, longitude, startTime, endTime]
+  source_operation: openapi/camara-population-density-data-openapi.yml#retrievePopulationDensity
+- name: get-sim-swap-date
+  title: Get SIM swap date
+  description: Retrieve the timestamp of the latest SIM swap event for a phone number
+  inputs: [phoneNumber]
+  source_operation: openapi/camara-sim-swap-openapi.yml#retrieveSimSwapDate
+- name: check-sim-swap
+  title: Check SIM swap
+  description: Check if a SIM swap occurred in the last X hours for a phone number
+  inputs: [phoneNumber, hours]
+  source_operation: openapi/camara-sim-swap-openapi.yml#checkSimSwap
+- name: retrieve-qos-profiles
+  title: Retrieve QoS Profiles
+  description: Retrieve all available Quality of Service profiles managed by the server
+  inputs: [devicePhoneNumber, profileName]
+  source_operation: openapi/camara-qos-profiles-openapi.yml#retrieveQoSProfiles
+- name: get-qos-profile
+  title: Get QoS Profile
+  description: Get detailed information about a specific Quality of Service profile by name
+  inputs: [profileName]
+  source_operation: openapi/camara-qos-profiles-openapi.yml#getQosProfile
+- name: create-qos-session
+  title: Create QoS Session
+  description: Create a Quality of Service session with improved performance between a device and application server
+  inputs: [devicePhoneNumber, deviceIpv4PublicAddress, deviceIpv4PrivateAddress, deviceIpv4PublicPort,
+    deviceIpv6Address, deviceNetworkAccessIdentifier, applicationServerIpv4, applicationServerIpv6,
+    qosProfile, duration, devicePorts, notificationUrl, notificationToken]
+  source_operation: openapi/camara-quality-on-demand-openapi.yml#createSession
+- name: get-qos-session
+  title: Get QoS Session
+  description: Retrieve information about a specific Quality of Service session
+  inputs: [sessionId]
+  source_operation: openapi/camara-quality-on-demand-openapi.yml#getSession
+- name: delete-qos-session
+  title: Delete QoS Session
+  description: Terminate a Quality of Service session before its planned end time
+  inputs: [sessionId]
+  source_operation: openapi/camara-quality-on-demand-openapi.yml#deleteSession
+- name: extend-qos-session
+  title: Extend QoS Session
+  description: Extend the duration of an existing Quality of Service session
+  inputs: [sessionId, additionalDuration]
+  source_operation: openapi/camara-quality-on-demand-openapi.yml#extendQosSessionDuration
+- name: retrieve-qos-sessions
+  title: Retrieve QoS Sessions
+  description: Retrieve all Quality of Service sessions for a specific device
+  inputs: [devicePhoneNumber, deviceIpv4PublicAddress, deviceIpv4PrivateAddress, deviceIpv4PublicPort,
+    deviceIpv6Address, deviceNetworkAccessIdentifier]
+  source_operation: openapi/camara-quality-on-demand-openapi.yml#retrieveSessionsByDevice
+- name: list-playground-phone-numbers
+  title: List playground phone numbers
+  description: List all phone numbers in the playground
+  inputs: [phoneNumber]
+  source_operation: null
+  category: playground-admin
+- name: create-playground-phone-number
+  title: Create playground phone number
+  description: Create a new phone number in the playground with default data
+  inputs: [phoneNumber]
+  source_operation: null
+  category: playground-admin
+- name: read-playground-phone-number
+  title: Read playground phone number data
+  description: Read all data associated with a phone number in the playground
+  inputs: [phoneNumber]
+  source_operation: null
+  category: playground-admin
+- name: update-playground-phone-location
+  title: Update playground phone number location
+  description: Update the location data for a phone number in the playground
+  inputs: [phoneNumber, latitude, longitude, radius, available, lastLocationTime]
+  source_operation: null
+  category: playground-admin
+- name: update-playground-phone-kyc
+  title: Update playground phone number KYC
+  description: Update the KYC (Know Your Customer) data for a phone number in the playground
+  inputs: [phoneNumber, name, givenName, familyName, email, birthdate, gender, address, country]
+  source_operation: null
+  category: playground-admin
+- name: update-playground-phone-reachability
+  title: Update playground phone number reachability
+  description: Update the reachability status for a phone number in the playground
+  inputs: [phoneNumber, lastStatusTime]
+  source_operation: null
+  category: playground-admin
+- name: update-playground-phone-roaming
+  title: Update playground phone number roaming
+  description: Update the roaming status for a phone number in the playground
+  inputs: [phoneNumber, roaming, countryCode, countryName, lastStatusTime]
+  source_operation: null
+  category: playground-admin
+- name: update-playground-phone-sim-swap
+  title: Update playground phone number SIM swap
+  description: Update the SIM swap data for a phone number in the playground
+  inputs: [phoneNumber]
+  source_operation: null
+  category: playground-admin
+- name: delete-playground-phone-number
+  title: Delete playground phone number
+  description: 'Delete a phone number and all its data from the playground (WARNING: irreversible)'
+  inputs: [phoneNumber, confirm]
+  source_operation: null
+  category: playground-admin
+tool_count: 24
+tools_backed_by_camara_operations: 15
+tools_playground_admin_only: 9
+prompts:
+  note: The repository ships sample prompts rather than MCP prompt primitives.
+  files:
+  - https://github.com/camaraproject/MCPEnablement_PI1/blob/main/prompts/init.md
+  - https://github.com/camaraproject/MCPEnablement_PI1/blob/main/prompts/use-cases/bank.md
+  - https://github.com/camaraproject/MCPEnablement_PI1/blob/main/prompts/use-cases/real-estate.md
+introspection:
+  tools_list_probe: not-applicable
+  detail: >-
+    There is no remote endpoint to POST tools/list against. The tool names, titles, descriptions and
+    input parameter names recorded above were read verbatim from the registerTool() calls in
+    src/tools/*.ts at commit HEAD of main (pushed 2026-07-08).

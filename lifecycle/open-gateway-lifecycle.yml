@@ -1,0 +1,83 @@
+generated: '2026-07-25'
+method: searched
+source: >-
+  https://github.com/camaraproject/ReleaseManagement +
+  https://github.com/camaraproject/Commonalities/blob/main/documentation/CAMARA-API-Design-Guide.md +
+  https://www.gsma.com/solutions-and-impact/gsma-open-gateway/what-is-gsma-open-gateway-certification/
+note: >-
+  Open Gateway has a two-layer lifecycle. CAMARA governs the specification lifecycle through
+  twice-yearly meta-releases managed by the Release Management Working Group; GSMA governs the
+  implementation lifecycle through its certification programme, run jointly with TM Forum since 2025.
+  Neither layer operates a status page or an SLA, because GSMA runs no endpoints — availability and
+  uptime belong to each certified operator and channel partner.
+versioning:
+  scheme: uri-path
+  current: 'CAMARA meta-release r4.1 (Sync26 baseline, published 2026-06-19)'
+  form:
+  - stable APIs (major x > 0) use /api-name/vx
+  - initial APIs (major x = 0) use /api-name/v0.y
+  docs: https://github.com/camaraproject/Commonalities/blob/main/documentation/CAMARA-API-Design-Guide.md
+  release_management: https://github.com/camaraproject/ReleaseManagement
+  meta_release_cadence: twice yearly (Spring and Fall meta-releases; Sync releases between)
+  api_versions_in_this_repo:
+    stable: 9
+    initial: 12
+    note: >-
+      Nine of the 21 CAMARA specifications carried here are stable (major >= 1): SIM Swap 2.1.0,
+      Number Verification 2.1.0, Device Swap 1.0.0, One Time Password SMS 1.1.1, Quality on Demand
+      1.1.0, QoS Profiles 1.1.0, Device Reachability Status 1.1.0, Device Roaming Status 1.0.0,
+      Device Location Verification 3.0.0 and Simple Edge Discovery 2.0.1. The remainder are v0.x
+      initial versions.
+deprecation:
+  policy_url: https://github.com/camaraproject/ReleaseManagement/blob/main/documentation/API_Release_Guidelines.md
+  design_guide: https://github.com/camaraproject/Commonalities/blob/main/documentation/CAMARA-API-Design-Guide.md
+  sunset_header: false
+  deprecation_header: false
+  policy: >-
+    The CAMARA API Design Guide asks providers to establish obsolescence of a superseded API version
+    over a reasonable period — stated as six months — and to monitor usage of the old version before
+    withdrawal. Backward-incompatible changes require a new MAJOR version; MINOR and PATCH versions
+    must remain backward compatible. No RFC 8594 Sunset or Deprecation response headers are mandated,
+    so deprecation is announced through the release process rather than in the HTTP response.
+  window: 6 months (guidance, not contractual)
+deprecated_operations: []
+deprecated_specifications:
+- api: CAMARA Home Devices QoD
+  spec: openapi/camara-home-devices-qod-openapi.yml
+  version: 0.4.0
+  status: upstream sandbox repository archived
+  note: The camaraproject/HomeDevicesQoD repository is archived; the specification is retained here as certified history.
+certification:
+  programme: GSMA Open Gateway API certification
+  url: https://www.gsma.com/solutions-and-impact/gsma-open-gateway/what-is-gsma-open-gateway-certification/
+  joint_with: TM Forum (unified conformance certification programme for Open Gateway APIs)
+  covers:
+  - CAMARA service APIs
+  - TM Forum Operate APIs (TMF931 Onboarding and Ordering, TMF936)
+  reported_scale_q1_2026:
+    operator_groups_signed: 81
+    channel_partners_signed: 61
+    networks_covered: 292
+    certified_api_assets: 237
+    camara_tagged_released_apis: 33
+    api_instances_commercially_launched: 280
+    networks_launched: 85
+    markets: 50
+sla:
+  url: null
+  uptime_target: null
+  note: >-
+    GSMA publishes no SLA and operates no endpoints. Availability commitments are made by the
+    certified operator, aggregator or channel partner that hosts the apiRoot.
+status_page:
+  url: null
+  searched: true
+  note: >-
+    No status page exists for GSMA Open Gateway, and none is expected to: there is no shared runtime
+    to report on. The nearest equivalent is the Open Gateway availability directory at
+    https://open-gateway.gsma.com/, which reports which certified APIs are live in which markets
+    rather than whether anything is currently up. No StatusPage pointer is wired in apis.yml.
+availability_directory:
+  url: https://open-gateway.gsma.com/
+  probe_status: 403 (Cloudflare bot challenge to automated clients)
+  description: Filterable directory of certified Open Gateway deployments by operator and market.

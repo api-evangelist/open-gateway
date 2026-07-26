@@ -1,0 +1,85 @@
+generated: '2026-07-25'
+method: searched
+source: https://github.com/camaraproject/ReleaseManagement/releases
+note: >-
+  GSMA publishes no dated API changelog. The changelog that governs every certified Open Gateway API
+  is CAMARA's meta-release train, run by the Release Management Working Group and published as tagged
+  releases on the camaraproject/ReleaseManagement repository. Each meta-release fixes the set of
+  CAMARA API versions that GSMA then certifies. Recent window only; the repository is the source of
+  truth.
+scheme: meta-release (twice-yearly Spring/Fall trains, plus Sync releases)
+current_version: r4.1
+current_version_date: '2026-06-19'
+changelog_url: https://github.com/camaraproject/ReleaseManagement/releases
+release_guidelines: https://github.com/camaraproject/ReleaseManagement/blob/main/documentation/API_Release_Guidelines.md
+readiness_checklist: https://github.com/camaraproject/ReleaseManagement/blob/main/documentation/API-Readiness-Checklist.md
+entries:
+- version: r4.1
+  date: '2026-06-19'
+  train: Sync26 baseline
+  url: https://github.com/camaraproject/ReleaseManagement/releases/tag/r4.1
+  breaking: false
+  highlights:
+  - Public release of the Release Management documents at repository version 0.5.0.
+  - Consolidates the automated API release process documentation — release creation, review, publication, post-release sync, bot UX and branch terminology.
+  - Adds release metadata schema artifacts and release progress tracking data.
+  - Adds validation framework design material.
+  - Provides the baseline for API teams preparing Sync26 releases and the continued r4.x process.
+- version: r3.1
+  date: '2025-10-17'
+  train: Fall25 meta-release
+  url: https://github.com/camaraproject/ReleaseManagement/releases/tag/r3.1
+  breaking: false
+  highlights:
+  - Captures the Release Management documents as used in the Fall25 meta-release.
+  - Introduces automated API review workflows (api-review-trigger).
+  - Adds an API description requirement to the API Readiness Checklist.
+  - Adds sandbox-related information to the API Release Guidelines.
+  - Reference point before preparing the Spring26 meta-release.
+  reported_scope: Fall25 shipped 60 CAMARA APIs in total — 10 stable, 27 updated since Spring25, 23 new initial APIs.
+- version: r2.2
+  date: '2025-03-19'
+  train: Spring25 meta-release
+  url: https://github.com/camaraproject/ReleaseManagement/releases/tag/r2.2
+  breaking: false
+  highlights:
+  - Public release of the Release Management documents at version 0.3.0 for the Spring25 meta-release.
+  - Updated API release guidelines and API readiness checklist.
+  - Updated changelog template and example.
+  - Incorporates feedback from the Fall24 meta-release.
+- version: r2.1
+  date: '2024-11-19'
+  train: Spring25 meta-release (pre-release)
+  url: https://github.com/camaraproject/ReleaseManagement/releases/tag/r2.1
+  breaking: false
+  highlights:
+  - Pre-release (v0.3.0-rc.1) of the Spring25 Release Management documents.
+- version: r1.2
+  date: '2024-10-11'
+  train: Fall24 meta-release
+  url: https://github.com/camaraproject/ReleaseManagement/releases/tag/r1.2
+  breaking: false
+  highlights:
+  - First public release of the Release Management documents (v0.2.0).
+  - Establishes API_Release_Guidelines.md and the API-Readiness-Checklist template.
+- version: r1.1
+  date: '2024-10-09'
+  train: Fall24 meta-release (pre-release)
+  url: https://github.com/camaraproject/ReleaseManagement/releases/tag/r1.1
+  breaking: false
+  highlights:
+  - First pre-release (v0.1.0) of the release guidelines and readiness checklist.
+related_streams:
+- name: CAMARA Commonalities releases
+  url: https://github.com/camaraproject/Commonalities/releases
+  description: Cross-cutting design guide, event guide and CAMARA_common.yaml versions.
+- name: Per-API releases
+  url: https://github.com/camaraproject
+  description: >-
+    Each CAMARA API repository (SimSwap, QualityOnDemand, DeviceLocation, ...) publishes its own
+    tagged releases and CHANGELOG.md; the API versions carried in openapi/ come from those tags.
+- name: GSMA Open Gateway quarterly update
+  url: https://www.gsma.com/solutions-and-impact/gsma-open-gateway/
+  description: >-
+    GSMA publishes a quarterly programme update with signed operators, channel partners, certified
+    API assets and commercial launches. Narrative, not a versioned changelog.

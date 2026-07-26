@@ -1,0 +1,447 @@
+generated: '2026-07-25'
+method: searched
+source: openapi/*.yml operation security requirements (21 CAMARA specifications)
+docs: https://github.com/camaraproject/Commonalities/blob/main/documentation/CAMARA-API-Design-Guide.md
+identity_and_consent: https://github.com/camaraproject/IdentityAndConsentManagement
+note: 'CAMARA declares a single openIdConnect security scheme named openId per API rather than an oauth2
+  scheme, so the scope set is not carried in a flows.scopes map; it is declared per operation in security[].
+  Every scope below was read from an operation''s security requirement. Scopes are purpose-built consent
+  grants: a 3-legged access token carrying one of these scopes represents the end user''s consent to that
+  specific network capability, obtained through OIDC authorization code or CIBA. Two-legged (client credentials)
+  tokens are used only where no personal data is involved.'
+naming_convention:
+  format: api-name[:resource]:action[:detail]
+  case: 'kebab-case segments separated by :'
+  actions:
+  - create
+  - read
+  - update
+  - delete
+  - write
+  - verify
+  - check
+  - match
+  - retrieve-date
+  - send-validate
+  docs: https://github.com/camaraproject/Commonalities/blob/main/documentation/CAMARA-API-Design-Guide.md
+schemes:
+- name: openId
+  type: openIdConnect
+  openIdConnectUrl: operator-supplied /.well-known/openid-configuration
+  placeholder_in_spec: https://example.com/.well-known/openid-configuration
+  grant_types:
+  - authorization_code (OIDC)
+  - CIBA (client-initiated backchannel authentication)
+  - client_credentials (2-legged, where no personal data)
+  sources:
+  - openapi/camara-call-forwarding-signal-openapi.yml
+  - openapi/camara-carrier-billing-openapi.yml
+  - openapi/camara-connected-network-type-openapi.yml
+  - openapi/camara-device-identifier-openapi.yml
+  - openapi/camara-device-reachability-status-openapi.yml
+  - openapi/camara-device-reachability-status-subscriptions-openapi.yml
+  - openapi/camara-device-roaming-status-openapi.yml
+  - openapi/camara-device-swap-openapi.yml
+  - openapi/camara-kyc-age-verification-openapi.yml
+  - openapi/camara-kyc-match-openapi.yml
+  - openapi/camara-kyc-tenure-openapi.yml
+  - openapi/camara-location-retrieval-openapi.yml
+  - openapi/camara-location-verification-openapi.yml
+  - openapi/camara-number-verification-openapi.yml
+  - openapi/camara-one-time-password-sms-openapi.yml
+  - openapi/camara-population-density-data-openapi.yml
+  - openapi/camara-qos-profiles-openapi.yml
+  - openapi/camara-quality-on-demand-openapi.yml
+  - openapi/camara-sim-swap-openapi.yml
+  - openapi/camara-simple-edge-discovery-openapi.yml
+scope_count: 38
+scopes:
+- scope: call-forwarding-signal:call-forwardings:read
+  api: call-forwarding-signal
+  action: read
+  flows:
+  - authorizationCode
+  - ciba
+  operations:
+  - retrieveCallForwarding
+  sources:
+  - openapi/camara-call-forwarding-signal-openapi.yml
+- scope: call-forwarding-signal:unconditional-call-forwardings:read
+  api: call-forwarding-signal
+  action: read
+  flows:
+  - authorizationCode
+  - ciba
+  operations:
+  - retrieveUnconditionalCallForwarding
+  sources:
+  - openapi/camara-call-forwarding-signal-openapi.yml
+- scope: carrier-billing:payments:create
+  api: carrier-billing
+  action: create
+  flows:
+  - authorizationCode
+  - ciba
+  operations:
+  - createPayment
+  - preparePayment
+  sources:
+  - openapi/camara-carrier-billing-openapi.yml
+- scope: carrier-billing:payments:read
+  api: carrier-billing
+  action: read
+  flows:
+  - authorizationCode
+  - ciba
+  operations:
+  - retrievePayment
+  - retrievePayments
+  sources:
+  - openapi/camara-carrier-billing-openapi.yml
+- scope: carrier-billing:payments:write
+  api: carrier-billing
+  action: write
+  flows:
+  - authorizationCode
+  - ciba
+  operations:
+  - cancelPayment
+  - confirmPayment
+  - validatePayment
+  sources:
+  - openapi/camara-carrier-billing-openapi.yml
+- scope: connected-network-type:read
+  api: connected-network-type
+  action: read
+  flows:
+  - authorizationCode
+  - ciba
+  operations:
+  - getConnectedNetworkType
+  sources:
+  - openapi/camara-connected-network-type-openapi.yml
+- scope: device-identifier:retrieve-identifier
+  api: device-identifier
+  action: retrieve-identifier
+  flows:
+  - authorizationCode
+  - ciba
+  operations:
+  - retrieveIdentifier
+  sources:
+  - openapi/camara-device-identifier-openapi.yml
+- scope: device-identifier:retrieve-ppid
+  api: device-identifier
+  action: retrieve-ppid
+  flows:
+  - authorizationCode
+  - ciba
+  operations:
+  - retrievePPID
+  sources:
+  - openapi/camara-device-identifier-openapi.yml
+- scope: device-identifier:retrieve-type
+  api: device-identifier
+  action: retrieve-type
+  flows:
+  - authorizationCode
+  - ciba
+  operations:
+  - retrieveType
+  sources:
+  - openapi/camara-device-identifier-openapi.yml
+- scope: device-reachability-status-subscriptions:delete
+  api: device-reachability-status-subscriptions
+  action: delete
+  flows:
+  - authorizationCode
+  - ciba
+  operations:
+  - deleteDeviceReachabilityStatusSubscription
+  sources:
+  - openapi/camara-device-reachability-status-subscriptions-openapi.yml
+- scope: device-reachability-status-subscriptions:org.camaraproject.device-reachability-status-subscriptions.v0.reachability-data:create
+  api: device-reachability-status-subscriptions
+  action: create
+  flows:
+  - authorizationCode
+  - ciba
+  operations:
+  - createDeviceReachabilityStatusSubscription
+  sources:
+  - openapi/camara-device-reachability-status-subscriptions-openapi.yml
+- scope: device-reachability-status-subscriptions:org.camaraproject.device-reachability-status-subscriptions.v0.reachability-disconnected:create
+  api: device-reachability-status-subscriptions
+  action: create
+  flows:
+  - authorizationCode
+  - ciba
+  operations:
+  - createDeviceReachabilityStatusSubscription
+  sources:
+  - openapi/camara-device-reachability-status-subscriptions-openapi.yml
+- scope: device-reachability-status-subscriptions:org.camaraproject.device-reachability-status-subscriptions.v0.reachability-sms:create
+  api: device-reachability-status-subscriptions
+  action: create
+  flows:
+  - authorizationCode
+  - ciba
+  operations:
+  - createDeviceReachabilityStatusSubscription
+  sources:
+  - openapi/camara-device-reachability-status-subscriptions-openapi.yml
+- scope: device-reachability-status-subscriptions:read
+  api: device-reachability-status-subscriptions
+  action: read
+  flows:
+  - authorizationCode
+  - ciba
+  operations:
+  - retrieveDeviceReachabilityStatusSubscription
+  - retrieveDeviceReachabilityStatusSubscriptionList
+  sources:
+  - openapi/camara-device-reachability-status-subscriptions-openapi.yml
+- scope: device-reachability-status:read
+  api: device-reachability-status
+  action: read
+  flows:
+  - authorizationCode
+  - ciba
+  operations:
+  - getReachabilityStatus
+  sources:
+  - openapi/camara-device-reachability-status-openapi.yml
+- scope: device-roaming-status:read
+  api: device-roaming-status
+  action: read
+  flows:
+  - authorizationCode
+  - ciba
+  operations:
+  - getRoamingStatus
+  sources:
+  - openapi/camara-device-roaming-status-openapi.yml
+- scope: device-swap
+  api: device-swap
+  action: null
+  flows:
+  - authorizationCode
+  - ciba
+  operations:
+  - checkDeviceSwap
+  - retrieveDeviceSwapDate
+  sources:
+  - openapi/camara-device-swap-openapi.yml
+- scope: device-swap:check
+  api: device-swap
+  action: check
+  flows:
+  - authorizationCode
+  - ciba
+  operations:
+  - checkDeviceSwap
+  sources:
+  - openapi/camara-device-swap-openapi.yml
+- scope: device-swap:retrieve-date
+  api: device-swap
+  action: retrieve-date
+  flows:
+  - authorizationCode
+  - ciba
+  operations:
+  - retrieveDeviceSwapDate
+  sources:
+  - openapi/camara-device-swap-openapi.yml
+- scope: kyc-age-verification:verify
+  api: kyc-age-verification
+  action: verify
+  flows:
+  - authorizationCode
+  - ciba
+  operations:
+  - verifyAge
+  sources:
+  - openapi/camara-kyc-age-verification-openapi.yml
+- scope: kyc-match:match
+  api: kyc-match
+  action: match
+  flows:
+  - authorizationCode
+  - ciba
+  operations:
+  - KYC_Match
+  sources:
+  - openapi/camara-kyc-match-openapi.yml
+- scope: kyc-tenure:check-tenure
+  api: kyc-tenure
+  action: check-tenure
+  flows:
+  - authorizationCode
+  - ciba
+  operations:
+  - checkTenure
+  sources:
+  - openapi/camara-kyc-tenure-openapi.yml
+- scope: location-retrieval:read
+  api: location-retrieval
+  action: read
+  flows:
+  - authorizationCode
+  - ciba
+  operations:
+  - retrieveLocation
+  sources:
+  - openapi/camara-location-retrieval-openapi.yml
+- scope: location-verification:verify
+  api: location-verification
+  action: verify
+  flows:
+  - authorizationCode
+  - ciba
+  operations:
+  - verifyLocation
+  sources:
+  - openapi/camara-location-verification-openapi.yml
+- scope: number-verification:device-phone-number:read
+  api: number-verification
+  action: read
+  flows:
+  - authorizationCode
+  - ciba
+  operations:
+  - phoneNumberShare
+  sources:
+  - openapi/camara-number-verification-openapi.yml
+- scope: number-verification:verify
+  api: number-verification
+  action: verify
+  flows:
+  - authorizationCode
+  - ciba
+  operations:
+  - phoneNumberVerify
+  sources:
+  - openapi/camara-number-verification-openapi.yml
+- scope: one-time-password-sms:send-validate
+  api: one-time-password-sms
+  action: send-validate
+  flows:
+  - authorizationCode
+  - ciba
+  operations:
+  - sendCode
+  - validateCode
+  sources:
+  - openapi/camara-one-time-password-sms-openapi.yml
+- scope: population-density-data:read
+  api: population-density-data
+  action: read
+  flows:
+  - authorizationCode
+  - ciba
+  operations:
+  - retrievePopulationDensity
+  sources:
+  - openapi/camara-population-density-data-openapi.yml
+- scope: qos-profiles:read
+  api: qos-profiles
+  action: read
+  flows:
+  - authorizationCode
+  - ciba
+  operations:
+  - getQosProfile
+  - retrieveQoSProfiles
+  sources:
+  - openapi/camara-qos-profiles-openapi.yml
+- scope: quality-on-demand:sessions:create
+  api: quality-on-demand
+  action: create
+  flows:
+  - authorizationCode
+  - ciba
+  operations:
+  - createSession
+  sources:
+  - openapi/camara-quality-on-demand-openapi.yml
+- scope: quality-on-demand:sessions:delete
+  api: quality-on-demand
+  action: delete
+  flows:
+  - authorizationCode
+  - ciba
+  operations:
+  - deleteSession
+  sources:
+  - openapi/camara-quality-on-demand-openapi.yml
+- scope: quality-on-demand:sessions:read
+  api: quality-on-demand
+  action: read
+  flows:
+  - authorizationCode
+  - ciba
+  operations:
+  - getSession
+  sources:
+  - openapi/camara-quality-on-demand-openapi.yml
+- scope: quality-on-demand:sessions:retrieve-by-device
+  api: quality-on-demand
+  action: retrieve-by-device
+  flows:
+  - authorizationCode
+  - ciba
+  operations:
+  - retrieveSessionsByDevice
+  sources:
+  - openapi/camara-quality-on-demand-openapi.yml
+- scope: quality-on-demand:sessions:update
+  api: quality-on-demand
+  action: update
+  flows:
+  - authorizationCode
+  - ciba
+  operations:
+  - extendQosSessionDuration
+  sources:
+  - openapi/camara-quality-on-demand-openapi.yml
+- scope: sim-swap
+  api: sim-swap
+  action: null
+  flows:
+  - authorizationCode
+  - ciba
+  operations:
+  - checkSimSwap
+  - retrieveSimSwapDate
+  sources:
+  - openapi/camara-sim-swap-openapi.yml
+- scope: sim-swap:check
+  api: sim-swap
+  action: check
+  flows:
+  - authorizationCode
+  - ciba
+  operations:
+  - checkSimSwap
+  sources:
+  - openapi/camara-sim-swap-openapi.yml
+- scope: sim-swap:retrieve-date
+  api: sim-swap
+  action: retrieve-date
+  flows:
+  - authorizationCode
+  - ciba
+  operations:
+  - retrieveSimSwapDate
+  sources:
+  - openapi/camara-sim-swap-openapi.yml
+- scope: simple-edge-discovery:read
+  api: simple-edge-discovery
+  action: read
+  flows:
+  - authorizationCode
+  - ciba
+  operations:
+  - readClosestEdgeCloudZone
+  sources:
+  - openapi/camara-simple-edge-discovery-openapi.yml

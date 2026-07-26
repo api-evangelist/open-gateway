@@ -1,0 +1,110 @@
+generated: '2026-07-25'
+method: derived
+source: openapi/*.yml + https://github.com/camaraproject/Commonalities/blob/main/documentation/CAMARA-API-Design-Guide.md
+note: >-
+  Open Gateway is itself a conformance regime rather than a consumer of one: GSMA, jointly with TM
+  Forum since 2025, certifies operator implementations against CAMARA service APIs and TM Forum
+  Operate APIs. The assertions below are derived from the specifications carried in this repo and the
+  CAMARA design guide, not from a marketing claim. Where a standard is not used, that is recorded as
+  conforms false with the reason.
+standards:
+- id: openid-connect
+  conforms: true
+  evidence: >-
+    21 of 22 specifications declare components.securitySchemes.openId of type openIdConnect with an
+    operator-supplied /.well-known/openid-configuration discovery URL.
+- id: oauth2-ciba
+  conforms: true
+  evidence: >-
+    The CAMARA API Design Guide names Client-Initiated Backchannel Authentication (CIBA) alongside
+    OIDC authorization code as the consent-collection flows; the CAMARA Identity and Consent
+    Management working group specifies the profile.
+  reference: https://github.com/camaraproject/IdentityAndConsentManagement
+- id: oauth2-client-credentials
+  conforms: true
+  evidence: Two-legged access tokens are defined for operations that involve no personal data.
+- id: openapi-3.0
+  conforms: true
+  evidence: >-
+    The design guide requires OpenAPI 3.0.3. All 21 CAMARA specifications here are 3.0.3; TMF931 is
+    3.0.1.
+- id: cloudevents-1.0
+  conforms: true
+  evidence: >-
+    Event subscriptions and callbacks carry CloudEvents payloads with org.camaraproject.* event
+    types; sink and sinkCredential are the standard subscription fields.
+- id: rfc8288-web-linking
+  conforms: true
+  evidence: The design guide names Link as an optional pagination navigation header.
+- id: rfc9457-problem-details
+  conforms: false
+  reason: >-
+    CAMARA uses its own ErrorInfo envelope (status, code, message) on application/json. No
+    specification in this repo returns application/problem+json.
+- id: rfc8594-sunset-header
+  conforms: false
+  reason: >-
+    No Sunset or Deprecation response header is mandated. Deprecation is announced through the
+    meta-release process instead.
+- id: idempotency-key
+  conforms: false
+  reason: >-
+    No idempotency key header or at-most-once retry contract is defined anywhere in the design guide
+    or in any of the 22 specifications.
+- id: rate-limit-headers
+  conforms: false
+  reason: >-
+    429 TOO_MANY_REQUESTS and 429 QUOTA_EXCEEDED are standardised, but no RateLimit-* response
+    headers are mandated.
+- id: json-api
+  conforms: false
+  reason: Not used; CAMARA defines its own resource shapes.
+- id: odata
+  conforms: false
+  reason: Not used by CAMARA. TMF931 uses TM Forum's own query conventions.
+- id: scim2
+  conforms: false
+  reason: No identity provisioning surface.
+- id: fhir-r4
+  conforms: false
+  reason: Not a healthcare API surface.
+- id: fapi
+  conforms: false
+  reason: >-
+    CAMARA profiles OIDC and CIBA through its own Identity and Consent Management work rather than
+    adopting the OpenID FAPI profile.
+- id: psd2
+  conforms: false
+  reason: >-
+    Carrier Billing charges a subscriber's mobile account, which sits under national carrier-billing
+    exemptions rather than under PSD2 payment-institution rules. No PSD2 conformance is claimed.
+- id: e164
+  conforms: true
+  evidence: >-
+    Phone numbers throughout the CAMARA specifications are E.164 with a leading + and are pattern
+    constrained.
+- id: geojson-shapes
+  conforms: partial
+  evidence: >-
+    Device Location Verification and Population Density Data use CAMARA's own CIRCLE and POLYGON area
+    objects with Point (latitude/longitude), not GeoJSON geometry documents.
+- id: tmforum-open-api
+  conforms: true
+  evidence: >-
+    TMF931 Open Gateway Operate API — Onboarding and Ordering 5.2.1 follows the TM Forum Open API
+    resource, hub/listener and event conventions.
+certification_programme:
+  name: GSMA Open Gateway API certification
+  url: https://www.gsma.com/solutions-and-impact/gsma-open-gateway/what-is-gsma-open-gateway-certification/
+  joint_with: TM Forum
+  scope: CAMARA service APIs and TM Forum Operate APIs
+  reported_certified_api_assets_q1_2026: 237
+  note: >-
+    This is a conformance programme that GSMA operates for others, not a third-party certification
+    GSMA holds. GSMA publishes no SOC 2, ISO 27001, PCI DSS, HIPAA or FedRAMP attestation for itself,
+    and no trust centre was found; no Compliance or TrustCenter pointer is wired in apis.yml.
+readiness_checklist:
+  url: https://github.com/camaraproject/ReleaseManagement/blob/main/documentation/API-Readiness-Checklist.md
+  description: >-
+    CAMARA's own per-API release gate — the artefact list an API must satisfy before it can be
+    included in a meta-release, and therefore before GSMA can certify implementations of it.

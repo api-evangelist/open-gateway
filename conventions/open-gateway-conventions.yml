@@ -1,0 +1,133 @@
+generated: '2026-07-25'
+method: searched
+source: https://github.com/camaraproject/Commonalities/blob/main/documentation/CAMARA-API-Design-Guide.md
+also_derived_from: openapi/*.yml (22 specifications)
+note: >-
+  GSMA Open Gateway does not author API conventions. It certifies implementations against the CAMARA
+  API Design Guide, which is the normative cross-cutting contract every certified Open Gateway API
+  obeys. That guide, published by the CAMARA Commonalities Working Group under the Linux Foundation,
+  is the source below. The former API-design-guidelines.md is deprecated and now points at
+  CAMARA-API-Design-Guide.md and CAMARA-API-Event-Subscription-and-Notification-Guide.md.
+authentication:
+  style: openIdConnect
+  scheme_name: openId
+  protocols: [OpenID Connect, CIBA]
+  token_legs:
+  - leg: three-legged
+    description: >-
+      Bound to the end user's identity and carries their consent. Where a 3-legged token is used the
+      device is implied by the token and the device object MUST NOT be sent in the request body —
+      sending it returns 422 UNNECESSARY_IDENTIFIER.
+  - leg: two-legged
+    description: Bound to the API client only; used where no personal data or consent is involved.
+  artifact: authentication/open-gateway-authentication.yml
+  scopes_artifact: scopes/open-gateway-scopes.yml
+  identity_and_consent: https://github.com/camaraproject/IdentityAndConsentManagement
+idempotency:
+  supported: false
+  note: >-
+    The CAMARA API Design Guide defines no idempotency key, no Idempotency-Key header and no
+    at-most-once retry contract, and none of the 22 specifications in this repo declare an
+    idempotency parameter. This is a real and consequential gap for the write-side APIs — Carrier
+    Billing createPayment, Quality on Demand createSession and the subscription create operations are
+    all non-idempotent by contract. Recorded as absent rather than inferred; no Idempotency pointer is
+    wired in apis.yml.
+  evidence: grep for /idempoten/i across openapi/*.yml returns zero matches
+request_tracing:
+  header: x-correlator
+  direction: request and response
+  echo_required: true
+  pattern: '^[a-zA-Z0-9-_:;.\/<>{}]{0,256}$'
+  recommended_value: UUID
+  description: >-
+    Service correlator for end-to-end observability. When the API Consumer includes a non-empty
+    x-correlator header the API Provider MUST echo the same value on the response. Declared in 21 of
+    the 22 specifications in this repo.
+pagination:
+  style: page-number
+  params:
+  - name: page
+    in: query
+    type: integer
+    default: 1
+    minimum: 1
+  - name: perPage
+    in: query
+    type: integer
+    default: 20
+    minimum: 1
+    maximum: 100
+  response_envelope:
+    field: pagination
+    fields: [page, perPage, totalCount, totalPages]
+    note: totalCount and totalPages are optional where computing them is expensive.
+  response_headers_optional: [X-Total-Count, X-Total-Pages, Link]
+  link_header: RFC 8288
+  empty_and_out_of_range: >-
+    Both empty result sets and out-of-range page requests MUST return 200 with an empty items array.
+  note: >-
+    Most Open Gateway APIs are single-resource lookups with no collection to page. Pagination applies
+    to the list operations — Carrier Billing retrievePayments, the subscription list operations, and
+    the TMF931 list operations.
+field_expansion:
+  supported: false
+  note: CAMARA defines no expand / sparse-fieldset mechanism.
+metadata:
+  supported: false
+  note: CAMARA defines no free-form metadata object on resources.
+strictness:
+  undeclared_properties: rejected
+  description: >-
+    APIs MUST reject undeclared JSON properties at any nesting level with 400 INVALID_ARGUMENT. The
+    request contract is closed, not additive.
+error_envelope:
+  media_type: application/json
+  rfc9457: false
+  shape:
+    status: integer
+    code: string
+    message: string
+  code_style: UPPER_SNAKE_CASE, human-readable, never numeric
+  required_everywhere: [401, 403]
+  shared_definitions: CAMARA_common.yaml (camaraproject/Commonalities)
+  artifact: errors/open-gateway-problem-types.yml
+rate_limiting:
+  signalling: none-standardised
+  note: >-
+    The design guide standardises the 429 responses (TOO_MANY_REQUESTS and QUOTA_EXCEEDED) but
+    mandates no RateLimit-* or X-RateLimit-* response headers. Quotas and throttles are set by each
+    certified operator or channel partner in its own commercial agreement, so there is no
+    Open-Gateway-wide rate-limit contract to capture.
+versioning:
+  scheme: uri-path
+  form:
+  - stable APIs (major x > 0) use /api-name/vx
+  - initial APIs (major x = 0) use /api-name/v0.y
+  detail: The url field carries only the MAJOR version number for stable APIs.
+  api_root: >-
+    servers[0].url is {apiRoot}/<api-name>/<version>. apiRoot is a server variable supplied by the
+    operator, aggregator or channel partner. There is no GSMA-hosted apiRoot.
+  artifact: lifecycle/open-gateway-lifecycle.yml
+deprecation:
+  sunset_header: false
+  deprecation_header: false
+  policy: >-
+    The design guide asks API providers to establish obsolescence of a superseded API version over a
+    reasonable period (6 months) and to monitor usage, but mandates no RFC 8594 Sunset or Deprecation
+    response headers.
+events:
+  model: CloudEvents
+  subscription_fields: [sink, sinkCredential]
+  async_response: HTTP 202 Accepted for server-initiated asynchronous processing
+  guide: https://github.com/camaraproject/Commonalities/blob/main/documentation/CAMARA-API-Event-Subscription-and-Notification-Guide.md
+  artifact: asyncapi/open-gateway-webhooks.yml
+openapi:
+  version_required: 3.0.3
+  note: All 21 CAMARA specifications in this repo are OpenAPI 3.0.3. TMF931 is OpenAPI 3.0.1.
+cross_links:
+  errors: errors/open-gateway-problem-types.yml
+  lifecycle: lifecycle/open-gateway-lifecycle.yml
+  authentication: authentication/open-gateway-authentication.yml
+  scopes: scopes/open-gateway-scopes.yml
+  conformance: conformance/open-gateway-conformance.yml
+  webhooks: asyncapi/open-gateway-webhooks.yml

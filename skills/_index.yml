@@ -1,0 +1,43 @@
+generated: '2026-07-25'
+method: generated
+source: openapi/*.yml operationIds + conventions/open-gateway-conventions.yml + errors/open-gateway-problem-types.yml
+note: >-
+  Packaged agent operating instructions for the marquee GSMA Open Gateway flows. Every step is
+  grounded in an operationId that exists verbatim in the referenced specification. No provider-published
+  Agent Skills or AGENTS.md exist for GSMA Open Gateway or CAMARA; these are generated from the
+  specifications and the CAMARA API Design Guide.
+skills:
+- file: open-gateway-sim-swap-fraud-check.md
+  name: Check a phone number for a recent SIM swap
+  api: openapi/camara-sim-swap-openapi.yml
+  operations: [checkSimSwap, retrieveSimSwapDate]
+- file: open-gateway-number-verification.md
+  name: Verify a phone number against the network without an SMS
+  api: openapi/camara-number-verification-openapi.yml
+  operations: [phoneNumberVerify, phoneNumberShare]
+- file: open-gateway-quality-on-demand-session.md
+  name: Raise network quality for a device with a Quality on Demand session
+  api: openapi/camara-quality-on-demand-openapi.yml
+  operations: [retrieveQoSProfiles, getQosProfile, createSession, getSession, extendQosSessionDuration,
+    retrieveSessionsByDevice, deleteSession]
+- file: open-gateway-device-location.md
+  name: Verify or retrieve a device location from the network
+  api: openapi/camara-location-verification-openapi.yml
+  operations: [verifyLocation, retrieveLocation]
+- file: open-gateway-kyc-identity-check.md
+  name: Check a customer's identity against operator-held data
+  api: openapi/camara-kyc-match-openapi.yml
+  operations: [KYC_Match, verifyAge, checkTenure]
+- file: open-gateway-carrier-billing-payment.md
+  name: Charge a purchase to a subscriber's mobile account with Carrier Billing
+  api: openapi/camara-carrier-billing-openapi.yml
+  operations: [preparePayment, createPayment, validatePayment, confirmPayment, retrievePayment,
+    retrievePayments, cancelPayment]
+- file: open-gateway-channel-partner-onboarding.md
+  name: Onboard and order Open Gateway APIs as a channel partner (TMF931)
+  api: openapi/tmforum-tmf931-open-gateway-onboarding-ordering-openapi.yml
+  operations: [listApiProduct, retrieveApiProduct, createApplicationOwner, retrieveApplicationOwner,
+    patchApplicationOwner, createApplication, retrieveApplication, patchApplication,
+    createApiProductOrder, retrieveApiProductOrder, listApiProductOrder, createHub, listMonitor,
+    retrieveMonitor]
+skill_count: 7

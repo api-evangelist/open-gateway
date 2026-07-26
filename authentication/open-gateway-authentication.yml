@@ -1,0 +1,71 @@
+generated: '2026-07-25'
+method: searched
+source: openapi/camara-call-forwarding-signal-openapi.yml, openapi/camara-carrier-billing-openapi.yml,
+  openapi/camara-connected-network-type-openapi.yml, openapi/camara-device-identifier-openapi.yml, openapi/camara-device-reachability-status-openapi.yml,
+  openapi/camara-device-reachability-status-subscriptions-openapi.yml, openapi/camara-device-roaming-status-openapi.yml,
+  openapi/camara-device-swap-openapi.yml, openapi/camara-home-devices-qod-openapi.yml, openapi/camara-kyc-age-verification-openapi.yml,
+  openapi/camara-kyc-match-openapi.yml, openapi/camara-kyc-tenure-openapi.yml ...
+summary:
+  types:
+  - http
+  - openIdConnect
+schemes:
+- name: openId
+  type: openIdConnect
+  openIdConnectUrl: https://example.com/.well-known/openid-configuration
+  description: to support Consent Management
+  sources:
+  - openapi/camara-call-forwarding-signal-openapi.yml
+  - openapi/camara-carrier-billing-openapi.yml
+  - openapi/camara-connected-network-type-openapi.yml
+  - openapi/camara-device-identifier-openapi.yml
+  - openapi/camara-device-reachability-status-openapi.yml
+  - openapi/camara-device-reachability-status-subscriptions-openapi.yml
+  - openapi/camara-device-roaming-status-openapi.yml
+  - openapi/camara-device-swap-openapi.yml
+  - openapi/camara-home-devices-qod-openapi.yml
+  - openapi/camara-kyc-age-verification-openapi.yml
+  - openapi/camara-kyc-match-openapi.yml
+  - openapi/camara-kyc-tenure-openapi.yml
+  - openapi/camara-location-retrieval-openapi.yml
+  - openapi/camara-location-verification-openapi.yml
+  - openapi/camara-number-verification-openapi.yml
+  - openapi/camara-one-time-password-sms-openapi.yml
+  - openapi/camara-population-density-data-openapi.yml
+  - openapi/camara-qos-profiles-openapi.yml
+  - openapi/camara-quality-on-demand-openapi.yml
+  - openapi/camara-sim-swap-openapi.yml
+  - openapi/camara-simple-edge-discovery-openapi.yml
+- name: notificationsBearerAuth
+  type: http
+  scheme: bearer
+  bearerFormat: '{$request.body#/sinkCredential.credentialType}'
+  sources:
+  - openapi/camara-carrier-billing-openapi.yml
+  - openapi/camara-device-reachability-status-subscriptions-openapi.yml
+  - openapi/camara-population-density-data-openapi.yml
+  - openapi/camara-quality-on-demand-openapi.yml
+docs: https://github.com/camaraproject/IdentityAndConsentManagement
+design_guide: https://github.com/camaraproject/Commonalities/blob/main/documentation/CAMARA-API-Design-Guide.md
+note: 'CAMARA authentication is OpenID Connect plus CIBA, profiled by the CAMARA Identity and Consent
+  Management working group. Every certified Open Gateway API declares one openIdConnect scheme named openId;
+  the openIdConnectUrl carried in the published specs is the placeholder https://example.com/.well-known/openid-configuration
+  because the real discovery document belongs to each certified operator, aggregator or channel partner.
+  Access tokens come in two legs: three-legged tokens carry the end user identity and their consent (device
+  is implied by the token and MUST NOT be repeated in the request body), and two-legged client-credentials
+  tokens are used only where no personal data is involved. notificationsBearerAuth is a separate http
+  bearer scheme used to authenticate the operator when it POSTs CloudEvents to a consumer-supplied sink;
+  its bearerFormat is a runtime expression resolving to sinkCredential.credentialType. GSMA itself issues
+  no credentials.'
+token_legs:
+- leg: three-legged
+  grants:
+  - authorization_code (OIDC)
+  - CIBA
+  carries: end-user identity and consent
+- leg: two-legged
+  grants:
+  - client_credentials
+  carries: API client identity only; no personal data operations
+scopes_artifact: scopes/open-gateway-scopes.yml
+conventions_artifact: conventions/open-gateway-conventions.yml

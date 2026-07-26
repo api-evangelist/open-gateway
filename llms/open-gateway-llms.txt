@@ -1,0 +1,109 @@
+# GSMA Open Gateway
+
+> GSMA Open Gateway is the mobile industry's operator-commitment and certification layer for network
+> APIs, run by the GSM Association from London. Launched at MWC Barcelona on 27 February 2023 with 21
+> operator groups and eight universal network APIs, it is the go-to-market wrapper around CAMARA, the
+> Linux Foundation-hosted Telco Global API Alliance that actually authors the OpenAPI definitions.
+> GSMA sits above the value chain rather than in it: it signs operators and channel partners to a
+> memorandum of understanding, certifies implementations against CAMARA service APIs and TM Forum
+> Operate APIs, and publishes which certified APIs are live in which markets.
+
+Important for machine consumers: **GSMA operates no callable API and publishes no OpenAPI under its
+own name.** Every `servers[0].url` in the specifications below is `{apiRoot}/<api-name>/<version>`,
+where `apiRoot` is supplied by a certified operator, aggregator or channel partner (Aduna, Vonage,
+Infobip, Sinch, Twilio, Nokia, AWS, Bridge Alliance, Telefonica, Orange, Deutsche Telekom and
+others). There is no GSMA host to call, no GSMA API key, and no GSMA self-serve signup. GSMA does run
+a first-party developer sandbox at https://open-gateway.gsma.com/sandbox. Both gsma.com and
+open-gateway.gsma.com sit behind a Cloudflare bot challenge that returns 403 to automated clients.
+
+Per the GSMA's Q1 2026 Open Gateway update: 81 operator groups and 61 channel partners covering 292
+networks and about 80 percent of global mobile connections have signed, with 237 certified API assets
+drawn from 33 CAMARA tagged released APIs and 280 API instances commercially launched across 85
+networks in 50 markets.
+
+## Programme
+
+- [GSMA Open Gateway](https://www.gsma.com/solutions-and-impact/gsma-open-gateway/): programme home.
+- [What is GSMA Open Gateway](https://www.gsma.com/solutions-and-impact/gsma-open-gateway/what-is-gsma-open-gateway/): overview.
+- [API certification](https://www.gsma.com/solutions-and-impact/gsma-open-gateway/what-is-gsma-open-gateway-certification/): the conformance programme, run jointly with TM Forum.
+- [API descriptions](https://www.gsma.com/solutions-and-impact/gsma-open-gateway/gsma-open-gateway-api-descriptions/): the certified API catalogue in prose.
+- [Availability directory](https://open-gateway.gsma.com/): which certified APIs are live in which markets.
+- [API Sandbox](https://open-gateway.gsma.com/sandbox): developer playground for CAMARA-compliant APIs.
+- [FAQ](https://www.gsma.com/solutions-and-impact/gsma-open-gateway/gsma-open-gateway-frequently-asked-questions/)
+
+## Specification authorities
+
+- [CAMARA Project](https://github.com/camaraproject): Linux Foundation project that authors the service API OpenAPIs.
+- [CAMARA API Design Guide](https://github.com/camaraproject/Commonalities/blob/main/documentation/CAMARA-API-Design-Guide.md): the normative cross-cutting contract.
+- [CAMARA Event Subscription and Notification Guide](https://github.com/camaraproject/Commonalities/blob/main/documentation/CAMARA-API-Event-Subscription-and-Notification-Guide.md)
+- [CAMARA Identity and Consent Management](https://github.com/camaraproject/IdentityAndConsentManagement): the OIDC/CIBA consent profile.
+- [CAMARA Release Management](https://github.com/camaraproject/ReleaseManagement): the meta-release train (current baseline r4.1, 2026-06-19).
+- [TMF931 Onboarding and Ordering](https://github.com/tmforum-apis/TMF931_OpenGatewayOnboardingAndOrderingComponentSuite): the TM Forum Operate API.
+- [CAMARA Swagger UI](https://camaraproject.github.io/swagger-ui/): rendered reference for every CAMARA API.
+
+## APIs — anti-fraud and identity
+
+- [SIM Swap 2.1.0](openapi/camara-sim-swap-openapi.yml): `checkSimSwap`, `retrieveSimSwapDate`. The most commercially launched Open Gateway API.
+- [Number Verification 2.1.0](openapi/camara-number-verification-openapi.yml): `phoneNumberVerify`, `phoneNumberShare`. Silent SMS-free verification over the mobile data connection.
+- [Device Swap 1.0.0](openapi/camara-device-swap-openapi.yml): `checkDeviceSwap`, `retrieveDeviceSwapDate`.
+- [Call Forwarding Signal 0.4.0](openapi/camara-call-forwarding-signal-openapi.yml): `retrieveCallForwarding`, `retrieveUnconditionalCallForwarding`.
+- [Device Identifier 0.3.0](openapi/camara-device-identifier-openapi.yml): `retrieveIdentifier`, `retrieveType`, `retrievePPID`.
+- [Know Your Customer Match 0.4.0](openapi/camara-kyc-match-openapi.yml): `KYC_Match`.
+- [KYC Age Verification 0.2.1](openapi/camara-kyc-age-verification-openapi.yml): `verifyAge`.
+- [KYC Tenure 0.2.0](openapi/camara-kyc-tenure-openapi.yml): `checkTenure`.
+- [One Time Password SMS 1.1.1](openapi/camara-one-time-password-sms-openapi.yml): `sendCode`, `validateCode`.
+
+## APIs — location and analytics
+
+- [Device Location Verification 3.0.0](openapi/camara-location-verification-openapi.yml): `verifyLocation`. Privacy-preserving in/out/partial answer.
+- [Device Location Retrieval 0.5.0](openapi/camara-location-retrieval-openapi.yml): `retrieveLocation`.
+- [Population Density Data 0.3.0](openapi/camara-population-density-data-openapi.yml): `retrievePopulationDensity`.
+
+## APIs — network quality and edge
+
+- [Quality on Demand 1.1.0](openapi/camara-quality-on-demand-openapi.yml): `createSession`, `getSession`, `extendQosSessionDuration`, `deleteSession`, `retrieveSessionsByDevice`.
+- [QoS Profiles 1.1.0](openapi/camara-qos-profiles-openapi.yml): `retrieveQoSProfiles`, `getQosProfile`.
+- [Home Devices QoD 0.4.0](openapi/camara-home-devices-qod-openapi.yml): `setQos`. Upstream sandbox repository archived.
+- [Simple Edge Discovery 2.0.1](openapi/camara-simple-edge-discovery-openapi.yml): `readClosestEdgeCloudZone`.
+
+## APIs — device status and events
+
+- [Device Reachability Status 1.1.0](openapi/camara-device-reachability-status-openapi.yml): `getReachabilityStatus`.
+- [Device Reachability Status Subscriptions 0.8.0](openapi/camara-device-reachability-status-subscriptions-openapi.yml): CloudEvents subscriptions.
+- [Device Roaming Status 1.0.0](openapi/camara-device-roaming-status-openapi.yml): `getRoamingStatus`.
+- [Connected Network Type 0.1.0](openapi/camara-connected-network-type-openapi.yml): `getConnectedNetworkType`.
+
+## APIs — payments and onboarding
+
+- [Carrier Billing 0.5.0](openapi/camara-carrier-billing-openapi.yml): `preparePayment`, `createPayment`, `validatePayment`, `confirmPayment`, `cancelPayment`, `retrievePayment`, `retrievePayments`.
+- [TMF931 Open Gateway Onboarding and Ordering 5.2.1](openapi/tmforum-tmf931-open-gateway-onboarding-ordering-openapi.yml): 28 operations for channel-partner onboarding, application registration, API product ordering and lifecycle events.
+
+## How to call these APIs correctly
+
+- [API conventions](conventions/open-gateway-conventions.yml): `x-correlator` echo, page/perPage pagination, the closed request contract, the ErrorInfo envelope, and the absence of any idempotency key.
+- [Authentication](authentication/open-gateway-authentication.yml): a single `openIdConnect` scheme named `openId` on 21 of 22 specs, plus `notificationsBearerAuth` for callback sinks.
+- [OAuth scopes](scopes/open-gateway-scopes.yml): 38 purpose-built consent scopes in `api-name[:resource]:action` form.
+- [Error catalogue](errors/open-gateway-problem-types.yml): CAMARA `{status, code, message}` on `application/json` — NOT RFC 9457 problem details.
+- [Lifecycle](lifecycle/open-gateway-lifecycle.yml): URI-path versioning, twice-yearly meta-releases, no Sunset header, no status page, no SLA.
+- [Changelog](changelog/open-gateway-changelog.yml): the CAMARA meta-release train.
+- [Webhooks and events](asyncapi/open-gateway-webhooks.yml): CloudEvents over `sink`/`sinkCredential`; no AsyncAPI document exists.
+- [Conformance](conformance/open-gateway-conformance.yml): what these APIs do and do not conform to.
+- [Sandbox](sandbox/open-gateway-sandbox.yml): GSMA API Sandbox and the Orange CAMARA Playground.
+- [Data model](data-model/open-gateway-data-model.yml): the shared Device identifier and the TMF931 relational core.
+- [Domain security](security/open-gateway-domain-security.yml) and [vulnerability disclosure](security/open-gateway-vulnerability-disclosure.yml).
+
+## Agent surfaces
+
+- [MCP server](mcp/open-gateway-mcp.yml): the CAMARA MCP Enablement provider implementation contributed by Orange — 24 tools, stdio transport, no hosted endpoint, Orange CAMARA Playground credentials required. Not a GSMA product and not a normative CAMARA specification.
+- [Tool crosswalk](mcp/open-gateway-tool-crosswalk.yml): every MCP tool bound to the CAMARA operationId that backs it, plus the 9 playground-admin tools with no REST equivalent and the 55 operations with no tool.
+- [Agent skills](skills/_index.yml): 7 packaged operating instructions grounded in real operationIds.
+
+## Caveats for agents
+
+- Do not attempt to call an endpoint from these specifications without an operator-supplied
+  `apiRoot`. The default `http://localhost:9091` in the upstream specs is a placeholder.
+- With a three-legged access token the subscriber is implied by the token; sending the `device`
+  object as well returns `422 UNNECESSARY_IDENTIFIER`.
+- There is no idempotency key anywhere in CAMARA. Writes — `createPayment`, `createSession`,
+  subscription creates, TMF931 orders — are not safe to blindly retry.
+- Errors are not RFC 9457. Parse `{status, code, message}` on `application/json`.

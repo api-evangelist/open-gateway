@@ -1,0 +1,175 @@
+generated: '2026-07-25'
+method: derived
+source: openapi/*.yml (4xx/5xx responses across 22 CAMARA + TM Forum specifications)
+docs: https://github.com/camaraproject/Commonalities/blob/main/documentation/CAMARA-API-Design-Guide.md
+format: camara-errorinfo
+format_note: 'CAMARA does NOT use RFC 9457 application/problem+json. Every error is returned as application/json
+  with the CAMARA ErrorInfo envelope: {status, code, message}. "code" is a human-readable UPPER_SNAKE_CASE
+  string, never a numeric code. The canonical shared definitions live in CAMARA_common.yaml in the Commonalities
+  repository.'
+envelope:
+  media_type: application/json
+  fields:
+  - field: status
+    type: integer
+    description: HTTP status code returned with the error.
+  - field: code
+    type: string
+    description: Machine-readable UPPER_SNAKE_CASE error code.
+  - field: message
+    type: string
+    description: Human-readable description of the error.
+problems:
+- status: 400
+  title: Bad Request
+  description: Bad Request
+  codes:
+  - INVALID_ARGUMENT
+  - OUT_OF_RANGE
+  - POPULATION_DENSITY_DATA
+  - INVALID_CREDENTIAL
+  - INVALID_SINK
+  - INVALID_TOKEN
+  - CARRIER_BILLING
+  - ONE_TIME_PASSWORD_SMS
+  - QUALITY_ON_DEMAND
+  - INVALID_PROTOCOL
+  - KNOW_YOUR_CUSTOMER
+  spec_count: 22
+  example_operations:
+  - openapi/camara-call-forwarding-signal-openapi.yml#retrieveCallForwarding
+  - openapi/camara-call-forwarding-signal-openapi.yml#retrieveUnconditionalCallForwarding
+  - openapi/camara-carrier-billing-openapi.yml#cancelPayment
+- status: 401
+  title: Unauthorized
+  description: Unauthorized
+  codes:
+  - UNAUTHENTICATED
+  - AUTHENTICATION_REQUIRED
+  spec_count: 22
+  example_operations:
+  - openapi/camara-call-forwarding-signal-openapi.yml#retrieveCallForwarding
+  - openapi/camara-call-forwarding-signal-openapi.yml#retrieveUnconditionalCallForwarding
+  - openapi/camara-carrier-billing-openapi.yml#cancelPayment
+- status: 403
+  title: Forbidden
+  description: Forbidden
+  codes:
+  - PERMISSION_DENIED
+  - CARRIER_BILLING
+  - INVALID_TOKEN_CONTEXT
+  - ONE_TIME_PASSWORD_SMS
+  - KNOW_YOUR_CUSTOMER
+  - NUMBER_VERIFICATION
+  - SUBSCRIPTION_MISMATCH
+  spec_count: 22
+  example_operations:
+  - openapi/camara-call-forwarding-signal-openapi.yml#retrieveCallForwarding
+  - openapi/camara-call-forwarding-signal-openapi.yml#retrieveUnconditionalCallForwarding
+  - openapi/camara-carrier-billing-openapi.yml#cancelPayment
+- status: 404
+  title: Not Found
+  description: Not found
+  codes:
+  - NOT_FOUND
+  - IDENTIFIER_NOT_FOUND
+  - DEVICE_NOT_FOUND
+  spec_count: 21
+  example_operations:
+  - openapi/camara-call-forwarding-signal-openapi.yml#retrieveCallForwarding
+  - openapi/camara-call-forwarding-signal-openapi.yml#retrieveUnconditionalCallForwarding
+  - openapi/camara-carrier-billing-openapi.yml#cancelPayment
+- status: 405
+  title: Method Not Allowed
+  description: Method Not allowed
+  codes: []
+  spec_count: 1
+  example_operations:
+  - openapi/tmforum-tmf931-open-gateway-onboarding-ordering-openapi.yml#createApiProductOrder
+  - openapi/tmforum-tmf931-open-gateway-onboarding-ordering-openapi.yml#createApplication
+  - openapi/tmforum-tmf931-open-gateway-onboarding-ordering-openapi.yml#createApplicationOwner
+- status: 409
+  title: Conflict
+  description: Conflict
+  codes:
+  - HOME_DEVICES_QOD
+  - ALREADY_EXISTS
+  - CARRIER_BILLING
+  - CONFLICT
+  - ABORTED
+  - QUALITY_ON_DEMAND
+  spec_count: 5
+  example_operations:
+  - openapi/camara-carrier-billing-openapi.yml#cancelPayment
+  - openapi/camara-carrier-billing-openapi.yml#confirmPayment
+  - openapi/camara-carrier-billing-openapi.yml#createPayment
+- status: 422
+  title: Unprocessable Content
+  description: Unprocessable Content
+  codes:
+  - SERVICE_NOT_APPLICABLE
+  - MISSING_IDENTIFIER
+  - UNNECESSARY_IDENTIFIER
+  - UNSUPPORTED_IDENTIFIER
+  - CARRIER_BILLING
+  - LOCATION_VERIFICATION
+  - LOCATION_RETRIEVAL
+  - POPULATION_DENSITY_DATA
+  - IDENTIFIER_MISMATCH
+  - MULTIEVENT_SUBSCRIPTION_NOT_SUPPORTED
+  - QUALITY_ON_DEMAND
+  spec_count: 18
+  example_operations:
+  - openapi/camara-call-forwarding-signal-openapi.yml#retrieveCallForwarding
+  - openapi/camara-call-forwarding-signal-openapi.yml#retrieveUnconditionalCallForwarding
+  - openapi/camara-carrier-billing-openapi.yml#cancelPayment
+- status: 429
+  title: Too Many Requests
+  description: Too Many Requests
+  codes:
+  - TOO_MANY_REQUESTS
+  - QUOTA_EXCEEDED
+  spec_count: 13
+  example_operations:
+  - openapi/camara-call-forwarding-signal-openapi.yml#retrieveCallForwarding
+  - openapi/camara-call-forwarding-signal-openapi.yml#retrieveUnconditionalCallForwarding
+  - openapi/camara-carrier-billing-openapi.yml#cancelPayment
+- status: 500
+  title: Internal Server Error
+  description: Internal Server Error
+  codes:
+  - INTERNAL
+  spec_count: 2
+  example_operations:
+  - openapi/camara-home-devices-qod-openapi.yml#setQos
+  - openapi/tmforum-tmf931-open-gateway-onboarding-ordering-openapi.yml#createApiProductOrder
+  - openapi/tmforum-tmf931-open-gateway-onboarding-ordering-openapi.yml#createApplication
+- status: 501
+  title: Not Implemented
+  description: Not Implemented
+  codes:
+  - NOT_IMPLEMENTED
+  spec_count: 2
+  example_operations:
+  - openapi/camara-call-forwarding-signal-openapi.yml#retrieveCallForwarding
+  - openapi/tmforum-tmf931-open-gateway-onboarding-ordering-openapi.yml#createApiProductOrder
+  - openapi/tmforum-tmf931-open-gateway-onboarding-ordering-openapi.yml#createApplication
+- status: 503
+  title: Service Unavailable
+  description: Service Unavailable
+  codes:
+  - UNAVAILABLE
+  - HOME_DEVICES_QOD
+  spec_count: 4
+  example_operations:
+  - openapi/camara-device-reachability-status-openapi.yml#getReachabilityStatus
+  - openapi/camara-device-roaming-status-openapi.yml#getRoamingStatus
+  - openapi/camara-home-devices-qod-openapi.yml#setQos
+- status: 504
+  title: Gateway Timeout
+  description: Gateway Timeout
+  codes:
+  - TIMEOUT
+  spec_count: 1
+  example_operations:
+  - openapi/camara-home-devices-qod-openapi.yml#setQos

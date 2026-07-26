@@ -1,0 +1,101 @@
+generated: '2026-07-25'
+method: derived
+source: openapi/*.yml callbacks + https://github.com/camaraproject/Commonalities/blob/main/documentation/CAMARA-API-Event-Subscription-and-Notification-Guide.md
+spec_type: Webhooks
+asyncapi_published: false
+asyncapi_search: >-
+  Searched the camaraproject GitHub organisation (93 repositories), the Commonalities repository and
+  the GSMA Open Gateway site for an AsyncAPI document. None exists. CAMARA models its event surface as
+  OpenAPI callbacks carrying CloudEvents payloads, not as AsyncAPI. The webhook catalogue below is
+  derived from the callbacks and subscription operations actually declared in the specifications in
+  this repo. No AsyncAPI file is fabricated.
+model:
+  envelope: CloudEvents 1.0
+  delivery: HTTP POST from the operator to a consumer-supplied sink
+  subscription_fields:
+  - field: sink
+    description: The callback URL the operator posts CloudEvents notifications to.
+  - field: sinkCredential
+    description: >-
+      Security configuration for the sink. Carries credentialType, and for ACCESSTOKEN the
+      accessToken, accessTokenExpiresUtc and accessTokenType.
+  security_scheme: notificationsBearerAuth
+  security_scheme_type: http bearer
+  security_scheme_bearer_format: '{$request.body#/sinkCredential.credentialType}'
+  specs_declaring_notifications_auth:
+  - openapi/camara-carrier-billing-openapi.yml
+  - openapi/camara-device-reachability-status-subscriptions-openapi.yml
+  - openapi/camara-population-density-data-openapi.yml
+  - openapi/camara-quality-on-demand-openapi.yml
+  async_response: HTTP 202 Accepted is used for server-initiated asynchronous processing, distinct from CloudEvents.
+subscription_apis:
+- api: CAMARA Device Reachability Status Subscriptions
+  spec: openapi/camara-device-reachability-status-subscriptions-openapi.yml
+  version: 0.8.0
+  operations:
+  - createDeviceReachabilityStatusSubscription
+  - retrieveDeviceReachabilityStatusSubscriptionList
+  - retrieveDeviceReachabilityStatusSubscription
+  - deleteDeviceReachabilityStatusSubscription
+  event_types:
+  - type: org.camaraproject.device-reachability-status-subscriptions.v0.reachability-data
+    description: The device became reachable for data.
+    scope: device-reachability-status-subscriptions:org.camaraproject.device-reachability-status-subscriptions.v0.reachability-data:create
+  - type: org.camaraproject.device-reachability-status-subscriptions.v0.reachability-sms
+    description: The device became reachable for SMS.
+    scope: device-reachability-status-subscriptions:org.camaraproject.device-reachability-status-subscriptions.v0.reachability-sms:create
+  - type: org.camaraproject.device-reachability-status-subscriptions.v0.reachability-disconnected
+    description: The device became disconnected from the network.
+    scope: device-reachability-status-subscriptions:org.camaraproject.device-reachability-status-subscriptions.v0.reachability-disconnected:create
+callback_apis:
+- api: CAMARA Quality on Demand
+  spec: openapi/camara-quality-on-demand-openapi.yml
+  version: 1.1.0
+  trigger_operation: createSession
+  sink_field: sink
+  description: >-
+    Session status notifications. The consumer supplies sink and sinkCredential on createSession and
+    the operator posts CloudEvents on QoS session status transitions.
+- api: CAMARA Carrier Billing
+  spec: openapi/camara-carrier-billing-openapi.yml
+  version: 0.5.0
+  trigger_operation: createPayment
+  sink_field: sink
+  description: Payment status notifications for carrier-billed payments.
+- api: CAMARA Population Density Data
+  spec: openapi/camara-population-density-data-openapi.yml
+  version: 0.3.0
+  trigger_operation: retrievePopulationDensity
+  sink_field: sink
+  description: Notification callback for long-running population density estimations.
+- api: CAMARA Device Reachability Status Subscriptions
+  spec: openapi/camara-device-reachability-status-subscriptions-openapi.yml
+  version: 0.8.0
+  trigger_operation: createDeviceReachabilityStatusSubscription
+  sink_field: sink
+  description: Reachability event notifications.
+tmforum_events:
+  api: TM Forum TMF931 Open Gateway Onboarding and Ordering
+  spec: openapi/tmforum-tmf931-open-gateway-onboarding-ordering-openapi.yml
+  model: TM Forum hub/listener pattern
+  register_operations: [createHub, hubGet, hubDelete]
+  listener_operations:
+  - apiProductOrderCreateEvent
+  - apiProductOrderStateChangeEvent
+  - apiProductOrderAttributeValueChangeEvent
+  - applicationCreateEvent
+  - applicationApprovalStatusChangeEvent
+  - applicationAttributeValueChangeEvent
+  - applicationOwnerCreateEvent
+  - applicationOwnerApprovalStatusChangeEvent
+  - applicationOwnerAttributeValueChangeEvent
+  - monitorStateChangeEvent
+  description: >-
+    A channel partner registers a listener via createHub, then receives POSTs on the /listener/*
+    endpoints for order, application and application-owner lifecycle changes. This is the event side
+    of Open Gateway onboarding.
+counts:
+  subscription_apis: 1
+  callback_apis: 4
+  camara_event_types: 3
+  tmf931_listener_events: 10

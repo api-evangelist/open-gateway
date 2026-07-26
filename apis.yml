@@ -60,6 +60,8 @@ apis:
     url: https://camaraproject.github.io/swagger-ui/
   - type: Documentation
     url: https://www.gsma.com/solutions-and-impact/gsma-open-gateway/gsma-open-gateway-api-descriptions/
+  - type: Overlay
+    url: overlays/open-gateway-camara-number-verification-overlay.yaml
 - aid: open-gateway:camara-sim-swap
   name: CAMARA SIM Swap API
   description: CAMARA SIM Swap 2.1.0 as certified under GSMA Open Gateway. Checks whether the SIM associated
@@ -81,6 +83,8 @@ apis:
     url: https://camaraproject.github.io/swagger-ui/
   - type: Documentation
     url: https://www.gsma.com/solutions-and-impact/gsma-open-gateway/gsma-open-gateway-api-descriptions/
+  - type: Overlay
+    url: overlays/open-gateway-camara-sim-swap-overlay.yaml
 - aid: open-gateway:camara-device-swap
   name: CAMARA Device Swap API
   description: CAMARA Device Swap 1.0.0 as certified under GSMA Open Gateway. Reports whether the device
@@ -100,6 +104,8 @@ apis:
     url: https://camaraproject.github.io/swagger-ui/
   - type: Documentation
     url: https://www.gsma.com/solutions-and-impact/gsma-open-gateway/gsma-open-gateway-api-descriptions/
+  - type: Overlay
+    url: overlays/open-gateway-camara-device-swap-overlay.yaml
 - aid: open-gateway:camara-call-forwarding-signal
   name: CAMARA Call Forwarding Signal API
   description: CAMARA Call Forwarding Signal 0.4.0 as certified under GSMA Open Gateway. Exposes whether
@@ -119,6 +125,8 @@ apis:
     url: https://camaraproject.github.io/swagger-ui/
   - type: Documentation
     url: https://www.gsma.com/solutions-and-impact/gsma-open-gateway/gsma-open-gateway-api-descriptions/
+  - type: Overlay
+    url: overlays/open-gateway-camara-call-forwarding-signal-overlay.yaml
 - aid: open-gateway:camara-kyc-match
   name: CAMARA Know Your Customer Match API
   description: CAMARA Know Your Customer Match 0.4.0 as certified under GSMA Open Gateway. Compares customer-supplied
@@ -139,6 +147,8 @@ apis:
     url: https://camaraproject.github.io/swagger-ui/
   - type: Documentation
     url: https://www.gsma.com/solutions-and-impact/gsma-open-gateway/gsma-open-gateway-api-descriptions/
+  - type: Overlay
+    url: overlays/open-gateway-camara-kyc-match-overlay.yaml
 - aid: open-gateway:camara-kyc-age-verification
   name: CAMARA Know Your Customer Age Verification API
   description: CAMARA Know Your Customer Age Verification 0.2.1 as certified under GSMA Open Gateway.
@@ -159,6 +169,8 @@ apis:
     url: https://camaraproject.github.io/swagger-ui/
   - type: Documentation
     url: https://www.gsma.com/solutions-and-impact/gsma-open-gateway/gsma-open-gateway-api-descriptions/
+  - type: Overlay
+    url: overlays/open-gateway-camara-kyc-age-verification-overlay.yaml
 - aid: open-gateway:camara-kyc-tenure
   name: CAMARA KYC Tenure API
   description: CAMARA KYC Tenure 0.2.0 as certified under GSMA Open Gateway. Confirms whether a mobile
@@ -178,6 +190,8 @@ apis:
     url: https://camaraproject.github.io/swagger-ui/
   - type: Documentation
     url: https://www.gsma.com/solutions-and-impact/gsma-open-gateway/gsma-open-gateway-api-descriptions/
+  - type: Overlay
+    url: overlays/open-gateway-camara-kyc-tenure-overlay.yaml
 - aid: open-gateway:camara-one-time-password-sms
   name: CAMARA One Time Password SMS API
   description: CAMARA One Time Password SMS 1.1.1 as certified under GSMA Open Gateway. Sends a one-time
@@ -198,6 +212,8 @@ apis:
     url: https://camaraproject.github.io/swagger-ui/
   - type: Documentation
     url: https://www.gsma.com/solutions-and-impact/gsma-open-gateway/gsma-open-gateway-api-descriptions/
+  - type: Overlay
+    url: overlays/open-gateway-camara-one-time-password-sms-overlay.yaml
 - aid: open-gateway:camara-quality-on-demand
   name: CAMARA Quality on Demand API
   description: CAMARA Quality-On-Demand 1.1.0 as certified under GSMA Open Gateway. Creates, reads, extends
@@ -219,6 +235,8 @@ apis:
     url: https://camaraproject.github.io/swagger-ui/
   - type: Documentation
     url: https://www.gsma.com/solutions-and-impact/gsma-open-gateway/gsma-open-gateway-api-descriptions/
+  - type: Overlay
+    url: overlays/open-gateway-camara-quality-on-demand-overlay.yaml
 - aid: open-gateway:camara-qos-profiles
   name: CAMARA QoS Profiles API
   description: CAMARA QoS Profiles 1.1.0 as certified under GSMA Open Gateway. Lists the quality-of-service
@@ -238,6 +256,8 @@ apis:
     url: https://camaraproject.github.io/swagger-ui/
   - type: Documentation
     url: https://www.gsma.com/solutions-and-impact/gsma-open-gateway/gsma-open-gateway-api-descriptions/
+  - type: Overlay
+    url: overlays/open-gateway-camara-qos-profiles-overlay.yaml
 - aid: open-gateway:camara-device-reachability-status
   name: CAMARA Device Reachability Status API
   description: CAMARA Device Reachability Status 1.1.0 as certified under GSMA Open Gateway. Returns whether
@@ -257,6 +277,8 @@ apis:
     url: https://camaraproject.github.io/swagger-ui/
   - type: Documentation
     url: https://www.gsma.com/solutions-and-impact/gsma-open-gateway/gsma-open-gateway-api-descriptions/
+  - type: Overlay
+    url: overlays/open-gateway-camara-device-reachability-status-overlay.yaml
 - aid: open-gateway:camara-device-reachability-status-subscriptions
   name: CAMARA Device Reachability Status Subscriptions API
   description: CAMARA Device Reachability Status Subscriptions 0.8.0 as certified under GSMA Open Gateway.
@@ -279,6 +301,8 @@ apis:
     url: https://camaraproject.github.io/swagger-ui/
   - type: Documentation
     url: https://www.gsma.com/solutions-and-impact/gsma-open-gateway/gsma-open-gateway-api-descriptions/
+  - type: Overlay
+    url: overlays/open-gateway-camara-device-reachability-status-subscriptions-overlay.yaml
 - aid: open-gateway:camara-device-identifier
   name: CAMARA Device Identifier API
   description: CAMARA Device Identifier 0.3.0 as certified under GSMA Open Gateway. Retrieves the identifier,
@@ -299,6 +323,8 @@ apis:
     url: https://camaraproject.github.io/swagger-ui/
   - type: Documentation
     url: https://www.gsma.com/solutions-and-impact/gsma-open-gateway/gsma-open-gateway-api-descriptions/
+  - type: Overlay
+    url: overlays/open-gateway-camara-device-identifier-overlay.yaml
 - aid: open-gateway:camara-device-roaming-status
   name: CAMARA Device Roaming Status API
   description: CAMARA Device Roaming Status 1.0.0 as certified under GSMA Open Gateway. Reports whether
@@ -318,6 +344,8 @@ apis:
     url: https://camaraproject.github.io/swagger-ui/
   - type: Documentation
     url: https://www.gsma.com/solutions-and-impact/gsma-open-gateway/gsma-open-gateway-api-descriptions/
+  - type: Overlay
+    url: overlays/open-gateway-camara-device-roaming-status-overlay.yaml
 - aid: open-gateway:camara-connected-network-type
   name: CAMARA Connected Network Type API
   description: CAMARA Connected Network Type 0.1.0 as certified under GSMA Open Gateway. Returns the access
@@ -337,6 +365,8 @@ apis:
     url: https://camaraproject.github.io/swagger-ui/
   - type: Documentation
     url: https://www.gsma.com/solutions-and-impact/gsma-open-gateway/gsma-open-gateway-api-descriptions/
+  - type: Overlay
+    url: overlays/open-gateway-camara-connected-network-type-overlay.yaml
 - aid: open-gateway:camara-population-density-data
   name: CAMARA Population Density Data API
   description: CAMARA Population Density Data 0.3.0 as certified under GSMA Open Gateway. Returns aggregated,
@@ -357,6 +387,8 @@ apis:
     url: https://camaraproject.github.io/swagger-ui/
   - type: Documentation
     url: https://www.gsma.com/solutions-and-impact/gsma-open-gateway/gsma-open-gateway-api-descriptions/
+  - type: Overlay
+    url: overlays/open-gateway-camara-population-density-data-overlay.yaml
 - aid: open-gateway:camara-location-retrieval
   name: CAMARA Device Location Retrieval API
   description: CAMARA Device Location Retrieval 0.5.0 as certified under GSMA Open Gateway. Returns the
@@ -375,6 +407,8 @@ apis:
     url: https://camaraproject.github.io/swagger-ui/
   - type: Documentation
     url: https://www.gsma.com/solutions-and-impact/gsma-open-gateway/gsma-open-gateway-api-descriptions/
+  - type: Overlay
+    url: overlays/open-gateway-camara-location-retrieval-overlay.yaml
 - aid: open-gateway:camara-location-verification
   name: CAMARA Device Location Verification API
   description: CAMARA Device Location Verification 3.0.0 as certified under GSMA Open Gateway. Verifies
@@ -394,6 +428,8 @@ apis:
     url: https://camaraproject.github.io/swagger-ui/
   - type: Documentation
     url: https://www.gsma.com/solutions-and-impact/gsma-open-gateway/gsma-open-gateway-api-descriptions/
+  - type: Overlay
+    url: overlays/open-gateway-camara-location-verification-overlay.yaml
 - aid: open-gateway:camara-simple-edge-discovery
   name: CAMARA Simple Edge Discovery API
   description: CAMARA Simple Edge Discovery 2.0.1 as certified under GSMA Open Gateway. Returns the closest
@@ -414,6 +450,8 @@ apis:
     url: https://camaraproject.github.io/swagger-ui/
   - type: Documentation
     url: https://www.gsma.com/solutions-and-impact/gsma-open-gateway/gsma-open-gateway-api-descriptions/
+  - type: Overlay
+    url: overlays/open-gateway-camara-simple-edge-discovery-overlay.yaml
 - aid: open-gateway:camara-carrier-billing
   name: CAMARA Carrier Billing API
   description: CAMARA Carrier Billing 0.5.0 as certified under GSMA Open Gateway. Creates and manages
@@ -433,6 +471,8 @@ apis:
     url: https://camaraproject.github.io/swagger-ui/
   - type: Documentation
     url: https://www.gsma.com/solutions-and-impact/gsma-open-gateway/gsma-open-gateway-api-descriptions/
+  - type: Overlay
+    url: overlays/open-gateway-camara-carrier-billing-overlay.yaml
 - aid: open-gateway:camara-home-devices-qod
   name: CAMARA Home Devices QoD API
   description: CAMARA Home Devices QoD 0.4.0 as certified under GSMA Open Gateway. Requests prioritised
@@ -454,6 +494,8 @@ apis:
     url: https://camaraproject.github.io/swagger-ui/
   - type: Documentation
     url: https://www.gsma.com/solutions-and-impact/gsma-open-gateway/gsma-open-gateway-api-descriptions/
+  - type: Overlay
+    url: overlays/open-gateway-camara-home-devices-qod-overlay.yaml
 - aid: open-gateway:tmf931-onboarding-ordering
   name: TM Forum TMF931 Open Gateway Onboarding and Ordering API
   description: 'TM Forum TMF931 Open Gateway Operate API - Onboarding and Ordering 5.2.1, the GSMA-defined
@@ -478,7 +520,17 @@ apis:
     url: https://github.com/tmforum-apis/TMF931_OpenGatewayOnboardingAndOrderingComponentSuite
   - type: Documentation
     url: https://www.gsma.com/solutions-and-impact/gsma-open-gateway/gsma-open-gateway-api-descriptions/
+  - type: Overlay
+    url: overlays/open-gateway-tmforum-tmf931-open-gateway-onboarding-ordering-overlay.yaml
 common:
+- type: AgenticAccess
+  url: agentic-access/open-gateway-agentic-access.yml
+- type: VulnerabilityDisclosure
+  url: security/open-gateway-vulnerability-disclosure.yml
+- type: DomainSecurity
+  url: security/open-gateway-domain-security.yml
+- type: Authentication
+  url: authentication/open-gateway-authentication.yml
 - type: Website
   url: https://www.gsma.com/
 - type: Documentation
@@ -505,6 +557,61 @@ common:
   url: https://www.gsma.com/security/cvd-submit-a-vulnerability/
 - type: Privacy
   url: https://www.gsma.com/aboutus/legal/privacy
+- type: Packages
+  url: packages/open-gateway-packages.yml
+- type: WellKnown
+  url: well-known/open-gateway-well-known.yml
+- type: SecurityTxt
+  url: well-known/open-gateway-security.txt
+- type: MCPServer
+  url: mcp/open-gateway-mcp.yml
+- type: ToolCrosswalk
+  url: mcp/open-gateway-tool-crosswalk.yml
+- type: LLMsTxt
+  url: llms/open-gateway-llms.txt
+- type: Conformance
+  url: conformance/open-gateway-conformance.yml
+- type: ErrorCatalog
+  url: errors/open-gateway-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/open-gateway-lifecycle.yml
+- type: Deprecation
+  url: https://github.com/camaraproject/ReleaseManagement/blob/main/documentation/API_Release_Guidelines.md
+- type: OAuthScopes
+  url: scopes/open-gateway-scopes.yml
+- type: Conventions
+  url: conventions/open-gateway-conventions.yml
+- type: Sandbox
+  url: sandbox/open-gateway-sandbox.yml
+- type: Sandbox
+  url: https://open-gateway.gsma.com/sandbox
+- type: ChangeLog
+  url: changelog/open-gateway-changelog.yml
+- type: ChangeLog
+  url: https://github.com/camaraproject/ReleaseManagement/releases
+- type: DataModel
+  url: data-model/open-gateway-data-model.yml
+- type: Webhooks
+  url: asyncapi/open-gateway-webhooks.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Security
+  url: https://www.gsma.com/security/
+- type: APIReference
+  url: https://camaraproject.github.io/swagger-ui/
+- type: GettingStarted
+  url: https://www.gsma.com/solutions-and-impact/gsma-open-gateway/wp-content/uploads/2024/02/Channel-Partner-Onboarding-Guide-WA.101-v1.0.pdf
+  name: Open Gateway Channel Partner Onboarding Guide WA.101
+- type: Blog
+  url: https://www.gsma.com/solutions-and-impact/gsma-open-gateway/resources/
+  name: GSMA Open Gateway News and Resources
+- type: TermsOfService
+  url: https://www.gsma.com/about-us/legal/
+- type: PrivacyPolicy
+  url: https://www.gsma.com/aboutus/legal/privacy
+- type: GitHubOrganization
+  url: https://github.com/camaraproject
+  name: CAMARA Project (specification authority)
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com

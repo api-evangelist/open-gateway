@@ -1,0 +1,81 @@
+generated: '2026-07-25'
+method: searched
+source: https://open-gateway.gsma.com/sandbox
+note: >-
+  GSMA operates a first-party API Sandbox at open-gateway.gsma.com/sandbox — a developer playground
+  for testing and prototyping against fully CAMARA-compliant network APIs before integrating with a
+  production operator. This is the one place GSMA puts a callable surface in front of developers. The
+  host sits behind a Cloudflare bot challenge that returns 403 to every automated client, so the
+  sandbox's own credential mechanics, quotas and any published test identifiers could not be read
+  programmatically and are recorded as unverified rather than guessed. No test values are invented
+  here.
+sandboxes:
+- name: GSMA Open Gateway API Sandbox
+  first_party: true
+  url: https://open-gateway.gsma.com/sandbox
+  probe_status: 403 (Cloudflare bot challenge)
+  description: >-
+    Developer playground for testing and prototyping with fully CAMARA-compliant network APIs before
+    integrating them into production environments. Each API is built to CAMARA standards, so code
+    written against the sandbox is portable to any certified operator network.
+  apis_advertised:
+  - SIM Swap
+  - Number Verification
+  - Quality on Demand
+  - Device Location Retrieval
+  - Geofencing (Device Location Verification)
+  - Population Density Data
+  api_count_advertised: '10+'
+  use_cases_advertised:
+  - fraud prevention
+  - user authentication
+  - network performance optimisation
+  test_values_published: unverified
+  test_values_note: >-
+    Whether the sandbox publishes fixed magic phone numbers or test identities could not be confirmed
+    because the page is bot-challenged. Nothing is recorded as a test value without seeing it.
+  credentials: unverified
+- name: Orange CAMARA Playground
+  first_party: false
+  url: https://developer.orange.com/apis/camara-playground
+  description: >-
+    Operator-run CAMARA playground. This is the sandbox the CAMARA MCP Enablement provider
+    implementation targets. Developers create an account, subscribe to the CAMARA Playground API and
+    receive a CLIENT_ID and CLIENT_SECRET.
+  credentials:
+    type: oauth2 client credentials
+    fields: [CLIENT_ID, CLIENT_SECRET]
+    provisioning: subscribe to the CAMARA Playground API on the Orange Developer portal
+  fixtures:
+    mechanism: playground phone numbers created and mutated by the developer
+    tooling: mcp/open-gateway-mcp.yml playground-admin tools
+    description: >-
+      Test subjects are provisioned rather than published. The developer creates a playground phone
+      number, then sets its location, KYC attributes, reachability, roaming state and SIM-swap
+      timestamp; subsequent CAMARA reads return whatever was set. Nine playground-admin MCP tools
+      exist purely to drive these fixtures.
+    admin_operations:
+    - create-playground-phone-number
+    - list-playground-phone-numbers
+    - read-playground-phone-number
+    - update-playground-phone-location
+    - update-playground-phone-kyc
+    - update-playground-phone-reachability
+    - update-playground-phone-roaming
+    - update-playground-phone-sim-swap
+    - delete-playground-phone-number
+  test_values_published: false
+  test_values_note: >-
+    The repository's example E.164 number +33699901032 appears only as a format illustration in a zod
+    describe() string. It is not published as a working test subject and is not recorded as one.
+test_vs_live:
+  separation: environment, not key prefix
+  note: >-
+    CAMARA defines no test/live key prefix convention. Separation is by apiRoot — a sandbox apiRoot
+    versus a production operator apiRoot — with different OIDC credentials per environment. Client
+    code differs only in the apiRoot server variable and the credentials.
+release_process:
+  note: >-
+    Sandbox availability became part of CAMARA release readiness in the r3.1 (Fall25) release
+    guidelines, which added sandbox-related information to the API Release Guidelines.
+  source: https://github.com/camaraproject/ReleaseManagement/releases/tag/r3.1

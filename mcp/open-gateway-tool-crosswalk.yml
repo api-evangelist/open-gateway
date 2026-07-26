@@ -1,0 +1,214 @@
+generated: '2026-07-25'
+method: derived
+source: mcp/open-gateway-mcp.yml + openapi/*.yml operationIds
+note: >-
+  Binds every tool in the CAMARA MCP Enablement provider implementation (Orange contribution) to the
+  CAMARA OpenAPI operation that backs it. Each bound tool inherits its real input contract from that
+  operation's requestBody/parameters in the referenced spec. Mappings were made by reading the tool's
+  registerTool() source and the api/*.ts client it calls, then matching to the operationId in the
+  CAMARA specification; confidence is recorded honestly where the implementation targets an operator
+  playground rather than the certified CAMARA endpoint.
+surfaces:
+  openapi:
+    location: openapi/
+    specs: 22
+    operations: 70
+    gated: false
+    note: >-
+      Specs are public on GitHub under camaraproject and tmforum-apis. The endpoints they describe are
+      operator-hosted; apiRoot is a server variable with a placeholder default.
+  graphql:
+    endpoint: null
+    note: No GraphQL surface exists anywhere in CAMARA, TM Forum TMF931 or GSMA Open Gateway.
+  mcp:
+    server: orange-network-api
+    transport: stdio
+    url: null
+    gated: true
+    gating: >-
+      No remote endpoint to introspect. Running the server requires Orange CAMARA Playground
+      CLIENT_ID/CLIENT_SECRET, so live tools/list output is credential-gated. Tool names and input
+      parameter names below were read verbatim from source.
+crosswalk:
+- tool: get-device-location
+  category: location
+  rest: [retrieveLocation]
+  spec: openapi/camara-location-retrieval-openapi.yml
+  binding: rest
+  confidence: high
+  note: phoneNumber maps to device.phoneNumber; maxAge maps to the maxAge request body field.
+- tool: verify-device-location
+  category: location
+  rest: [verifyLocation]
+  spec: openapi/camara-location-verification-openapi.yml
+  binding: rest
+  confidence: high
+  note: latitude/longitude/radius map to the CIRCLE area object; maxAge maps to maxAge.
+- tool: get-device-reachability-status
+  category: device-status
+  rest: [getReachabilityStatus]
+  spec: openapi/camara-device-reachability-status-openapi.yml
+  binding: rest
+  confidence: high
+- tool: get-device-roaming-status
+  category: device-status
+  rest: [getRoamingStatus]
+  spec: openapi/camara-device-roaming-status-openapi.yml
+  binding: rest
+  confidence: high
+- tool: kyc-match
+  category: identity
+  rest: [KYC_Match]
+  spec: openapi/camara-kyc-match-openapi.yml
+  binding: rest
+  confidence: medium
+  note: >-
+    The tool exposes only phoneNumber in its declared inputSchema, while KYC_Match accepts the full
+    attribute set (name, givenName, familyName, address, birthdate, email, idDocument). The tool is a
+    narrowed projection of the operation.
+- tool: get-population-density-data
+  category: analytics
+  rest: [retrievePopulationDensity]
+  spec: openapi/camara-population-density-data-openapi.yml
+  binding: rest
+  confidence: medium
+  note: >-
+    The tool takes a single latitude/longitude pair plus a time window; the CAMARA operation takes a
+    POLYGON area. The implementation constructs the polygon server-side.
+- tool: get-sim-swap-date
+  category: anti-fraud
+  rest: [retrieveSimSwapDate]
+  spec: openapi/camara-sim-swap-openapi.yml
+  binding: rest
+  confidence: high
+- tool: check-sim-swap
+  category: anti-fraud
+  rest: [checkSimSwap]
+  spec: openapi/camara-sim-swap-openapi.yml
+  binding: rest
+  confidence: high
+  note: hours maps to the maxAge request body field (hours).
+- tool: retrieve-qos-profiles
+  category: quality-on-demand
+  rest: [retrieveQoSProfiles]
+  spec: openapi/camara-qos-profiles-openapi.yml
+  binding: rest
+  confidence: high
+- tool: get-qos-profile
+  category: quality-on-demand
+  rest: [getQosProfile]
+  spec: openapi/camara-qos-profiles-openapi.yml
+  binding: rest
+  confidence: high
+  note: profileName maps to the {name} path parameter.
+- tool: create-qos-session
+  category: quality-on-demand
+  rest: [createSession]
+  spec: openapi/camara-quality-on-demand-openapi.yml
+  binding: rest
+  confidence: high
+  note: >-
+    The tool flattens the CreateSession body — device identifiers, applicationServer, qosProfile,
+    duration, devicePorts and the sink/sinkCredential pair (notificationUrl/notificationToken) become
+    scalar tool inputs.
+- tool: get-qos-session
+  category: quality-on-demand
+  rest: [getSession]
+  spec: openapi/camara-quality-on-demand-openapi.yml
+  binding: rest
+  confidence: high
+- tool: delete-qos-session
+  category: quality-on-demand
+  rest: [deleteSession]
+  spec: openapi/camara-quality-on-demand-openapi.yml
+  binding: rest
+  confidence: high
+- tool: extend-qos-session
+  category: quality-on-demand
+  rest: [extendQosSessionDuration]
+  spec: openapi/camara-quality-on-demand-openapi.yml
+  binding: rest
+  confidence: high
+- tool: retrieve-qos-sessions
+  category: quality-on-demand
+  rest: [retrieveSessionsByDevice]
+  spec: openapi/camara-quality-on-demand-openapi.yml
+  binding: rest
+  confidence: high
+mcp_only:
+- tool: list-playground-phone-numbers
+  reason: Orange CAMARA Playground administration; no CAMARA or TM Forum operation exists for it.
+- tool: create-playground-phone-number
+  reason: Playground fixture creation. CAMARA has no test-subject provisioning API.
+- tool: read-playground-phone-number
+  reason: Playground fixture read.
+- tool: update-playground-phone-location
+  reason: Playground fixture mutation — sets the location a CAMARA read will later return.
+- tool: update-playground-phone-kyc
+  reason: Playground fixture mutation — sets the operator-held KYC attributes.
+- tool: update-playground-phone-reachability
+  reason: Playground fixture mutation — sets reachability state.
+- tool: update-playground-phone-roaming
+  reason: Playground fixture mutation — sets roaming state and country.
+- tool: update-playground-phone-sim-swap
+  reason: Playground fixture mutation — sets the latest SIM change timestamp.
+- tool: delete-playground-phone-number
+  reason: Playground fixture teardown; irreversible, gated behind a confirm input.
+rest_only:
+- capability: Number Verification
+  spec: openapi/camara-number-verification-openapi.yml
+  operations: [phoneNumberVerify, phoneNumberShare]
+  note: Requires an OIDC flow over the mobile data connection, which a stdio MCP server cannot drive.
+- capability: Device Swap
+  spec: openapi/camara-device-swap-openapi.yml
+  operations: [retrieveDeviceSwapDate, checkDeviceSwap]
+- capability: Call Forwarding Signal
+  spec: openapi/camara-call-forwarding-signal-openapi.yml
+  operations: [retrieveUnconditionalCallForwarding, retrieveCallForwarding]
+- capability: KYC Age Verification
+  spec: openapi/camara-kyc-age-verification-openapi.yml
+  operations: [verifyAge]
+- capability: KYC Tenure
+  spec: openapi/camara-kyc-tenure-openapi.yml
+  operations: [checkTenure]
+- capability: One Time Password SMS
+  spec: openapi/camara-one-time-password-sms-openapi.yml
+  operations: [sendCode, validateCode]
+- capability: Device Identifier
+  spec: openapi/camara-device-identifier-openapi.yml
+  operations: [retrieveIdentifier, retrieveType, retrievePPID]
+- capability: Connected Network Type
+  spec: openapi/camara-connected-network-type-openapi.yml
+  operations: [getConnectedNetworkType]
+- capability: Simple Edge Discovery
+  spec: openapi/camara-simple-edge-discovery-openapi.yml
+  operations: [readClosestEdgeCloudZone]
+- capability: Carrier Billing
+  spec: openapi/camara-carrier-billing-openapi.yml
+  operations: [createPayment, retrievePayments, retrievePayment, preparePayment, validatePayment,
+    confirmPayment, cancelPayment]
+  note: Money movement. Deliberately absent from the MCP tool set.
+- capability: Home Devices QoD
+  spec: openapi/camara-home-devices-qod-openapi.yml
+  operations: [setQos]
+- capability: Device Reachability Status Subscriptions
+  spec: openapi/camara-device-reachability-status-subscriptions-openapi.yml
+  operations: [createDeviceReachabilityStatusSubscription, retrieveDeviceReachabilityStatusSubscriptionList,
+    retrieveDeviceReachabilityStatusSubscription, deleteDeviceReachabilityStatusSubscription]
+  note: Event subscriptions need a reachable sink; not modellable as a stdio tool.
+- capability: TMF931 Onboarding and Ordering
+  spec: openapi/tmforum-tmf931-open-gateway-onboarding-ordering-openapi.yml
+  operations: [listApiProduct, retrieveApiProduct, listApiProductOrder, createApiProductOrder,
+    retrieveApiProductOrder, createApplication, listApplication, retrieveApplication, patchApplication,
+    createApplicationOwner, listApplicationOwner, retrieveApplicationOwner, patchApplicationOwner,
+    createHub, hubGet, hubDelete, listMonitor, retrieveMonitor]
+  note: Channel-partner onboarding and ordering; no MCP tooling exists for it yet.
+coverage:
+  tools_named: 24
+  tools_bound_to_rest: 15
+  mcp_only: 9
+  rest_operations_total: 70
+  rest_operations_with_a_tool: 15
+  rest_operations_without_a_tool: 55
+  camara_apis_with_mcp_coverage: 8
+  camara_apis_without_mcp_coverage: 13

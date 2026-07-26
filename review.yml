@@ -1,0 +1,431 @@
+aid: open-gateway
+name: GSMA Open Gateway
+review:
+  question: Does GSMA Open Gateway operate a real, self-serve public developer portal and publish
+    its own downloadable OpenAPI definitions?
+  answer: false
+  date: '2026-07-25'
+  reviewer: API Evangelist
+  homeMarket: United Kingdom
+  tier: network-api-exposure
+  gated: true
+findings:
+  summary: |
+    GSMA Open Gateway is a commitment and certification layer, not an API provider. The GSM
+    Association — a London-headquartered trade body — signs mobile operators and channel partners
+    to a memorandum of understanding, certifies their implementations, and publishes a directory of
+    which certified APIs are live in which markets. It exposes no callable API of its own, publishes
+    no OpenAPI under its own name, and offers no self-serve signup, no API keys and no sandbox.
+
+    Every automated probe of gsma.com and open-gateway.gsma.com returned HTTP 403 behind a
+    Cloudflare "Just a moment..." managed challenge, so the portal could not be confirmed live by
+    machine at all. That is itself the finding: the organisation that tells the world telecom is
+    opening up serves a bot challenge to anyone trying to read it programmatically.
+
+    The specifications the initiative depends on are genuinely open, but they are published by other
+    organisations. The service APIs live in the Linux Foundation-hosted CAMARA project on GitHub
+    (github.com/camaraproject, 93 public repositories, all returning HTTP 200). The onboarding and
+    ordering "Operate API" lives with TM Forum as TMF931, Apache-2.0 licensed on GitHub. Twenty-two
+    real OpenAPI documents were harvested verbatim from those two sources — 21 CAMARA service APIs
+    at their latest stable release tags and one TMF931 component suite. None of them came from a
+    GSMA host.
+  developerPortal:
+    url: https://open-gateway.gsma.com/
+    httpStatus: 403
+    statusNote: Cloudflare managed bot challenge ("Just a moment...") on every automated request,
+      including through a text-extraction proxy. Not confirmable by machine.
+    realSelfServePortal: false
+    verdict: |
+      A GSMA-branded certified-API directory, not a developer portal. Public materials and the
+      GSMA's own Q1 2026 Open Gateway deck show a filterable catalogue (filters for APIs, Certified,
+      Regions, Markets, Providers, Channel Partners) listing which operators have launched which
+      CAMARA APIs. There is no key issuance, no sandbox, no console. Onboarding is a commercial
+      conversation with an operator or a channel partner.
+  probes:
+    - url: https://www.gsma.com/solutions-and-impact/gsma-open-gateway/
+      status: 403
+      note: Cloudflare challenge.
+    - url: https://open-gateway.gsma.com/
+      status: 403
+      note: Cloudflare challenge. DNS resolves (104.18.17.144, 104.18.16.144) so the host is real.
+    - url: https://open-gateway.gsma.com/openapi.json
+      status: 403
+    - url: https://open-gateway.gsma.com/api-docs
+      status: 403
+    - url: https://open-gateway.gsma.com/wp-json/
+      status: 403
+    - url: https://www.gsma.com/developer
+      status: 403
+    - url: https://www.gsma.com/developers
+      status: 403
+    - url: https://www.gsma.com/api
+      status: 403
+    - url: https://docs.gsma.com/
+      status: 401
+      note: Authentication wall — GSMA member documentation, not public.
+    - url: https://developer.gsma.com/
+      status: 000
+      note: DNS resolves to 54.194.152.41 but the connection times out. No listener. Not a real host.
+    - url: https://developers.gsma.com/
+      status: 000
+      note: Same wildcard address, connection times out. Not a real host.
+    - url: https://api.gsma.com/
+      status: 000
+      note: Same wildcard address, connection times out. Not a real host.
+    - url: https://opengateway.gsma.com/
+      status: 000
+      note: Same wildcard address, connection times out. The live host is open-gateway.gsma.com.
+    - url: https://developers.opengateway.gsma.com/
+      status: 000
+      note: Does not resolve. (The Telefonica-pattern subdomain exists for Telefonica, not GSMA.)
+    - url: https://developer.mobileconnect.io/
+      status: 403
+      note: Redirects to gsma.com — the old Mobile Connect developer site has been folded into Open
+        Gateway and no longer exists as a portal.
+    - url: https://www.gsma.com/.well-known/security.txt
+      status: 200
+      note: Real and served. Contact security@gsma.com, CVD programme, acknowledgements page.
+    - url: https://github.com/camaraproject
+      status: 200
+      note: 93 public repositories. Where the Open Gateway service API specifications actually live.
+    - url: https://api.github.com/orgs/GSMA
+      status: 200
+      note: GSMA's own GitHub organisation holds two public repositories — selectnav.js (2013) and
+        a Craft CMS plugin. Zero API specifications.
+    - url: https://camaraproject.github.io/swagger-ui/
+      status: 200
+      note: CAMARA-hosted Swagger UI for reading the definitions in human-readable form.
+    - url: https://github.com/tmforum-apis/TMF931_OpenGatewayOnboardingAndOrderingComponentSuite
+      status: 200
+      note: Apache-2.0. Holds TMF931 v5.0.0, v5.1.2 and v5.2.1 OpenAPI documents.
+    - url: https://www.tmforum.org/oda/open-apis/directory/open-gateway-onboarding-and-ordering-component-suite-TMF931/v5.2
+      status: 403
+      note: TM Forum site also blocks automated requests.
+  camara:
+    posture: >-
+      Open Gateway IS the CAMARA commitment layer — GSMA does not implement CAMARA, it certifies
+      operators against it and publishes the directory of who has launched what.
+    exposesCamaraDirectly: false
+    channel: >-
+      Operators expose; channel partners resell. GSMA's own Q1 2026 deck names Aduna (the
+      Ericsson/carrier joint venture) and Bridge Alliance as the headline aggregation channels,
+      alongside 61 channel partners including AWS, Google Cloud, Microsoft Azure, Nokia, Ericsson,
+      Vonage, Twilio, Infobip, Sinch, Cisco, Oracle, IBM, Salesforce, Red Hat, Meta, XConnect,
+      Syniverse, iconectiv, NetNumber, Prove, IPification, Callsign and HCLTech. A developer never
+      integrates with GSMA.
+    pressReleaseOnly: false
+    pressReleaseNote: >-
+      This is emphatically not a press-release-only CAMARA claim. The specifications are open, the
+      certification programme is real and joint with TM Forum, and the GSMA publishes launch counts
+      by market. What is absent is a first-party callable surface, not evidence of implementation.
+    openGatewayMember: true
+    openGatewayRole: Convener, MoU signatory administrator, and certification authority. GSMA runs
+      the initiative rather than participating in it.
+    launch:
+      date: '2023-02-27'
+      event: MWC Barcelona 2023
+      foundingOperatorGroups: 21
+      foundingApis: 8
+    scaleQ1_2026:
+      source: https://camaraproject.org/wp-content/uploads/sites/12/2026/02/Open-Gateway-1Q26-Update.pdf
+      sourceNote: GSMA "Open Gateway — Global simplification of network exposure" Q1 2026 update
+        deck, hosted on camaraproject.org. Fetched 2026-07-25, HTTP 200.
+      signatories: 140
+      operatorGroups: 81
+      channelPartners: 61
+      networks: 292
+      shareOfGlobalMobileConnections: 80%
+      certifiedApiAssets: 237
+      camaraTaggedReleasedApis: 33
+      apisInDevelopment: 40
+      apiInstancesCommerciallyLaunched: 280
+      networksWithLaunches: 85
+      markets: 50
+      marketsAt100PercentApiAlignment: 27
+    apisWithRealEvidence:
+      - name: Number Verification
+        evidence: GSMA Q1 2026 commercial heatmap (64 instances) + CAMARA r3.2 OpenAPI harvested.
+      - name: SIM Swap
+        evidence: GSMA Q1 2026 commercial heatmap (75 instances, the most launched) + CAMARA r3.3
+          OpenAPI harvested.
+      - name: Device Swap
+        evidence: GSMA Q1 2026 commercial heatmap (6 instances) + CAMARA r3.2 OpenAPI harvested.
+      - name: Call Forwarding Signal
+        evidence: GSMA Q1 2026 commercial heatmap (8 instances) + CAMARA r3.3 OpenAPI harvested.
+      - name: Know Your Customer Match
+        evidence: GSMA Q1 2026 commercial heatmap (13 instances) + CAMARA r1.2 OpenAPI harvested.
+      - name: Know Your Customer Age Verification
+        evidence: GSMA Q1 2026 commercial heatmap (6 instances) + CAMARA r1.3 OpenAPI harvested.
+      - name: Know Your Customer Tenure
+        evidence: GSMA Q1 2026 commercial heatmap (2 instances) + CAMARA r2.2 OpenAPI harvested.
+      - name: One Time Password SMS
+        evidence: GSMA Q1 2026 commercial heatmap (26 instances) + CAMARA r3.2 OpenAPI harvested.
+      - name: Quality on Demand
+        evidence: GSMA Q1 2026 commercial heatmap (6 instances) + CAMARA r3.2 OpenAPI harvested.
+      - name: QoS Profiles
+        evidence: CAMARA QualityOnDemand r3.2 OpenAPI harvested; companion to Quality on Demand.
+      - name: Home Devices QoD
+        evidence: GSMA Q1 2026 commercial heatmap (2 instances) + CAMARA r1.2 OpenAPI harvested.
+          Upstream CAMARA sandbox repository is archived.
+      - name: Device Reachability Status
+        evidence: GSMA Q1 2026 commercial heatmap, Device Reachability Status Subscriptions (6
+          instances) + CAMARA r1.2 OpenAPIs harvested (sync + subscriptions).
+      - name: Device Status
+        evidence: GSMA Q1 2026 commercial heatmap (24 instances) + CAMARA DeviceStatus r2.2
+          OpenAPIs harvested (Device Roaming Status, Connected Network Type).
+      - name: Mobile Device Identifier
+        evidence: GSMA Q1 2026 commercial heatmap (4 instances) + CAMARA DeviceIdentifier r2.2
+          OpenAPI harvested.
+      - name: Device Location Retrieval
+        evidence: GSMA Q1 2026 commercial heatmap (7 instances) + CAMARA r3.2 OpenAPI harvested.
+      - name: Device Location Verification
+        evidence: GSMA Q1 2026 commercial heatmap (27 instances) + CAMARA r3.2 OpenAPI harvested.
+      - name: Population Density Data
+        evidence: GSMA Q1 2026 commercial heatmap (1 instance) + CAMARA r3.2 OpenAPI harvested.
+      - name: Simple Edge Discovery
+        evidence: GSMA Q1 2026 commercial heatmap (3 instances) + CAMARA r2.3 OpenAPI harvested.
+      - name: Carrier Billing
+        evidence: GSMA Q1 2026 commercial heatmap (4 instances) + CAMARA CarrierBillingCheckOut
+          r3.2 OpenAPI harvested.
+  tmForum:
+    conformanceCertification: true
+    note: >-
+      GSMA and TM Forum run a unified conformance certification programme for Open Gateway. CAMARA
+      Service APIs (what developers call) are certified alongside TM Forum Operate APIs (how a
+      channel partner onboards). TMF931 "Open Gateway Onboarding and Ordering Component Suite" is
+      the GSMA-defined Operate API and is published as a public Apache-2.0 OpenAPI document.
+    specsHarvested:
+      - TMF931 Open Gateway Operate API - Onboarding and Ordering v5.2.1 (22 operations)
+    relatedFrameworks:
+      - TM Forum ODA (Open Digital Architecture) — named in the GSMA Q1 2026 deck as one of the
+        three alignment pillars alongside CAMARA and MEF LSO.
+      - MEF LSO — named in the same deck for east-west federation.
+  threeGpp:
+    nefOrScefSurface: false
+    note: >-
+      GSMA publishes no NEF or SCEF interface itself. CAMARA service APIs are the northbound
+      abstraction that operators map onto their own 3GPP NEF/SCEF exposure. Network slicing and edge
+      reach the developer as Quality on Demand, QoS Profiles and Simple Edge Discovery rather than
+      as raw 3GPP interfaces. GSMA's own federation layer in this stack is the Operator Platform
+      Group work and "Telco Finder", both member-facing documents rather than callable APIs.
+  auth:
+    scheme: OpenID Connect (openId security scheme in every harvested CAMARA spec, with
+      per-operation OAuth scopes)
+    ciba: true
+    cibaEvidence: >-
+      CIBA (Client-Initiated Backchannel Authentication) is explicitly the CAMARA network-based
+      authorization pattern. github.com/camaraproject/IdentityAndConsentManagement
+      documentation/CAMARA-API-access-and-user-consent.md (HTTP 200, fetched 2026-07-25) names CIBA
+      21 times and spells out "Client-Initiated Backchannel Authentication" 5 times, alongside the
+      Authorization Code Flow and client credentials. The harvested Number Verification spec itself
+      references sending "a CIBA Authentication Request ... with a parameter
+      login_hint=operatortoken:<temporary token>" for TS.43 SIM-based authentication.
+    threeLeggedVsTwoLegged: >-
+      Three-legged (CIBA or auth-code) where an end user's consent is required — location, KYC,
+      number verification. Two-legged client credentials for APIs with no identifiable subscriber,
+      such as Population Density Data.
+    wellKnown:
+      - url: https://open-gateway.gsma.com/.well-known/openid-configuration
+        status: 403
+        note: Not testable — Cloudflare challenge. GSMA runs no authorization server anyway; the
+          OIDC issuer is per-operator and resolved at onboarding.
+    baseURLs: >-
+      No absolute base URL exists anywhere in this stack. Every harvested CAMARA and TMF931 spec
+      uses a templated server of the form {apiRoot}/<api-name>/v<major>. The apiRoot is supplied by
+      whichever operator or aggregator you contracted with. This is the single most important
+      practical fact about Open Gateway: the specification is global, the endpoint is not.
+  webhooks:
+    present: true
+    note: >-
+      Event delivery is CloudEvents-over-HTTP push to a consumer-supplied sink, defined inside the
+      CAMARA specs themselves rather than in a separate webhook catalogue. Harvested specs carrying
+      subscription/notification surfaces include Device Reachability Status Subscriptions, Quality
+      on Demand, Carrier Billing and Population Density Data, each with a notificationsBearerAuth
+      security scheme for the callback. TMF931 carries an events-subscription and
+      notification-listener surface for onboarding lifecycle events. No AsyncAPI document is
+      published by GSMA.
+  sdks:
+    firstParty: false
+    note: No GSMA-published SDK on npm, PyPI, Maven or NuGet was found. GSMA ships specifications and
+      certification, not client libraries. SDKs, where they exist, come from operators and channel
+      partners.
+  postman:
+    publicWorkspace: false
+    note: No public GSMA Postman workspace found.
+  graphql:
+    present: false
+  grpc:
+    present: false
+  transports:
+    - protocol: REST
+      scheme: https
+      baseURL: '{apiRoot}/<api-name>/v<major> — templated, operator-supplied'
+      documented: true
+      note: All 22 harvested specs are OpenAPI 3.0.x REST.
+    - protocol: Webhook
+      scheme: https
+      documented: true
+      note: CloudEvents push notifications to consumer-supplied sinks, defined in-spec.
+    - protocol: GraphQL
+      documented: false
+    - protocol: gRPC
+      documented: false
+    - protocol: WebSocket
+      documented: false
+specs:
+  harvested: 22
+  fetchDate: '2026-07-25'
+  sourceNote: >-
+    Not one of these specifications is served from a GSMA host. They are harvested verbatim from
+    the Linux Foundation-hosted CAMARA project and from TM Forum, both on GitHub, at their latest
+    stable release tags. GSMA Open Gateway certifies implementations of these documents; it does
+    not publish them.
+  files:
+    - file: openapi/camara-number-verification-openapi.yml
+      source: https://raw.githubusercontent.com/camaraproject/NumberVerification/r3.2/code/API_definitions/number-verification.yaml
+      status: 200
+      release: r3.2
+      specVersion: 2.1.0
+    - file: openapi/camara-sim-swap-openapi.yml
+      source: https://raw.githubusercontent.com/camaraproject/SimSwap/r3.3/code/API_definitions/sim-swap.yaml
+      status: 200
+      release: r3.3
+      specVersion: 2.1.0
+    - file: openapi/camara-device-swap-openapi.yml
+      source: https://raw.githubusercontent.com/camaraproject/DeviceSwap/r3.2/code/API_definitions/device-swap.yaml
+      status: 200
+      release: r3.2
+      specVersion: 1.0.0
+    - file: openapi/camara-call-forwarding-signal-openapi.yml
+      source: https://raw.githubusercontent.com/camaraproject/CallForwardingSignal/r3.3/code/API_definitions/call-forwarding-signal.yaml
+      status: 200
+      release: r3.3
+      specVersion: 0.4.0
+    - file: openapi/camara-kyc-match-openapi.yml
+      source: https://raw.githubusercontent.com/camaraproject/KnowYourCustomerMatch/r1.2/code/API_definitions/kyc-match.yaml
+      status: 200
+      release: r1.2
+      specVersion: 0.4.0
+    - file: openapi/camara-kyc-age-verification-openapi.yml
+      source: https://raw.githubusercontent.com/camaraproject/KnowYourCustomerAgeVerification/r1.3/code/API_definitions/kyc-age-verification.yaml
+      status: 200
+      release: r1.3
+      specVersion: 0.2.1
+    - file: openapi/camara-kyc-tenure-openapi.yml
+      source: https://raw.githubusercontent.com/camaraproject/Tenure/r2.2/code/API_definitions/kyc-tenure.yaml
+      status: 200
+      release: r2.2
+      specVersion: 0.2.0
+    - file: openapi/camara-one-time-password-sms-openapi.yml
+      source: https://raw.githubusercontent.com/camaraproject/OTPValidation/r3.2/code/API_definitions/one-time-password-sms.yaml
+      status: 200
+      release: r3.2
+      specVersion: 1.1.1
+    - file: openapi/camara-quality-on-demand-openapi.yml
+      source: https://raw.githubusercontent.com/camaraproject/QualityOnDemand/r3.2/code/API_definitions/quality-on-demand.yaml
+      status: 200
+      release: r3.2
+      specVersion: 1.1.0
+    - file: openapi/camara-qos-profiles-openapi.yml
+      source: https://raw.githubusercontent.com/camaraproject/QualityOnDemand/r3.2/code/API_definitions/qos-profiles.yaml
+      status: 200
+      release: r3.2
+      specVersion: 1.1.0
+    - file: openapi/camara-device-reachability-status-openapi.yml
+      source: https://raw.githubusercontent.com/camaraproject/DeviceReachabilityStatus/r1.2/code/API_definitions/device-reachability-status.yaml
+      status: 200
+      release: r1.2
+      specVersion: 1.1.0
+    - file: openapi/camara-device-reachability-status-subscriptions-openapi.yml
+      source: https://raw.githubusercontent.com/camaraproject/DeviceReachabilityStatus/r1.2/code/API_definitions/device-reachability-status-subscriptions.yaml
+      status: 200
+      release: r1.2
+      specVersion: 0.8.0
+    - file: openapi/camara-device-identifier-openapi.yml
+      source: https://raw.githubusercontent.com/camaraproject/DeviceIdentifier/r2.2/code/API_definitions/device-identifier.yaml
+      status: 200
+      release: r2.2
+      specVersion: 0.3.0
+    - file: openapi/camara-device-roaming-status-openapi.yml
+      source: https://raw.githubusercontent.com/camaraproject/DeviceStatus/r2.2/code/API_definitions/device-roaming-status.yaml
+      status: 200
+      release: r2.2
+      specVersion: 1.0.0
+    - file: openapi/camara-connected-network-type-openapi.yml
+      source: https://raw.githubusercontent.com/camaraproject/DeviceStatus/r2.2/code/API_definitions/connected-network-type.yaml
+      status: 200
+      release: r2.2
+      specVersion: 0.1.0
+    - file: openapi/camara-population-density-data-openapi.yml
+      source: https://raw.githubusercontent.com/camaraproject/PopulationDensityData/r3.2/code/API_definitions/population-density-data.yaml
+      status: 200
+      release: r3.2
+      specVersion: 0.3.0
+    - file: openapi/camara-location-retrieval-openapi.yml
+      source: https://raw.githubusercontent.com/camaraproject/DeviceLocation/r3.2/code/API_definitions/location-retrieval.yaml
+      status: 200
+      release: r3.2
+      specVersion: 0.5.0
+    - file: openapi/camara-location-verification-openapi.yml
+      source: https://raw.githubusercontent.com/camaraproject/DeviceLocation/r3.2/code/API_definitions/location-verification.yaml
+      status: 200
+      release: r3.2
+      specVersion: 3.0.0
+    - file: openapi/camara-simple-edge-discovery-openapi.yml
+      source: https://raw.githubusercontent.com/camaraproject/SimpleEdgeDiscovery/r2.3/code/API_definitions/simple-edge-discovery.yaml
+      status: 200
+      release: r2.3
+      specVersion: 2.0.1
+    - file: openapi/camara-carrier-billing-openapi.yml
+      source: https://raw.githubusercontent.com/camaraproject/CarrierBillingCheckOut/r3.2/code/API_definitions/carrier-billing.yaml
+      status: 200
+      release: r3.2
+      specVersion: 0.5.0
+    - file: openapi/camara-home-devices-qod-openapi.yml
+      source: https://raw.githubusercontent.com/camaraproject/HomeDevicesQoD/r1.2/code/API_definitions/home-devices-qod.yaml
+      status: 200
+      release: r1.2
+      specVersion: 0.4.0
+    - file: openapi/tmforum-tmf931-open-gateway-onboarding-ordering-openapi.yml
+      source: https://raw.githubusercontent.com/tmforum-apis/TMF931_OpenGatewayOnboardingAndOrderingComponentSuite/main/TMF931-Open_Gateway_Operate_API_Onboarding_and_Ordering-v5.2.1.oas.yaml
+      status: 200
+      release: v5.2.1
+      specVersion: 5.2.1
+      license: Apache-2.0
+sources:
+  - url: https://camaraproject.org/wp-content/uploads/sites/12/2026/02/Open-Gateway-1Q26-Update.pdf
+    type: PrimarySource
+    status: 200
+    note: GSMA Q1 2026 Open Gateway update deck. Source of every signatory, certification and
+      commercial-launch number in this review, including the per-API commercial heatmap.
+  - url: https://www.gsma.com/solutions-and-impact/gsma-open-gateway/
+    type: Documentation
+    status: 403
+    note: Cloudflare challenge on automated access.
+  - url: https://open-gateway.gsma.com/
+    type: Portal
+    status: 403
+  - url: https://github.com/camaraproject
+    type: Specification
+    status: 200
+  - url: https://github.com/camaraproject/IdentityAndConsentManagement
+    type: Authentication
+    status: 200
+    note: CAMARA API access and user consent profile. CIBA source of truth.
+  - url: https://github.com/tmforum-apis/TMF931_OpenGatewayOnboardingAndOrderingComponentSuite
+    type: Specification
+    status: 200
+  - url: https://camaraproject.github.io/swagger-ui/
+    type: APIReference
+    status: 200
+  - url: https://www.gsma.com/.well-known/security.txt
+    type: SecurityTxt
+    status: 200
+verdict:
+  status: built-stub
+  reason: >-
+    Identity plus a genuinely rich harvested specification set, but no first-party public API and no
+    self-serve portal. GSMA Open Gateway is the certification and commitment layer for network APIs,
+    not a provider of them. The 22 OpenAPI documents in openapi/ are the definitions GSMA certifies
+    against, harvested from CAMARA and TM Forum, and none of them can be called without an operator
+    or channel-partner contract that supplies the apiRoot and the OIDC issuer.

@@ -1,0 +1,510 @@
+aid: open-gateway
+url: https://raw.githubusercontent.com/api-evangelist/open-gateway/refs/heads/main/apis.yml
+name: GSMA Open Gateway
+kind: company
+description: 'GSMA Open Gateway is the mobile industry''s operator-commitment and certification layer
+  for network APIs, run by the GSM Association from its London headquarters in the United Kingdom. Launched
+  at MWC Barcelona on 27 February 2023 with 21 operator groups and eight universal network APIs, it is
+  the go-to-market wrapper around CAMARA, the Linux Foundation-hosted Telco Global API Alliance that actually
+  authors the OpenAPI definitions. GSMA sits above the value chain rather than in it: it signs operators
+  and channel partners to a memorandum of understanding, certifies implementations against CAMARA service
+  APIs and TM Forum Operate APIs, and publishes which certified APIs are live in which markets. Its API
+  posture is honestly non-existent as a first-party surface. GSMA operates no callable API, publishes
+  no OpenAPI under its own name, and runs no self-serve developer portal with keys or a sandbox. open-gateway.gsma.com
+  is a filterable directory of certified deployments, and every automated probe of it and of gsma.com
+  returned an HTTP 403 Cloudflare bot challenge. The specifications are open on GitHub under camaraproject
+  and tmforum-apis; the endpoints belong to operators; and developers reach them through aggregators and
+  channel partners such as Aduna, Vonage, Infobip, Sinch, Twilio, Nokia, AWS and Bridge Alliance rather
+  than through the GSMA. Per the GSMA''s own Q1 2026 Open Gateway update, 81 operator groups and 61 channel
+  partners covering 292 networks and about 80 percent of global mobile connections have signed, with 237
+  certified API assets drawn from 33 CAMARA tagged released APIs and 280 API instances commercially launched
+  across 85 networks in 50 markets.'
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+tags:
+- Telecommunications
+- United Kingdom
+- Network APIs
+- CAMARA
+- Open Gateway
+- Standards
+- Mobile Network Operator
+- Identity Verification
+- SIM Swap
+- Quality on Demand
+- 5G
+- Certification
+- Trade Association
+- TM Forum
+created: '2026-07-25'
+modified: '2026-07-25'
+specificationVersion: '0.19'
+apis:
+- aid: open-gateway:camara-number-verification
+  name: CAMARA Number Verification API
+  description: CAMARA Number Verification 2.1.0 as certified under GSMA Open Gateway. Verifies that the
+    phone number claimed by a user matches the number of the SIM on the network connection, or returns
+    the network-asserted phone number, using OIDC over the mobile data connection. The most widely launched
+    Open Gateway API alongside SIM Swap.
+  humanURL: https://github.com/camaraproject/NumberVerification
+  tags:
+  - CAMARA
+  - Identity Verification
+  - Authentication
+  - Anti-Fraud
+  properties:
+  - type: OpenAPI
+    url: openapi/camara-number-verification-openapi.yml
+  - type: Documentation
+    url: https://github.com/camaraproject/NumberVerification
+  - type: APIReference
+    url: https://camaraproject.github.io/swagger-ui/
+  - type: Documentation
+    url: https://www.gsma.com/solutions-and-impact/gsma-open-gateway/gsma-open-gateway-api-descriptions/
+- aid: open-gateway:camara-sim-swap
+  name: CAMARA SIM Swap API
+  description: CAMARA SIM Swap 2.1.0 as certified under GSMA Open Gateway. Checks whether the SIM associated
+    with a mobile phone number has been swapped within a given period, and retrieves the last SIM change
+    date, so banks and fintechs can block account-takeover attacks. Per the GSMA Q1 2026 update this is
+    the single most commercially launched Open Gateway API.
+  humanURL: https://github.com/camaraproject/SimSwap
+  tags:
+  - CAMARA
+  - Anti-Fraud
+  - SIM Swap
+  - Identity Verification
+  properties:
+  - type: OpenAPI
+    url: openapi/camara-sim-swap-openapi.yml
+  - type: Documentation
+    url: https://github.com/camaraproject/SimSwap
+  - type: APIReference
+    url: https://camaraproject.github.io/swagger-ui/
+  - type: Documentation
+    url: https://www.gsma.com/solutions-and-impact/gsma-open-gateway/gsma-open-gateway-api-descriptions/
+- aid: open-gateway:camara-device-swap
+  name: CAMARA Device Swap API
+  description: CAMARA Device Swap 1.0.0 as certified under GSMA Open Gateway. Reports whether the device
+    attached to a mobile subscription has changed within a supplied period and retrieves the last device
+    change date, used as an anti-fraud signal alongside SIM Swap.
+  humanURL: https://github.com/camaraproject/DeviceSwap
+  tags:
+  - CAMARA
+  - Anti-Fraud
+  - Device
+  properties:
+  - type: OpenAPI
+    url: openapi/camara-device-swap-openapi.yml
+  - type: Documentation
+    url: https://github.com/camaraproject/DeviceSwap
+  - type: APIReference
+    url: https://camaraproject.github.io/swagger-ui/
+  - type: Documentation
+    url: https://www.gsma.com/solutions-and-impact/gsma-open-gateway/gsma-open-gateway-api-descriptions/
+- aid: open-gateway:camara-call-forwarding-signal
+  name: CAMARA Call Forwarding Signal API
+  description: CAMARA Call Forwarding Signal 0.4.0 as certified under GSMA Open Gateway. Exposes whether
+    unconditional or conditional call forwarding is active on a subscriber line, a signal used to detect
+    social-engineering and call-diversion fraud.
+  humanURL: https://github.com/camaraproject/CallForwardingSignal
+  tags:
+  - CAMARA
+  - Anti-Fraud
+  - Voice
+  properties:
+  - type: OpenAPI
+    url: openapi/camara-call-forwarding-signal-openapi.yml
+  - type: Documentation
+    url: https://github.com/camaraproject/CallForwardingSignal
+  - type: APIReference
+    url: https://camaraproject.github.io/swagger-ui/
+  - type: Documentation
+    url: https://www.gsma.com/solutions-and-impact/gsma-open-gateway/gsma-open-gateway-api-descriptions/
+- aid: open-gateway:camara-kyc-match
+  name: CAMARA Know Your Customer Match API
+  description: CAMARA Know Your Customer Match 0.4.0 as certified under GSMA Open Gateway. Compares customer-supplied
+    identity attributes (name, address, birthdate, identity document, email) against the data the mobile
+    operator holds for the subscriber and returns per-attribute match results without disclosing the operator's
+    own values.
+  humanURL: https://github.com/camaraproject/KnowYourCustomerMatch
+  tags:
+  - CAMARA
+  - KYC
+  - Identity Verification
+  properties:
+  - type: OpenAPI
+    url: openapi/camara-kyc-match-openapi.yml
+  - type: Documentation
+    url: https://github.com/camaraproject/KnowYourCustomerMatch
+  - type: APIReference
+    url: https://camaraproject.github.io/swagger-ui/
+  - type: Documentation
+    url: https://www.gsma.com/solutions-and-impact/gsma-open-gateway/gsma-open-gateway-api-descriptions/
+- aid: open-gateway:camara-kyc-age-verification
+  name: CAMARA Know Your Customer Age Verification API
+  description: CAMARA Know Your Customer Age Verification 0.2.1 as certified under GSMA Open Gateway.
+    Answers whether the subscriber behind a phone number is over a given age threshold using operator-held
+    identity data, returning a boolean rather than a date of birth.
+  humanURL: https://github.com/camaraproject/KnowYourCustomerAgeVerification
+  tags:
+  - CAMARA
+  - KYC
+  - Age Verification
+  - Identity Verification
+  properties:
+  - type: OpenAPI
+    url: openapi/camara-kyc-age-verification-openapi.yml
+  - type: Documentation
+    url: https://github.com/camaraproject/KnowYourCustomerAgeVerification
+  - type: APIReference
+    url: https://camaraproject.github.io/swagger-ui/
+  - type: Documentation
+    url: https://www.gsma.com/solutions-and-impact/gsma-open-gateway/gsma-open-gateway-api-descriptions/
+- aid: open-gateway:camara-kyc-tenure
+  name: CAMARA KYC Tenure API
+  description: CAMARA KYC Tenure 0.2.0 as certified under GSMA Open Gateway. Confirms whether a mobile
+    subscription has been active with the operator for at least a requested duration, a low-friction trust
+    signal for onboarding and fraud scoring.
+  humanURL: https://github.com/camaraproject/Tenure
+  tags:
+  - CAMARA
+  - KYC
+  - Anti-Fraud
+  properties:
+  - type: OpenAPI
+    url: openapi/camara-kyc-tenure-openapi.yml
+  - type: Documentation
+    url: https://github.com/camaraproject/Tenure
+  - type: APIReference
+    url: https://camaraproject.github.io/swagger-ui/
+  - type: Documentation
+    url: https://www.gsma.com/solutions-and-impact/gsma-open-gateway/gsma-open-gateway-api-descriptions/
+- aid: open-gateway:camara-one-time-password-sms
+  name: CAMARA One Time Password SMS API
+  description: CAMARA One Time Password SMS 1.1.1 as certified under GSMA Open Gateway. Sends a one-time
+    password by SMS to a subscriber's phone number and validates the code the user returns, delivered
+    through the operator network rather than an aggregator's messaging route.
+  humanURL: https://github.com/camaraproject/OTPValidation
+  tags:
+  - CAMARA
+  - Authentication
+  - SMS
+  - One Time Password
+  properties:
+  - type: OpenAPI
+    url: openapi/camara-one-time-password-sms-openapi.yml
+  - type: Documentation
+    url: https://github.com/camaraproject/OTPValidation
+  - type: APIReference
+    url: https://camaraproject.github.io/swagger-ui/
+  - type: Documentation
+    url: https://www.gsma.com/solutions-and-impact/gsma-open-gateway/gsma-open-gateway-api-descriptions/
+- aid: open-gateway:camara-quality-on-demand
+  name: CAMARA Quality on Demand API
+  description: CAMARA Quality-On-Demand 1.1.0 as certified under GSMA Open Gateway. Creates, reads, extends
+    and deletes temporary sessions that raise the network quality of service for a specific device and
+    application flow, with event notifications on session status. The commercial front door to 5G differentiated
+    connectivity.
+  humanURL: https://github.com/camaraproject/QualityOnDemand
+  tags:
+  - CAMARA
+  - Quality on Demand
+  - 5G
+  - Network Slicing
+  properties:
+  - type: OpenAPI
+    url: openapi/camara-quality-on-demand-openapi.yml
+  - type: Documentation
+    url: https://github.com/camaraproject/QualityOnDemand
+  - type: APIReference
+    url: https://camaraproject.github.io/swagger-ui/
+  - type: Documentation
+    url: https://www.gsma.com/solutions-and-impact/gsma-open-gateway/gsma-open-gateway-api-descriptions/
+- aid: open-gateway:camara-qos-profiles
+  name: CAMARA QoS Profiles API
+  description: CAMARA QoS Profiles 1.1.0 as certified under GSMA Open Gateway. Lists the quality-of-service
+    profiles an operator makes available and retrieves a single profile by name, so a developer can discover
+    what Quality on Demand levels can actually be requested in a given market.
+  humanURL: https://github.com/camaraproject/QualityOnDemand
+  tags:
+  - CAMARA
+  - Quality on Demand
+  - 5G
+  properties:
+  - type: OpenAPI
+    url: openapi/camara-qos-profiles-openapi.yml
+  - type: Documentation
+    url: https://github.com/camaraproject/QualityOnDemand
+  - type: APIReference
+    url: https://camaraproject.github.io/swagger-ui/
+  - type: Documentation
+    url: https://www.gsma.com/solutions-and-impact/gsma-open-gateway/gsma-open-gateway-api-descriptions/
+- aid: open-gateway:camara-device-reachability-status
+  name: CAMARA Device Reachability Status API
+  description: CAMARA Device Reachability Status 1.1.0 as certified under GSMA Open Gateway. Returns whether
+    a device is currently reachable on the network and by which means (SMS, data), the core device-state
+    signal for IoT fleet operations.
+  humanURL: https://github.com/camaraproject/DeviceReachabilityStatus
+  tags:
+  - CAMARA
+  - Device Status
+  - IoT
+  properties:
+  - type: OpenAPI
+    url: openapi/camara-device-reachability-status-openapi.yml
+  - type: Documentation
+    url: https://github.com/camaraproject/DeviceReachabilityStatus
+  - type: APIReference
+    url: https://camaraproject.github.io/swagger-ui/
+  - type: Documentation
+    url: https://www.gsma.com/solutions-and-impact/gsma-open-gateway/gsma-open-gateway-api-descriptions/
+- aid: open-gateway:camara-device-reachability-status-subscriptions
+  name: CAMARA Device Reachability Status Subscriptions API
+  description: CAMARA Device Reachability Status Subscriptions 0.8.0 as certified under GSMA Open Gateway.
+    Creates and manages event subscriptions that push CloudEvents notifications to a consumer sink when
+    a device becomes reachable by data or SMS, or becomes disconnected. This is the event-driven half
+    of Open Gateway device status.
+  humanURL: https://github.com/camaraproject/DeviceReachabilityStatus
+  tags:
+  - CAMARA
+  - Device Status
+  - IoT
+  - Webhooks
+  - CloudEvents
+  properties:
+  - type: OpenAPI
+    url: openapi/camara-device-reachability-status-subscriptions-openapi.yml
+  - type: Documentation
+    url: https://github.com/camaraproject/DeviceReachabilityStatus
+  - type: APIReference
+    url: https://camaraproject.github.io/swagger-ui/
+  - type: Documentation
+    url: https://www.gsma.com/solutions-and-impact/gsma-open-gateway/gsma-open-gateway-api-descriptions/
+- aid: open-gateway:camara-device-identifier
+  name: CAMARA Device Identifier API
+  description: CAMARA Device Identifier 0.3.0 as certified under GSMA Open Gateway. Retrieves the identifier,
+    type and pseudonymous identifier of the device a subscription is currently using, and matches a supplied
+    identifier against the network view, supporting device-binding and fraud checks.
+  humanURL: https://github.com/camaraproject/DeviceIdentifier
+  tags:
+  - CAMARA
+  - Device
+  - Identity Verification
+  - Anti-Fraud
+  properties:
+  - type: OpenAPI
+    url: openapi/camara-device-identifier-openapi.yml
+  - type: Documentation
+    url: https://github.com/camaraproject/DeviceIdentifier
+  - type: APIReference
+    url: https://camaraproject.github.io/swagger-ui/
+  - type: Documentation
+    url: https://www.gsma.com/solutions-and-impact/gsma-open-gateway/gsma-open-gateway-api-descriptions/
+- aid: open-gateway:camara-device-roaming-status
+  name: CAMARA Device Roaming Status API
+  description: CAMARA Device Roaming Status 1.0.0 as certified under GSMA Open Gateway. Reports whether
+    a device is roaming and, where available, the country it is roaming in, used for travel-aware fraud
+    rules and IoT logistics.
+  humanURL: https://github.com/camaraproject/DeviceStatus
+  tags:
+  - CAMARA
+  - Device Status
+  - Roaming
+  properties:
+  - type: OpenAPI
+    url: openapi/camara-device-roaming-status-openapi.yml
+  - type: Documentation
+    url: https://github.com/camaraproject/DeviceStatus
+  - type: APIReference
+    url: https://camaraproject.github.io/swagger-ui/
+  - type: Documentation
+    url: https://www.gsma.com/solutions-and-impact/gsma-open-gateway/gsma-open-gateway-api-descriptions/
+- aid: open-gateway:camara-connected-network-type
+  name: CAMARA Connected Network Type API
+  description: CAMARA Connected Network Type 0.1.0 as certified under GSMA Open Gateway. Returns the access
+    technology a device is currently attached to (for example 4G or 5G standalone), letting an application
+    adapt its behaviour to real network conditions.
+  humanURL: https://github.com/camaraproject/DeviceStatus
+  tags:
+  - CAMARA
+  - Device Status
+  - 5G
+  properties:
+  - type: OpenAPI
+    url: openapi/camara-connected-network-type-openapi.yml
+  - type: Documentation
+    url: https://github.com/camaraproject/DeviceStatus
+  - type: APIReference
+    url: https://camaraproject.github.io/swagger-ui/
+  - type: Documentation
+    url: https://www.gsma.com/solutions-and-impact/gsma-open-gateway/gsma-open-gateway-api-descriptions/
+- aid: open-gateway:camara-population-density-data
+  name: CAMARA Population Density Data API
+  description: CAMARA Population Density Data 0.3.0 as certified under GSMA Open Gateway. Returns aggregated,
+    anonymised estimates of how many devices are present in a requested geographic area over a time window,
+    for planning, retail and mobility analytics rather than individual tracking.
+  humanURL: https://github.com/camaraproject/PopulationDensityData
+  tags:
+  - CAMARA
+  - Location
+  - Analytics
+  - Privacy
+  properties:
+  - type: OpenAPI
+    url: openapi/camara-population-density-data-openapi.yml
+  - type: Documentation
+    url: https://github.com/camaraproject/PopulationDensityData
+  - type: APIReference
+    url: https://camaraproject.github.io/swagger-ui/
+  - type: Documentation
+    url: https://www.gsma.com/solutions-and-impact/gsma-open-gateway/gsma-open-gateway-api-descriptions/
+- aid: open-gateway:camara-location-retrieval
+  name: CAMARA Device Location Retrieval API
+  description: CAMARA Device Location Retrieval 0.5.0 as certified under GSMA Open Gateway. Returns the
+    network-derived location of a device as a circle or polygon with an accuracy indication, without relying
+    on handset GPS or an installed SDK.
+  humanURL: https://github.com/camaraproject/DeviceLocation
+  tags:
+  - CAMARA
+  - Location
+  properties:
+  - type: OpenAPI
+    url: openapi/camara-location-retrieval-openapi.yml
+  - type: Documentation
+    url: https://github.com/camaraproject/DeviceLocation
+  - type: APIReference
+    url: https://camaraproject.github.io/swagger-ui/
+  - type: Documentation
+    url: https://www.gsma.com/solutions-and-impact/gsma-open-gateway/gsma-open-gateway-api-descriptions/
+- aid: open-gateway:camara-location-verification
+  name: CAMARA Device Location Verification API
+  description: CAMARA Device Location Verification 3.0.0 as certified under GSMA Open Gateway. Verifies
+    whether a device is inside, outside or partly within a supplied area rather than returning coordinates,
+    a privacy-preserving pattern widely deployed for payment and login fraud checks.
+  humanURL: https://github.com/camaraproject/DeviceLocation
+  tags:
+  - CAMARA
+  - Location
+  - Anti-Fraud
+  properties:
+  - type: OpenAPI
+    url: openapi/camara-location-verification-openapi.yml
+  - type: Documentation
+    url: https://github.com/camaraproject/DeviceLocation
+  - type: APIReference
+    url: https://camaraproject.github.io/swagger-ui/
+  - type: Documentation
+    url: https://www.gsma.com/solutions-and-impact/gsma-open-gateway/gsma-open-gateway-api-descriptions/
+- aid: open-gateway:camara-simple-edge-discovery
+  name: CAMARA Simple Edge Discovery API
+  description: CAMARA Simple Edge Discovery 2.0.1 as certified under GSMA Open Gateway. Returns the closest
+    MEC (multi-access edge computing) platform to a given device so that an application can route traffic
+    to the lowest-latency edge cloud zone.
+  humanURL: https://github.com/camaraproject/SimpleEdgeDiscovery
+  tags:
+  - CAMARA
+  - Edge Computing
+  - MEC
+  - 5G
+  properties:
+  - type: OpenAPI
+    url: openapi/camara-simple-edge-discovery-openapi.yml
+  - type: Documentation
+    url: https://github.com/camaraproject/SimpleEdgeDiscovery
+  - type: APIReference
+    url: https://camaraproject.github.io/swagger-ui/
+  - type: Documentation
+    url: https://www.gsma.com/solutions-and-impact/gsma-open-gateway/gsma-open-gateway-api-descriptions/
+- aid: open-gateway:camara-carrier-billing
+  name: CAMARA Carrier Billing API
+  description: CAMARA Carrier Billing 0.5.0 as certified under GSMA Open Gateway. Creates and manages
+    direct carrier-billing payments charged to a subscriber's mobile account, including payment status,
+    confirmation and event notifications. The payments-and-charging leg of Open Gateway.
+  humanURL: https://github.com/camaraproject/CarrierBillingCheckOut
+  tags:
+  - CAMARA
+  - Payments
+  - Carrier Billing
+  properties:
+  - type: OpenAPI
+    url: openapi/camara-carrier-billing-openapi.yml
+  - type: Documentation
+    url: https://github.com/camaraproject/CarrierBillingCheckOut
+  - type: APIReference
+    url: https://camaraproject.github.io/swagger-ui/
+  - type: Documentation
+    url: https://www.gsma.com/solutions-and-impact/gsma-open-gateway/gsma-open-gateway-api-descriptions/
+- aid: open-gateway:camara-home-devices-qod
+  name: CAMARA Home Devices QoD API
+  description: CAMARA Home Devices QoD 0.4.0 as certified under GSMA Open Gateway. Requests prioritised
+    quality of service for a device on a fixed broadband home network, extending Quality on Demand beyond
+    mobile to the operator's fixed access line. Note that the upstream CAMARA sandbox repository is now
+    archived.
+  humanURL: https://github.com/camaraproject/HomeDevicesQoD
+  tags:
+  - CAMARA
+  - Quality on Demand
+  - Broadband
+  - Fixed Access
+  properties:
+  - type: OpenAPI
+    url: openapi/camara-home-devices-qod-openapi.yml
+  - type: Documentation
+    url: https://github.com/camaraproject/HomeDevicesQoD
+  - type: APIReference
+    url: https://camaraproject.github.io/swagger-ui/
+  - type: Documentation
+    url: https://www.gsma.com/solutions-and-impact/gsma-open-gateway/gsma-open-gateway-api-descriptions/
+- aid: open-gateway:tmf931-onboarding-ordering
+  name: TM Forum TMF931 Open Gateway Onboarding and Ordering API
+  description: 'TM Forum TMF931 Open Gateway Operate API - Onboarding and Ordering 5.2.1, the GSMA-defined
+    ''Operate API'' that channel partners and aggregators use to onboard against an operator: browse the
+    API product catalogue, place API product orders, manage applications and application owners, and subscribe
+    to lifecycle events. This is the machine-readable onboarding path into Open Gateway, and it is certified
+    jointly by GSMA and TM Forum alongside the CAMARA service APIs. Twenty-two operations, Apache-2.0
+    licensed.'
+  humanURL: https://github.com/tmforum-apis/TMF931_OpenGatewayOnboardingAndOrderingComponentSuite
+  tags:
+  - TM Forum
+  - Operate API
+  - Onboarding
+  - Ordering
+  - Standards
+  properties:
+  - type: OpenAPI
+    url: openapi/tmforum-tmf931-open-gateway-onboarding-ordering-openapi.yml
+  - type: Documentation
+    url: https://github.com/tmforum-apis/TMF931_OpenGatewayOnboardingAndOrderingComponentSuite
+  - type: APIReference
+    url: https://github.com/tmforum-apis/TMF931_OpenGatewayOnboardingAndOrderingComponentSuite
+  - type: Documentation
+    url: https://www.gsma.com/solutions-and-impact/gsma-open-gateway/gsma-open-gateway-api-descriptions/
+common:
+- type: Website
+  url: https://www.gsma.com/
+- type: Documentation
+  url: https://www.gsma.com/solutions-and-impact/gsma-open-gateway/
+- type: Portal
+  url: https://open-gateway.gsma.com/
+- type: APIDescriptions
+  url: https://www.gsma.com/solutions-and-impact/gsma-open-gateway/gsma-open-gateway-api-descriptions/
+- type: Certification
+  url: https://www.gsma.com/solutions-and-impact/gsma-open-gateway/what-is-gsma-open-gateway-certification/
+- type: Specification
+  url: https://github.com/camaraproject
+- type: Specification
+  url: https://github.com/tmforum-apis/TMF931_OpenGatewayOnboardingAndOrderingComponentSuite
+- type: Authentication
+  url: https://github.com/camaraproject/IdentityAndConsentManagement
+- type: GitHubOrganization
+  url: https://github.com/GSMA
+- type: LinkedIn
+  url: https://www.linkedin.com/company/gsma
+- type: SecurityTxt
+  url: https://www.gsma.com/.well-known/security.txt
+- type: VulnerabilityDisclosure
+  url: https://www.gsma.com/security/cvd-submit-a-vulnerability/
+- type: Privacy
+  url: https://www.gsma.com/aboutus/legal/privacy
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

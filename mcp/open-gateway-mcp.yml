@@ -1,6 +1,7 @@
 generated: '2026-07-25'
 method: searched
-status: reference-implementation
+status: published
+status_raw: reference-implementation
 source: https://github.com/camaraproject/MCPEnablement_PI1
 first_party: false
 first_party_note: >-

@@ -1,0 +1,39 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "KYC Tenure",
+    "version": "0.2.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Check Subscriber Tenure",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "The KYC Tenure service API",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{apiRoot}/kyc-tenure/v0.2/check-tenure",
+            "headers": [
+              {
+                "name": "x-correlator",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Verifies a specified length of tenure, based on a provided date, for a network subscriber to establish a level of trust for the network subscription identifier.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

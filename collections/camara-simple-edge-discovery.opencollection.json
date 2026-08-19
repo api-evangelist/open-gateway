@@ -1,0 +1,39 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Simple Edge Discovery",
+    "version": "2.0.1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Discovery",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Returns the name of the Edge Cloud Zone closest to user device\nidentified in the request.\n",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{apiRoot}/simple-edge-discovery/v2/retrieve-closest-edge-cloud-zone",
+            "headers": [
+              {
+                "name": "x-correlator",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "On receiving this request, the network will return the name\nof the Edge Cloud Zone with the shortest network path to the end user\ndevice identified in the request.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

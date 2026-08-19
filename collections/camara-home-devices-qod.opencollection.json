@@ -1,0 +1,39 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Home Devices QoD",
+    "version": "0.4.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Home Devices QoD",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Set the desired QoS behaviour for a user home device",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{apiRoot}/home-devices-qod/v0.4/qos",
+            "headers": [
+              {
+                "name": "x-correlator",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Set the desired QoS behaviour for the traffic corresponding to the user home device matching the input criteria. **QoS behaviour is determined by the service class provided by the API Client. Setting `standard` service class restores default traffic treatment for the target home device.**\n\n- The operation is executed for the user whose `sub` is in the access token used to call this endpoint, and for the home network also deducted from the information included in the access token.\n- The target us"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

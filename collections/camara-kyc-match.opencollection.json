@@ -1,0 +1,39 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Know Your Customer Match",
+    "version": "0.4.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Match",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Matching a customer identity by checking a set of attributes related against the account data bound to their phone number.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{apiRoot}/kyc-match/v0.4/match",
+            "headers": [
+              {
+                "name": "x-correlator",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Verify matching of a number of attributes related to a customer identity against the verified data bound to their phone number in the Operator systems. Regardless of whether the `phoneNumber` is explicitly stated in the request body, at least one of the other fields must be provided, otherwise a `HTTP 400 - KNOW_YOUR_CUSTOMER.INVALID_PARAM_COMBINATION` error will be returned.\n\nIn order to proceed with the match check, some Operators may have the requirement to perform an additional level of vali"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

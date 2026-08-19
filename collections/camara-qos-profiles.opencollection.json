@@ -1,0 +1,64 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "QoS Profiles",
+    "version": "1.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "QoS Profiles",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve QoS profiles",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{apiRoot}/qos-profiles/v1/retrieve-qos-profiles",
+            "headers": [
+              {
+                "name": "x-correlator",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns all QoS Profiles that match the given criteria.\n**NOTES:**\n- The access token may be either a 2-legged or 3-legged access token.\n- If the access token is 3-legged, all returned QoS Profiles will be available to the subject (device) associated with the access token.\n- If the access token is 2-legged and a device filter is provided, all returned QoS Profiles will be available to that device. If multiple device identifiers are provided within the device property, only QoS Profiles available"
+        },
+        {
+          "info": {
+            "name": "Get QoS Profile for a given name",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{apiRoot}/qos-profiles/v1/qos-profiles/:name",
+            "headers": [
+              {
+                "name": "x-correlator",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Qos Profile name"
+              }
+            ]
+          },
+          "docs": "Returns a QoS Profile that matches the given name.\n\nThe access token may be either a 2-legged or 3-legged access token. If the access token is 3-legged, a QoS Profile is only returned if available to all subjects associated with the access token.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

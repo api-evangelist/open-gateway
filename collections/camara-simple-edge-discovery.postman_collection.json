@@ -1,0 +1,535 @@
+{
+  "item": [
+    {
+      "id": "c7fc81f5-9126-4b45-8c88-8dff7637c0d5",
+      "name": "Discovery",
+      "description": {
+        "content": "Find the closest Edge Cloud Zone to the user device.\n",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a3df3504-309a-4e14-a611-c49661a812ae",
+          "name": "Returns the name of the Edge Cloud Zone closest to user device\nidentified in the request.\n",
+          "request": {
+            "name": "Returns the name of the Edge Cloud Zone closest to user device\nidentified in the request.\n",
+            "description": {
+              "content": "On receiving this request, the network will return the name\nof the Edge Cloud Zone with the shortest network path to the end user\ndevice identified in the request.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "retrieve-closest-edge-cloud-zone"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "API root, defined by the service provider, e.g.\n`api.example.com` or `api.example.com/somepath`\n",
+                  "type": "any",
+                  "value": "{{apiRoot}}",
+                  "key": "apiRoot"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Correlation id for the different services",
+                "key": "x-correlator",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"device\": {\n    \"phoneNumber\": \"<string>\",\n    \"networkAccessIdentifier\": \"<string>\",\n    \"ipv4Address\": {},\n    \"ipv6Address\": \"<ipv6>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "db23934a-74da-4884-a42c-b146a0de11e9",
+              "name": "200 OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "retrieve-closest-edge-cloud-zone"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "API root, defined by the service provider, e.g.\n`api.example.com` or `api.example.com/somepath`\n",
+                      "type": "any",
+                      "value": "{{apiRoot}}",
+                      "key": "apiRoot"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Correlation id for the different services",
+                    "key": "x-correlator",
+                    "value": "b4333c46-49c0-4f62-80d7-f0ef930f1c46"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Correlation id for the different services",
+                  "key": "x-correlator",
+                  "value": "b4333c46-49c0-4f62-80d7-f0ef930f1c46"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"edgeCloudZoneId\": \"f81d4fae-7dec-11d0-a765-00a0c91e6bf6\",\n  \"edgeCloudZoneName\": \"UK-SOUTH\",\n  \"edgeCloudProvider\": \"Example Provider\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bdeaf83c-9ac9-4928-b0dc-dcfe27154fad",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "retrieve-closest-edge-cloud-zone"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "API root, defined by the service provider, e.g.\n`api.example.com` or `api.example.com/somepath`\n",
+                      "type": "any",
+                      "value": "{{apiRoot}}",
+                      "key": "apiRoot"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Correlation id for the different services",
+                    "key": "x-correlator",
+                    "value": "b4333c46-49c0-4f62-80d7-f0ef930f1c46"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Correlation id for the different services",
+                  "key": "x-correlator",
+                  "value": "b4333c46-49c0-4f62-80d7-f0ef930f1c46"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 400,\n  \"code\": \"INVALID_ARGUMENT\",\n  \"message\": \"Client specified an invalid argument, request body or query param.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8978cf8b-4b02-4c61-a6e0-6aa48839fba3",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "retrieve-closest-edge-cloud-zone"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "API root, defined by the service provider, e.g.\n`api.example.com` or `api.example.com/somepath`\n",
+                      "type": "any",
+                      "value": "{{apiRoot}}",
+                      "key": "apiRoot"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Correlation id for the different services",
+                    "key": "x-correlator",
+                    "value": "b4333c46-49c0-4f62-80d7-f0ef930f1c46"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Correlation id for the different services",
+                  "key": "x-correlator",
+                  "value": "b4333c46-49c0-4f62-80d7-f0ef930f1c46"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 401,\n  \"code\": \"UNAUTHENTICATED\",\n  \"message\": \"Request not authenticated due to missing, invalid, or expired credentials.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "59225f50-993b-4bc1-b95a-57e0ee06802c",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "retrieve-closest-edge-cloud-zone"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "API root, defined by the service provider, e.g.\n`api.example.com` or `api.example.com/somepath`\n",
+                      "type": "any",
+                      "value": "{{apiRoot}}",
+                      "key": "apiRoot"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Correlation id for the different services",
+                    "key": "x-correlator",
+                    "value": "b4333c46-49c0-4f62-80d7-f0ef930f1c46"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Correlation id for the different services",
+                  "key": "x-correlator",
+                  "value": "b4333c46-49c0-4f62-80d7-f0ef930f1c46"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 403,\n  \"code\": \"PERMISSION_DENIED\",\n  \"message\": \"Client does not have sufficient permissions to perform this action.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3ac182c7-9934-476d-859e-bb6c838a83e4",
+              "name": "Not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "retrieve-closest-edge-cloud-zone"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "API root, defined by the service provider, e.g.\n`api.example.com` or `api.example.com/somepath`\n",
+                      "type": "any",
+                      "value": "{{apiRoot}}",
+                      "key": "apiRoot"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Correlation id for the different services",
+                    "key": "x-correlator",
+                    "value": "b4333c46-49c0-4f62-80d7-f0ef930f1c46"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Correlation id for the different services",
+                  "key": "x-correlator",
+                  "value": "b4333c46-49c0-4f62-80d7-f0ef930f1c46"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 404,\n  \"code\": \"NOT_FOUND\",\n  \"message\": \"The specified resource is not found.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0562340b-9d19-4412-a2a7-341fb2492806",
+              "name": "Unprocessable Content",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "retrieve-closest-edge-cloud-zone"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "API root, defined by the service provider, e.g.\n`api.example.com` or `api.example.com/somepath`\n",
+                      "type": "any",
+                      "value": "{{apiRoot}}",
+                      "key": "apiRoot"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Correlation id for the different services",
+                    "key": "x-correlator",
+                    "value": "b4333c46-49c0-4f62-80d7-f0ef930f1c46"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Correlation id for the different services",
+                  "key": "x-correlator",
+                  "value": "b4333c46-49c0-4f62-80d7-f0ef930f1c46"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 422,\n  \"code\": \"SERVICE_NOT_APPLICABLE\",\n  \"message\": \"The service is not available for the provided identifier.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "039414be-c7e2-4aae-bdd9-5d75da5a9dbe",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "retrieve-closest-edge-cloud-zone"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "API root, defined by the service provider, e.g.\n`api.example.com` or `api.example.com/somepath`\n",
+                      "type": "any",
+                      "value": "{{apiRoot}}",
+                      "key": "apiRoot"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Correlation id for the different services",
+                    "key": "x-correlator",
+                    "value": "b4333c46-49c0-4f62-80d7-f0ef930f1c46"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Correlation id for the different services",
+                  "key": "x-correlator",
+                  "value": "b4333c46-49c0-4f62-80d7-f0ef930f1c46"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 429,\n  \"code\": \"QUOTA_EXCEEDED\",\n  \"message\": \"Out of resource quota.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "API root, defined by the service provider, e.g.\n`api.example.com` or `api.example.com/somepath`\n",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "https://localhost:9091",
+      "key": "apiRoot"
+    },
+    {
+      "type": "string",
+      "value": "{{apiRoot}}/simple-edge-discovery/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "b7c79241-07de-445d-ac70-232ad6dfb1ad",
+    "name": "Simple Edge Discovery",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "# Find the closest Edge Cloud Zone\n---\n# Summary\n\nThe Simple Edge Discovery API returns the name of the closest operator Edge\nCloud Zone to a particular user device.\n\n# Purpose\nNetwork operators may host multiple Edge Cloud Zones in a\ngiven territory. Connecting your application to a server on the closest\nEdge Cloud Zone means packets travel the shortest distance between\nendpoints, typically resulting in the lowest round-trip latency. Note, the\nphysical (GPS) location of a user device is not a reliable way to determine\nthe closest Edge Cloud Zone, due to the way operator networks are routed -\nso the operator will calculate the Edge Cloud Zone with the\n_shortest network path_ to the network-attached device identified in the API\nrequest.\n\nOnce you have the name of the closest Edge Cloud Zone to the user device,\nyou may:\n\n* connect the application client on the user device to your application\nserver instance on that Edge Cloud Zone. Note: the IP address of that\napplication server instance is not part of the API response, so you will need\nto map the edge cloud zone name to the server endpoint IP address you received\nwhen you deployed the server via the cloud provider's API.\n* or, if you have no instance on that Edge Cloud Zone, you may wish to\ndeploy one there using the cloud provider's APIs.\n\nNote: the provider of the Edge Cloud Zone may be an operator, or a cloud\nprovider working in partnership with the operator.\n\n# Usage\n\nThe API may be called either by an application client hosted on a device\nattached to the operator network (i.e. phone, tablet), or by a server.\n\nThere is a single API endpoint: `/retrieve-closest-edge-cloud-zone`.\n\nTo call this endpoint, the API consumer must first obtain a valid OAuth2 token\nfrom the token endpoint, and pass it as an `Authorization` header in the API\nrequest.\n\n# Identifying the device\n\nThe API returns the closest Edge Cloud Zone to a given device, so that\ndevice needs to be identifiable by the network. This can be achieved either\nby passing one or more device identifiers in the request, or, from the\nthree-legged access token where implemented by the operator.\n\n## Passing device identifier(s) in the request\nAt least one of the following device identifiers must be provided, unless\nusing a 3-legged access token (see next section):\n - Phone number (i.e. MSISDN)\n - Network Access Identifier assigned by the mobile network operator for the device\n - IPv6 address\n - IPv4 address\n\n\nNOTE1: the network operator might support only a subset of these options.\nThe API invoker can provide multiple identifiers to be compatible across\ndifferent network operators. In this case the identifiers MUST belong to the\nsame device.\n\nNOTE2: for this Commonalities release,  we are enforcing that the\n`networkAccessIdentifier` is only part of the schema for future-proofing, and\nCAMARA does not currently allow its use. After the CAMARA meta-release work\nis concluded and the relevant issues are resolved, its use will need to be\nexplicitly documented in the guidelines.\n\n\n## Identifying the device from the access token\n\nThis API requires the API consumer to identify a device as the subject of\nthe API as follows:\n\n- When the API is invoked using a two-legged access token, the subject will be\nidentified from the optional `device` object, which therefore MUST be provided.\n- When a three-legged access token is used however, this optional identifier\nMUST NOT be provided, as the subject will be uniquely identified from the access\ntoken.\n\nThis approach simplifies API usage for API consumers using a three-legged access\ntoken to invoke the API by relying on the information that is associated with the\naccess token and was identified during the authentication process.\n\n## Error handling:\n\n- If the subject cannot be identified from the access token and the optional `device`\nobject is not included in the request, then the server will return an error with the\n`422 MISSING_IDENTIFIER` error code.\n\n- If the subject can be identified from the access token and the optional `device`\nobject is also included in the request, then the server will return an error with the\n`422 UNNECESSARY_IDENTIFIER` error code. This will be the case even if the same device\nis identified by these two methods, as the server is unable to make this comparison.\n\n# Responses\n\n## Success\n\nA JSON object is returned containing an array with a single member object.\nThis contains identifiers for the closest Edge Cloud Zone. The HTTP status\ncode will be`200 OK`. An example response:\n\n```\n[\n  {\n    \"edgeCloudZoneId\": \"4gt555-6457-7890-d4he-1dc79f44gb66\",\n    \"edgeCloudZoneName\": \"example zone name\",\n    \"edgeCloudProvider\": \"example zone provider\"\n  }\n]\n```\n* `edgeCloudZoneId` is a UUID for the Edge Cloud Zone.\n* `edgeCloudZoneName` is the common name of the closest Edge Cloud Zone to\nthe user device.\n* `edgeCloudProvider` is the name of the operator or cloud provider of\nthe Edge Cloud Zone.\n\n## Errors\n\nIf the authentication token is not valid, a `401 UNAUTHENTICATED` error is\nreturned.\n\nIf the mobile subscription parameters contain a formatting error, a `400\nINVALID_ARGUMENT` error is returned.\n\nIf the mobile subscription cannot be identified from the provided\nparameters, a `404 NOT_FOUND` error is returned.\n\nAny more general service failures will result in an error in the `5xx`range\nwith an explanation.\n\n### Additional CAMARA error responses\nThe list of error codes in this API specification is not exhaustive. Therefore\nthe API specification may not document some non-mandatory error statuses as\nindicated in `CAMARA API Design Guide`.\n\nPlease refer to the `CAMARA_common.yaml` of the Commonalities Release associated\nto this API version for a complete list of error responses. The applicable\nCommonalities Release can be identified in the `API Readiness Checklist` document\nassociated to this API version.\n\nAs a specific rule, error `501 - NOT_IMPLEMENTED` can be only a possible error\nresponse if it is explicitly documented in the API.\n\n# Notes for Simple Edge Discovery API publishers\n\nShould your implementation require the `Port` value to be passed in addition\nto the `IP-Address`, please make that explicit in the documentation, and\nutilise the `GENERIC_400_MISSING_PORT` error if the `Port` header is omitted.\n\n# Authorization and authentication\n\nThe \"Camara Security and Interoperability Profile\" provides details of how\nan API consumer requests an access token. Please refer to Identity and Consent\nManagement (https://github.com/camaraproject/IdentityAndConsentManagement/)\nfor the released version of the profile.\n\nThe specific authorization flows to be used will be agreed upon during the\nonboarding process, happening between the provider of the application consuming\nthe API and the operator's API exposure platform, taking into account the\ndeclared purpose for accessing the API, whilst also being subject to the\nprevailing legal framework dictated by local legislation.\n\nIn cases where personal data is processed by the API and users can exercise\ntheir rights through mechanisms such as opt-in and/or opt-out, the use of\nthree-legged access tokens is mandatory. This ensures that the API remains\nin compliance with privacy regulations, upholding the principles of\ntransparency and user-centric privacy-by-design.\n\n# Further info and support\n---\n",
+      "type": "text/plain"
+    }
+  }
+}

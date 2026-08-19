@@ -1,0 +1,39 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Connected Network Type",
+    "version": "0.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Connected Network Type",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get the connected network type",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{apiRoot}/connected-network-type/v0.1/retrieve",
+            "headers": [
+              {
+                "name": "x-correlator",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get the connected network type to which the user device is connected"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

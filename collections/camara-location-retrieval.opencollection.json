@@ -1,0 +1,39 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Device Location Retrieval",
+    "version": "0.5.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Location retrieval",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Execute location retrieval for a user device",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{apiRoot}/location-retrieval/v0.5/retrieve",
+            "headers": [
+              {
+                "name": "x-correlator",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Retrieve the area where a certain user device is localized."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

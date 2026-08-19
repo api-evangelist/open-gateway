@@ -1,0 +1,796 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Open Gateway Operate API Onboarding and Ordering",
+    "version": "5.2.1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "apiProduct",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List or find ApiProduct objects",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{apiRoot}/openGatewayOperateAPIOnboardingAndOrdering/v5/apiProduct",
+            "params": [
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated properties to be provided in response"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Requested index for start of resources to be provided in response"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Requested number of resources to be provided in response"
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "An opaque string value representing the page results before the cursor value"
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "An opaque string value representing the page results after the cursor value"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "The default direction is Ascending order, the use of the modifier in front of the sort field name, “-“, changes the sort order direction."
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter a collection using JSONPath"
+              }
+            ]
+          },
+          "docs": "List or find ApiProduct objects"
+        },
+        {
+          "info": {
+            "name": "Retrieves a ApiProduct by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{apiRoot}/openGatewayOperateAPIOnboardingAndOrdering/v5/apiProduct/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the Resource"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated properties to be provided in response"
+              }
+            ]
+          },
+          "docs": "This operation retrieves a ApiProduct entity. Attribute selection enabled for all first level attributes."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "apiProductOrder",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List or find ApiProductOrder objects",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{apiRoot}/openGatewayOperateAPIOnboardingAndOrdering/v5/apiProductOrder",
+            "params": [
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated properties to be provided in response"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Requested index for start of resources to be provided in response"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Requested number of resources to be provided in response"
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "An opaque string value representing the page results before the cursor value"
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "An opaque string value representing the page results after the cursor value"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "The default direction is Ascending order, the use of the modifier in front of the sort field name, “-“, changes the sort order direction."
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter a collection using JSONPath"
+              }
+            ]
+          },
+          "docs": "List or find ApiProductOrder objects"
+        },
+        {
+          "info": {
+            "name": "Creates a ApiProductOrder",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{apiRoot}/openGatewayOperateAPIOnboardingAndOrdering/v5/apiProductOrder",
+            "params": [
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated properties to be provided in response"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "This operation creates a ApiProductOrder entity."
+        },
+        {
+          "info": {
+            "name": "Retrieves a ApiProductOrder by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{apiRoot}/openGatewayOperateAPIOnboardingAndOrdering/v5/apiProductOrder/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the Resource"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated properties to be provided in response"
+              }
+            ]
+          },
+          "docs": "This operation retrieves a ApiProductOrder entity. Attribute selection enabled for all first level attributes."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "application",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List or find Application objects",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{apiRoot}/openGatewayOperateAPIOnboardingAndOrdering/v5/application",
+            "params": [
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated properties to be provided in response"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Requested index for start of resources to be provided in response"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Requested number of resources to be provided in response"
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "An opaque string value representing the page results before the cursor value"
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "An opaque string value representing the page results after the cursor value"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "The default direction is Ascending order, the use of the modifier in front of the sort field name, “-“, changes the sort order direction."
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter a collection using JSONPath"
+              }
+            ]
+          },
+          "docs": "List or find Application objects"
+        },
+        {
+          "info": {
+            "name": "Creates a Application",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{apiRoot}/openGatewayOperateAPIOnboardingAndOrdering/v5/application",
+            "params": [
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated properties to be provided in response"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "This operation creates a Application entity."
+        },
+        {
+          "info": {
+            "name": "Retrieves a Application by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{apiRoot}/openGatewayOperateAPIOnboardingAndOrdering/v5/application/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the Resource"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated properties to be provided in response"
+              }
+            ]
+          },
+          "docs": "This operation retrieves a Application entity. Attribute selection enabled for all first level attributes."
+        },
+        {
+          "info": {
+            "name": "Updates partially a Application",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{apiRoot}/openGatewayOperateAPIOnboardingAndOrdering/v5/application/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the Resource"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated properties to be provided in response"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "This operation updates partially a Application entity."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "applicationOwner",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List or find ApplicationOwner objects",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{apiRoot}/openGatewayOperateAPIOnboardingAndOrdering/v5/applicationOwner",
+            "params": [
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated properties to be provided in response"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Requested index for start of resources to be provided in response"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Requested number of resources to be provided in response"
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "An opaque string value representing the page results before the cursor value"
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "An opaque string value representing the page results after the cursor value"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "The default direction is Ascending order, the use of the modifier in front of the sort field name, “-“, changes the sort order direction."
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter a collection using JSONPath"
+              }
+            ]
+          },
+          "docs": "List or find ApplicationOwner objects"
+        },
+        {
+          "info": {
+            "name": "Creates a ApplicationOwner",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{apiRoot}/openGatewayOperateAPIOnboardingAndOrdering/v5/applicationOwner",
+            "params": [
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated properties to be provided in response"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "This operation creates a ApplicationOwner entity."
+        },
+        {
+          "info": {
+            "name": "Retrieves a ApplicationOwner by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{apiRoot}/openGatewayOperateAPIOnboardingAndOrdering/v5/applicationOwner/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the Resource"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated properties to be provided in response"
+              }
+            ]
+          },
+          "docs": "This operation retrieves a ApplicationOwner entity. Attribute selection enabled for all first level attributes."
+        },
+        {
+          "info": {
+            "name": "Updates partially a ApplicationOwner",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{apiRoot}/openGatewayOperateAPIOnboardingAndOrdering/v5/applicationOwner/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the Resource"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated properties to be provided in response"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "This operation updates partially a ApplicationOwner entity."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "events subscription",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a subscription (hub) to receive Events",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{apiRoot}/openGatewayOperateAPIOnboardingAndOrdering/v5/hub",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sets the communication endpoint to receive Events."
+        },
+        {
+          "info": {
+            "name": "Retrieve a subscription (hub)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{apiRoot}/openGatewayOperateAPIOnboardingAndOrdering/v5/hub/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the Resource"
+              }
+            ]
+          },
+          "docs": "This operation retrieves the subscription to receive Events."
+        },
+        {
+          "info": {
+            "name": "Remove a subscription (hub) to receive Events",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{apiRoot}/openGatewayOperateAPIOnboardingAndOrdering/v5/hub/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the Resource"
+              }
+            ]
+          },
+          "docs": "This operation removes the subscription to receive Events."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "notification listener",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Client listener for entity ApiProductOrderAttributeValueChangeEvent",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{apiRoot}/openGatewayOperateAPIOnboardingAndOrdering/v5/listener/apiProductOrderAttributeValueChangeEvent",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Example of a client listener for receiving the notification ApiProductOrderAttributeValueChangeEvent"
+        },
+        {
+          "info": {
+            "name": "Client listener for entity ApiProductOrderCreateEvent",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{apiRoot}/openGatewayOperateAPIOnboardingAndOrdering/v5/listener/apiProductOrderCreateEvent",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Example of a client listener for receiving the notification ApiProductOrderCreateEvent"
+        },
+        {
+          "info": {
+            "name": "Client listener for entity ApiProductOrderStateChangeEvent",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{apiRoot}/openGatewayOperateAPIOnboardingAndOrdering/v5/listener/apiProductOrderStateChangeEvent",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Example of a client listener for receiving the notification ApiProductOrderStateChangeEvent"
+        },
+        {
+          "info": {
+            "name": "Client listener for entity ApplicationApprovalStatusChangeEvent",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{apiRoot}/openGatewayOperateAPIOnboardingAndOrdering/v5/listener/applicationApprovalStatusChangeEvent",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Example of a client listener for receiving the notification ApplicationApprovalStatusChangeEvent"
+        },
+        {
+          "info": {
+            "name": "Client listener for entity ApplicationAttributeValueChangeEvent",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{apiRoot}/openGatewayOperateAPIOnboardingAndOrdering/v5/listener/applicationAttributeValueChangeEvent",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Example of a client listener for receiving the notification ApplicationAttributeValueChangeEvent"
+        },
+        {
+          "info": {
+            "name": "Client listener for entity ApplicationCreateEvent",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{apiRoot}/openGatewayOperateAPIOnboardingAndOrdering/v5/listener/applicationCreateEvent",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Example of a client listener for receiving the notification ApplicationCreateEvent"
+        },
+        {
+          "info": {
+            "name": "Client listener for entity ApplicationOwnerApprovalStatusChangeEvent",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{apiRoot}/openGatewayOperateAPIOnboardingAndOrdering/v5/listener/applicationOwnerApprovalStatusChangeEvent",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Example of a client listener for receiving the notification ApplicationOwnerApprovalStatusChangeEvent"
+        },
+        {
+          "info": {
+            "name": "Client listener for entity ApplicationOwnerAttributeValueChangeEvent",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{apiRoot}/openGatewayOperateAPIOnboardingAndOrdering/v5/listener/applicationOwnerAttributeValueChangeEvent",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Example of a client listener for receiving the notification ApplicationOwnerAttributeValueChangeEvent"
+        },
+        {
+          "info": {
+            "name": "Client listener for entity ApplicationOwnerCreateEvent",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{apiRoot}/openGatewayOperateAPIOnboardingAndOrdering/v5/listener/applicationOwnerCreateEvent",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Example of a client listener for receiving the notification ApplicationOwnerCreateEvent"
+        },
+        {
+          "info": {
+            "name": "Client listener for entity MonitorStateChangeEvent",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{apiRoot}/openGatewayOperateAPIOnboardingAndOrdering/v5/listener/monitorStateChangeEvent",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Example of a client listener for receiving the notification MonitorStateChangeEvent"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "monitor",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List or find Monitor objects",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{apiRoot}/openGatewayOperateAPIOnboardingAndOrdering/v5/monitor",
+            "params": [
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated properties to be provided in response"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Requested index for start of resources to be provided in response"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Requested number of resources to be provided in response"
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "An opaque string value representing the page results before the cursor value"
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "An opaque string value representing the page results after the cursor value"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "The default direction is Ascending order, the use of the modifier in front of the sort field name, “-“, changes the sort order direction."
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter a collection using JSONPath"
+              }
+            ]
+          },
+          "docs": "List or find Monitor objects"
+        },
+        {
+          "info": {
+            "name": "Retrieves a Monitor by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{apiRoot}/openGatewayOperateAPIOnboardingAndOrdering/v5/monitor/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the Resource"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated properties to be provided in response"
+              }
+            ]
+          },
+          "docs": "This operation retrieves a Monitor entity. Attribute selection enabled for all first level attributes."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

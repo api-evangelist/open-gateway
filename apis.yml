@@ -19,6 +19,18 @@ description: 'GSMA Open Gateway is the mobile industry''s operator-commitment an
   partners covering 292 networks and about 80 percent of global mobile connections have signed, with 237
   certified API assets drawn from 33 CAMARA tagged released APIs and 280 API instances commercially launched
   across 85 networks in 50 markets.'
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 tags:
 - Telecommunications
@@ -1816,6 +1828,9 @@ apis:
   - type: APIReference
     url: https://github.com/tmforum-apis/TMF931_OpenGatewayOnboardingAndOrderingComponentSuite
 common:
+- type: CapabilityMap
+  url: capabilities/open-gateway-capability-edges.yml
+  name: GSMA Open Gateway Business Capability Map
 - type: Overlay
   url: overlays/open-gateway-camara-number-verification-overlay.yaml
 - type: Overlay

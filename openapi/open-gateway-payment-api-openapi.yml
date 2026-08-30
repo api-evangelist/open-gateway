@@ -1,0 +1,611 @@
+openapi: 3.2.0
+info:
+  description: "Service Enabling Payments against Operator Carrier Billing Systems\n\n# Introduction\n\nThe Carrier Billing API provides programmable interface for developers and other users (capabilities consumers) to charge an amount on a mobile line.\nIt can be easily integrated and allows end-users to buy digital content in an easy & secured way. The API provides management of a payment entity and its associated lifecycle.\n\n# Relevant terms and definitions\n\n- **Carrier Billing**:\nAn online payment process which allows users to make purchases by charging payments against Telco Operator Billing Systems, accordingly to the user's configuration in the Telco Operator. In a common usage in the industry, the payment is processed on current account balance or charged on next bill generated for this line.\n\n- **Payment**:\nThe process of paying for a (set of) good(s)/service(s).\n\n- **1-STEP Payment**:\nPayment process performed in one phase (i.e. one action), that involves all the Telco Operator Carrier Billing Systems checking and trigger the charging request against Billing Systems.\n\n- **2-STEP Payment**:\nPayment process performed in two phases (i.e. two actions). First action deals with payment preparation request to guarantee the reservation of the involved amount. Second action is an explicit confirmation or cancellation of the payment by the user. Any payment not confirmed/cancelled by a given user is discarded after some time in order to avoid inconsistency in the billing systems.\n\n# API Functionality\n\nThis API allows to third party clients to request the payment of a (set of) digital good(s)/service(s), as well as to retrieve information about a specific payment or a list of payments.\n\nIn the scope of **version v0.5rc1, only one-off payments are covered**. Recurrent payments (a.k.a. payment subscriptions) are not covered so far.\n\nThe API provides several endpoints/operations:\n- An endpoint to request a 1-STEP Payment, named `createPayment`.\n- A set of endpoints to request a 2-STEP Payment:\n  - One endpoint to setup the payment reservation, named `preparePayment`.\n  - A couple of endpoints to confirm/cancel such payment reservation, named `confirmPayment` and `cancelPayment` respectively.\n- A set of endpoints to retrieve information about a list of payments or a specific payment (identified by its specific `paymentId`), named `retrievePayments` and `retrievePayment` respectively.\n- A callback endpoint where API Server can send notifications about a payment procedure, as defined within `createPayment` and `preparePayment` operations, towards the `sink` when provided by API client.\n\nThe usage of the API is based on Payment resource, which can be created (in 1-STEP or 2-STEP Payment process), confirmed/cancelled (for 2-STEP Payment process), and queried/retrieved (list of payments or a specific payment).\n\nBefore starting to use the API, the developer needs to know about the below specified details:\n- **Payment service endpoint**: The URL pointing to the RESTful resource of the payment API. As 1-STEP and 2-STEP processes are managed, 2 separate tags _`One Step Payment`_ and _`Two Step Payment`_ have been defined to explicitly distinguish them in the API specification. A third tag _`Payment`_ is defined for common operations in both processes (query/retrieve list of payments or a specific payment).\n- **1-STEP & 2-STEP Payment**:\n  - **1-STEP Payment**: The request intent is to charge an amount to the mobile line. When the server receives the request, it will check the user account associated with this line and, if nothing prevents it, the amount is charged and will be either bill in next invoice or removed from current line credit/balance.\n  - **2-STEP Payment**: The first call is to request a payment preparation, which implies an amount reservation. The amount is not charged and the server has to be ready to get a confirmation or a cancellation to perform the payment. Only when the confirmation is done, payment is charged. Depending on business rules of the Telco operator, a `prepared` payment could expire after a defined delay.\n- **Notification URL**: Developers may provide a callback URL (`sink` param) on which status change notifications, regarding the payment, can be received from the Telco Operator. This is an optional parameter.\n\nFollowing diagram shows the API resources operation sequencing:\n![PaymentSequence](https://raw.githubusercontent.com/camaraproject/CarrierBillingCheckOut/r3.2/documentation/API_documentation/resources/Carrier_Billing_sequence_diagram.png)\n\nFollow picture provides information about the payment state engine (state description & transition):\n![Payment State Engine](https://raw.githubusercontent.com/camaraproject/CarrierBillingCheckOut/r3.2/documentation/API_documentation/resources/Carrier_Billing_State_Engine.JPG)\n\nState transitions:\n\n**1-STEP Payment**\n\nIf `createPayment` is a **SYNC** process:\n- Response contains `paymentId` and paymentStatus=`succeeded`.\n- In case of any error scenario `paymentId` is not created.\n\nIf `createPayment` is an **ASYNC** process:\n- Response contains `paymentId` and paymentStatus=`processing`. After completion:\n  - When payment is successfully completed then paymentStatus=`succeeded`.\n  - When payment is not successfully performed then paymentStatus=`denied`.\n- In case of any error scenario `paymentId` is not created.\n\n**2-STEP Payment**\n\nFIRST STEP\n\nIf `preparePayment` is a **SYNC** process:\n- **Case A** - `validationInfo` is NOT provided in response.\n  - Response contains `paymentId` and paymentStatus=`reserved`.\n- **Case B** - `validationInfo` is provided in response.\n  - Response contains `paymentId` and paymentStatus=`pending_validation`.\n- In case of any error scenario `paymentId` is not created.\n\nIf `preparePayment` is an **ASYNC** process:\n- **Case A** - `validationInfo` is NOT provided in response.\n  - Response contains `paymentId` and paymentStatus=`processing`. After completion:\n    - When payment preparation is successfully completed then paymentStatus=`reserved`.\n    - When payment preparation is not successfully performed then paymentStatus=`denied`.\n- **Case B** - `validationInfo` is provided in response.\n  - Response contains `paymentId` and paymentStatus=`processing`. After completion:\n    - When payment preparation is successfully completed then paymentStatus=`pending_validation`. [1]\n    - When payment preparation is not successfully performed then paymentStatus=`denied`.\n- In case of any error scenario `paymentId` is not created.\n\n[OPTIONAL] VALIDATE STEP [1]\n\nAfter `validatePayment`, paymentStatus=`reserved` OR `denied`, depending whether it was successful or not.\n\nSECOND STEP\n\nAfter `confirmPayment`, paymentStatus=`succeeded` OR `denied`, depending whether it was successful or not.\n\nAfter `cancelPayment`, paymentStatus=`cancelled`.\n\n# Generic Clarification about optional parameters\n\nRegarding optional parameters, they can be conditionally mandatory for a Telco Operator to implement them based on business scenarios or applicable regulations in a given market.\n\nNOTE: Within a given market, in a multi Telco Operator ecosystem, the set of optional parameters to be implemented MUST be aligned among involved Telco Operators.\n\n# Authorization and authentication\n\nThe \"Camara Security and Interoperability Profile\" provides details of how an API consumer requests an access token. Please refer to Identity and Consent Management (https://github.com/camaraproject/IdentityAndConsentManagement/) for the released version of the profile.\n\nThe specific authorization flows to be used will be agreed upon during the onboarding process, happening between the API consumer and the API provider, taking into account the declared purpose for accessing the API, whilst also being subject to the prevailing legal framework dictated by local legislation.\n\nIn cases where personal data is processed by the API and users can exercise their rights through mechanisms such as opt-in and/or opt-out, the use of three-legged access tokens is mandatory. This ensures that the API remains in compliance with privacy regulations, upholding the principles of transparency and user-centric privacy-by-design.\n\n# Identifying the phone number from the access token\n\nThis API requires the API consumer to identify a phone number as the subject of the API as follows:\n- When the API is invoked using a two-legged access token, the subject will be identified from the optional `phoneNumber` field, which therefore MUST be provided.\n- When a three-legged access token is used however, this optional identifier MUST NOT be provided, as the subject will be uniquely identified from the access token.\n\nThis approach simplifies API usage for API consumers using a three-legged access token to invoke the API by relying on the information that is associated with the access token and was identified during the authentication process.\n\n## Error handling:\n\n- If the subject cannot be identified from the access token and the optional `phoneNumber` field is not included in the request, then the server will return an error with the `422 MISSING_IDENTIFIER` error code.\n\n- If the subject can be identified from the access token and the optional `phoneNumber` field is also included in the request, then the server will return an error with the `422 UNNECESSARY_IDENTIFIER` error code. This will be the case even if the same phone number is identified by these two methods, as the server is unable to make this comparison.\n\n# Additional CAMARA error responses\n\nThe list of error codes in this API specification is not exhaustive. Therefore the API specification may not document some non-mandatory error statuses as indicated in `CAMARA API Design Guide`.\n\nPlease refer to the `CAMARA_common.yaml` of the Commonalities Release associated to this API version for a complete list of error responses. The applicable Commonalities Release can be identified in the `API Readiness Checklist` document associated to this API version.\n\nAs a specific rule, error `501 - NOT_IMPLEMENTED` can be only a possible error response if it is explicitly documented in the API.\n\n# Further info and support\n\n(FAQs will be added in a later version of the documentation)"
+  version: 0.5.0
+  title: Carrier Billing Payment API
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  x-camara-commonalities: 0.6
+servers:
+- url: '{apiRoot}/carrier-billing/v0.5'
+  variables:
+    apiRoot:
+      default: http://localhost:9091
+      description: API root, defined by the service provider
+tags:
+- name: Payment
+  description: Operations to obtain information about payments
+paths:
+  /payments:
+    get:
+      security:
+      - openId:
+        - carrier-billing:payments:read
+      tags:
+      - Payment
+      summary: Get a list of payments
+      operationId: retrievePayments
+      description: 'Retrieve a list of payments and their details based on some filtering criteria.
+
+        Regardless the payment criteria provided, response MUST be always limited to payments performed by the API client (i.e same oAuth credentials) triggering this request.
+
+        This is to guarantee no API client can check payments performed by other, therefore avoiding any legal or privacy topic.
+
+
+        When Access Token is issued for a given user phone number, the list of payments returned would be only the ones associated to that user phone number and API client. When Access Token is not associated to a user phone number, therefore only associated to API client the list of payments returned would be all the ones managed by that API client.
+
+
+        Considerations regarding `paymentCreationDate.gte`, `paymentCreationDate.lte`:
+
+        - If both included, return payments in that date range
+
+        - If no one included, no filtering by date range is applied
+
+        - If only settled `paymentCreationDate.gte`, `paymentCreationDate.lte` is considered current date-time
+
+        - If only settled `paymentCreationDate.lte`, every payment existing in the Operator billing system until such date is returned'
+      parameters:
+      - $ref: '#/components/parameters/x-correlator'
+      - $ref: '#/components/parameters/Page'
+      - $ref: '#/components/parameters/PerPage'
+      - $ref: '#/components/parameters/StartPaymentCreationDate'
+      - $ref: '#/components/parameters/EndPaymentCreationDate'
+      - $ref: '#/components/parameters/Order'
+      - $ref: '#/components/parameters/PaymentStatus'
+      - $ref: '#/components/parameters/MerchantIdentifier'
+      responses:
+        '200':
+          description: OK
+          headers:
+            x-correlator:
+              $ref: '#/components/headers/x-correlator'
+            Content-Last-Key:
+              $ref: '#/components/headers/Content-Last-Key'
+            X-Total-Count:
+              $ref: '#/components/headers/X-Total-Count'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentArray'
+        '400':
+          $ref: '#/components/responses/GetPaymentsInvalid400'
+        '401':
+          $ref: '#/components/responses/Generic401'
+        '403':
+          $ref: '#/components/responses/Generic403'
+        '429':
+          $ref: '#/components/responses/Generic429'
+  /payments/{paymentId}:
+    get:
+      security:
+      - openId:
+        - carrier-billing:payments:read
+      tags:
+      - Payment
+      summary: Get payment details
+      operationId: retrievePayment
+      description: 'Retrieve payment details for a given payment.
+
+
+        When Access Token is issued for a given user phone number, the payment details would be returned in case the `paymentId` is associated to that user phone number and API client, otherwise `404 NOT_FOUND` will be returned. When Access Token is not associated to a user phone number, the payment details are returned in case the API client managed that payment.'
+      parameters:
+      - name: paymentId
+        in: path
+        description: Payment identifier that was obtained from the create payment operation
+        required: true
+        schema:
+          type: string
+      - $ref: '#/components/parameters/x-correlator'
+      responses:
+        '200':
+          description: OK
+          headers:
+            x-correlator:
+              $ref: '#/components/headers/x-correlator'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Payment'
+        '400':
+          $ref: '#/components/responses/Generic400'
+        '401':
+          $ref: '#/components/responses/Generic401'
+        '403':
+          $ref: '#/components/responses/Generic403'
+        '404':
+          $ref: '#/components/responses/Generic404'
+        '429':
+          $ref: '#/components/responses/Generic429'
+components:
+  headers:
+    X-Total-Count:
+      description: Total number of items matching criteria
+      schema:
+        type: integer
+    Content-Last-Key:
+      description: Indicates the index of the last result provided in the response
+      schema:
+        type: integer
+    x-correlator:
+      description: Correlation id for the different services
+      schema:
+        $ref: '#/components/schemas/XCorrelator'
+  parameters:
+    x-correlator:
+      name: x-correlator
+      in: header
+      description: Correlation id for the different services
+      schema:
+        $ref: '#/components/schemas/XCorrelator'
+    Order:
+      description: Used to return the sorted results in descending (default) or ascending order, based on `paymentCreationDate` property
+      in: query
+      name: order
+      required: false
+      schema:
+        default: desc
+        enum:
+        - desc
+        - asc
+        type: string
+    StartPaymentCreationDate:
+      description: Initial `paymentCreationDate` for running the query. It must follow [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339#section-5.6) and must have time zone.
+      in: query
+      name: paymentCreationDate.gte
+      required: false
+      schema:
+        format: date-time
+        type: string
+    MerchantIdentifier:
+      description: Merchant identifier to filter the results
+      in: query
+      name: merchantIdentifier
+      required: false
+      schema:
+        type: string
+    PaymentStatus:
+      description: List of payment status to be considered for the query
+      in: query
+      name: paymentStatus
+      required: false
+      schema:
+        type: array
+        items:
+          type: string
+          enum:
+          - processing
+          - pending_validation
+          - denied
+          - reserved
+          - succeeded
+          - cancelled
+    PerPage:
+      name: perPage
+      in: query
+      description: Requested number of resources to be provided in response
+      schema:
+        type: integer
+        default: 10
+    Page:
+      name: page
+      in: query
+      description: Requested index to indicate the start of the resources to be provided in the response
+      schema:
+        type: integer
+        default: 1
+    EndPaymentCreationDate:
+      description: End `paymentCreationDate` for running the query. It must follow [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339#section-5.6) and must have time zone.
+      in: query
+      name: paymentCreationDate.lte
+      required: false
+      schema:
+        format: date-time
+        type: string
+  schemas:
+    XCorrelator:
+      type: string
+      pattern: ^[a-zA-Z0-9-_:;.\/<>{}]{0,256}$
+      example: b4333c46-49c0-4f62-80d7-f0ef930f1c46
+    PaymentDetails:
+      type: array
+      description: Detailed description of the concepts/items considered within a specific payment procedure.
+      minItems: 1
+      items:
+        $ref: '#/components/schemas/PaymentItem'
+    ChargingMetaData:
+      type: object
+      properties:
+        merchantName:
+          type: string
+          description: Indicates the merchant name. Allows aggregators/partners to specify the actual merchant name
+          example: EA Sports
+        merchantIdentifier:
+          type: string
+          description: Indicates the merchant identifier. Allows aggregators/partners to specify the actual merchant identifier
+          example: eas-12345
+        fee:
+          type: number
+          format: float
+          multipleOf: 0.01
+          description: Percentage of the amount to be received by the requester
+          example: 10
+        purchaseCategoryCode:
+          type: string
+          description: A category defining the type of service, product or media being purchased
+          example: games
+        channel:
+          type: string
+          description: The channel over which the requester is interacting with the merchant (e.g. WAP, Web, SMS...)
+          example: web
+        serviceId:
+          type: string
+          description: The identifier of the partner/merchant service being purchased
+          example: games-online
+        productId:
+          type: string
+          description: The product identifier to be combined with the `serviceId` to uniquely identify the product being purchased. For example if the `serviceId` relates to a VOD service, the `productId` can specify the movie rented
+          example: '138235321'
+    AmountTransaction:
+      required:
+      - phoneNumber
+      - paymentAmount
+      - referenceCode
+      type: object
+      properties:
+        phoneNumber:
+          type: string
+          description: 'Identifies the mobile account to be charged.
+
+
+            A public identifier addressing a telephone subscription. In mobile networks it corresponds to the MSISDN (Mobile Station International Subscriber Directory Number). In order to be globally unique it has to be formatted in international format, according to E.164 standard, prefixed with ''+''.'
+          pattern: ^\+[1-9][0-9]{4,14}$
+          example: '+34671999000'
+        clientCorrelator:
+          type: string
+          description: Uniquely identifies this create payment request. If there is a communication failure during the payment request, using the same clientCorrelator when retrying the request allows the operator to avoid applying the same charge twice. This field SHOULD be present. Same value as indicated in the request.
+          example: req-12f2pgh448gh2hvrfrv
+        paymentAmount:
+          $ref: '#/components/schemas/PaymentAmountForCharge'
+        referenceCode:
+          type: string
+          description: Merchant generated payment reference to uniquely identify the request, for instance, in the case of disputes. Same value as the one provided in the request.
+          example: ref-pay-834tfr2rA3v8r8vr3rv
+        resourceURL:
+          type: string
+          description: URI of the created resource (same as in the Location header)
+          example: urn:payments:AK234rfweSBuWGFUEWFGWEVWRV
+        serverReferenceCode:
+          type: string
+          description: Reference to the charge or refund, provided by the server, and meaningful to the server’s backend system for the purpose of reconciliation.
+          example: ref-pay-834tfr2rA3v8r8vr3rv-serv
+    ErrorInfo:
+      type: object
+      required:
+      - status
+      - code
+      - message
+      properties:
+        status:
+          type: integer
+          description: HTTP response status code
+        code:
+          type: string
+          description: A human-readable code to describe the error
+        message:
+          type: string
+          description: A human-readable description of what the event represents
+    PaymentArray:
+      description: A list of payment(s)
+      type: array
+      minItems: 0
+      items:
+        $ref: '#/components/schemas/Payment'
+    ChargingInformation:
+      type: object
+      required:
+      - amount
+      - currency
+      - description
+      properties:
+        amount:
+          type: number
+          format: float
+          multipleOf: 0.001
+          minimum: 0.001
+          description: Amount to be charged or reserved.
+          example: 100
+        currency:
+          type: string
+          description: Currency code in which amount is expressed as defined in [ISO 4217](https://www.iso.org/iso-4217-currency-codes.html).
+          example: EUR
+        description:
+          type: string
+          description: Description text to be used for information and billing text
+          example: FIFA EA Sports 24
+        isTaxIncluded:
+          type: boolean
+          default: false
+          description: If true, the `amount` is tax included, if false the `amount` is provided without tax. In both cases, `taxAmount` could be indicated to provide tax amount.
+        taxAmount:
+          type: number
+          format: float
+          multipleOf: 0.001
+          minimum: 0
+          description: 'The tax amount charged by the merchant. Indicated when the merchant is the one applying taxes. This field also provides an indicator to the downstream billing system.
+
+            '
+          example: 21
+    PaymentItem:
+      type: object
+      required:
+      - id
+      - amount
+      - currency
+      - description
+      properties:
+        id:
+          type: string
+          description: Unique payment item identifier. Relevant to uniquely identify an item within a given payment when `paymentDetails` are provided and also to correlate information when a refund regarding this item is performed, by means of using `refundDetails`.
+          example: 3goug3uvu32v3b
+        amount:
+          type: number
+          format: float
+          multipleOf: 0.001
+          minimum: 0.001
+          description: Specific amount to be charged or reserved referred to a specific item.
+          example: 100
+        currency:
+          type: string
+          description: Currency code in which amount is expressed as defined in [ISO 4217](https://www.iso.org/iso-4217-currency-codes.html).
+          example: EUR
+        description:
+          type: string
+          description: Description text to be used for information and billing text referred to a specific item.
+          example: FIFA EA Sports 24
+        isTaxIncluded:
+          type: boolean
+          default: false
+          description: If true, the `amount` is tax included, if false the `amount` is provided without tax. In both cases, `taxAmount` could be indicated to provide tax amount.
+        taxAmount:
+          type: number
+          format: float
+          multipleOf: 0.001
+          minimum: 0
+          description: 'The tax amount charged by the merchant. Indicated when the merchant is the one applying taxes. This field also provides an indicator to the downstream billing system.
+
+            '
+          example: 21
+    PaymentAmountForCharge:
+      type: object
+      required:
+      - chargingInformation
+      properties:
+        chargingInformation:
+          $ref: '#/components/schemas/ChargingInformation'
+        chargingMetaData:
+          $ref: '#/components/schemas/ChargingMetaData'
+        paymentDetails:
+          $ref: '#/components/schemas/PaymentDetails'
+    Payment:
+      type: object
+      required:
+      - amountTransaction
+      - paymentId
+      - paymentStatus
+      - paymentCreationDate
+      properties:
+        paymentId:
+          type: string
+          description: Unique Identifier of the payment
+          example: AK234rfweSBuWGFUEWFGWEVWRV
+        amountTransaction:
+          $ref: '#/components/schemas/AmountTransaction'
+        paymentStatus:
+          type: string
+          description: Specifies the payment status (`processing`, `pending_validation`, `denied`, `reserved`, `succeeded`, `cancelled`).
+          example: processing
+        paymentCreationDate:
+          type: string
+          format: date-time
+          description: Date time when the payment is created in server database. This is a technical information. It must follow [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339#section-5.6) and must have time zone.
+        paymentDate:
+          type: string
+          format: date-time
+          description: Date time when the payment is effectively performed. This is a business information. It must follow [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339#section-5.6) and must have time zone.
+        sink:
+          type: string
+          format: uri
+          pattern: ^https:\/\/.+$
+          description: The address to which events shall be delivered, using the HTTP protocol.
+          example: https://endpoint.example.com/sink
+  responses:
+    GetPaymentsInvalid400:
+      description: "Invalid input. In addition to regular INVALID_ARGUMENT scenario other scenarios may exist:\n  - Inconsistent paymentCreationDate.gte and paymentCreationDate.lte values (\"code\": \"CARRIER_BILLING.INVALID_DATE_RANGE\",\"message\": \"Client specified an invalid date range\").\n  - Request out of range (\"code\": \"OUT_OF_RANGE\",\"message\": \"Client specified an invalid range\").\n  - Too many matching records found (\"code\": \"CARRIER_BILLING.TOO_MANY_MATCHING_RECORDS\",\"message\": \"Too many matching records found. Specify additional/suitable criteria to limit the number of records.\")."
+      headers:
+        x-correlator:
+          $ref: '#/components/headers/x-correlator'
+      content:
+        application/json:
+          schema:
+            allOf:
+            - $ref: '#/components/schemas/ErrorInfo'
+            - type: object
+              properties:
+                status:
+                  enum:
+                  - 400
+                code:
+                  enum:
+                  - INVALID_ARGUMENT
+                  - OUT_OF_RANGE
+                  - CARRIER_BILLING.INVALID_DATE_RANGE
+                  - CARRIER_BILLING.TOO_MANY_MATCHING_RECORDS
+          examples:
+            GENERIC_400_INVALID_ARGUMENT:
+              summary: Generic Invalid Argument
+              description: Invalid Argument. Generic Syntax Exception
+              value:
+                status: 400
+                code: INVALID_ARGUMENT
+                message: Client specified an invalid argument, request body or query param.
+            GENERIC_400_INVALID_DATE_RANGE:
+              summary: Generic Invalid Date Range
+              description: Inconsistent paymentCreationDate.gte and paymentCreationDate.lte values
+              value:
+                status: 400
+                code: CARRIER_BILLING.INVALID_DATE_RANGE
+                message: Client specified an invalid date range.
+            GENERIC_400_OUT_OF_RANGE:
+              summary: Generic Out Of Range
+              description: Out of Range. Specific Syntax Exception used when a given field has a pre-defined range or a invalid filter criteria combination is requested
+              value:
+                status: 400
+                code: OUT_OF_RANGE
+                message: Client specified an invalid range.
+            GENERIC_400_TOO_MANY_MATCHING_RECORDS:
+              summary: Generic Too Many Matching Records
+              description: Too many matching records found
+              value:
+                status: 400
+                code: CARRIER_BILLING.TOO_MANY_MATCHING_RECORDS
+                message: Too many matching records found. Specify additional/suitable criteria to limit the number of records.
+    Generic401:
+      description: Unauthorized
+      headers:
+        x-correlator:
+          $ref: '#/components/headers/x-correlator'
+      content:
+        application/json:
+          schema:
+            allOf:
+            - $ref: '#/components/schemas/ErrorInfo'
+            - type: object
+              properties:
+                status:
+                  enum:
+                  - 401
+                code:
+                  enum:
+                  - UNAUTHENTICATED
+          examples:
+            GENERIC_401_UNAUTHENTICATED:
+              description: Request cannot be authenticated and a new authentication is required
+              value:
+                status: 401
+                code: UNAUTHENTICATED
+                message: Request not authenticated due to missing, invalid, or expired credentials. A new authentication is required.
+    Generic403:
+      description: Forbidden
+      headers:
+        x-correlator:
+          $ref: '#/components/headers/x-correlator'
+      content:
+        application/json:
+          schema:
+            allOf:
+            - $ref: '#/components/schemas/ErrorInfo'
+            - type: object
+              properties:
+                status:
+                  enum:
+                  - 403
+                code:
+                  enum:
+                  - PERMISSION_DENIED
+          examples:
+            GENERIC_403_PERMISSION_DENIED:
+              description: Permission denied. OAuth2 token access does not have the required scope or when the user fails operational security
+              value:
+                status: 403
+                code: PERMISSION_DENIED
+                message: Client does not have sufficient permissions to perform this action.
+    Generic429:
+      description: Too Many Requests
+      headers:
+        x-correlator:
+          $ref: '#/components/headers/x-correlator'
+      content:
+        application/json:
+          schema:
+            allOf:
+            - $ref: '#/components/schemas/ErrorInfo'
+            - type: object
+              properties:
+                status:
+                  enum:
+                  - 429
+                code:
+                  enum:
+                  - TOO_MANY_REQUESTS
+          examples:
+            GENERIC_429_TOO_MANY_REQUESTS:
+              summary: Generic Too Many Requests
+              description: Access to the API has been temporarily blocked due to rate or spike arrest limits being reached
+              value:
+                status: 429
+                code: TOO_MANY_REQUESTS
+                message: Rate limit reached.
+    Generic404:
+      description: Resource Not Found
+      headers:
+        x-correlator:
+          $ref: '#/components/headers/x-correlator'
+      content:
+        application/json:
+          schema:
+            allOf:
+            - $ref: '#/components/schemas/ErrorInfo'
+            - type: object
+              properties:
+                status:
+                  enum:
+                  - 404
+                code:
+                  enum:
+                  - NOT_FOUND
+          examples:
+            GENERIC_404_NOT_FOUND:
+              summary: Generic Not Found
+              description: Resource is not found
+              value:
+                status: 404
+                code: NOT_FOUND
+                message: The specified resource is not found.
+    Generic400:
+      description: Bad Request
+      headers:
+        x-correlator:
+          $ref: '#/components/headers/x-correlator'
+      content:
+        application/json:
+          schema:
+            allOf:
+            - $ref: '#/components/schemas/ErrorInfo'
+            - type: object
+              properties:
+                status:
+                  enum:
+                  - 400
+                code:
+                  enum:
+                  - INVALID_ARGUMENT
+          examples:
+            GENERIC_400_INVALID_ARGUMENT:
+              summary: Generic Invalid Argument
+              description: Invalid Argument. Generic Syntax Exception
+              value:
+                status: 400
+                code: INVALID_ARGUMENT
+                message: Client specified an invalid argument, request body or query param.
+  securitySchemes:
+    openId:
+      type: openIdConnect
+      openIdConnectUrl: https://example.com/.well-known/openid-configuration
+    notificationsBearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: '{$request.body#/sinkCredential.credentialType}'
+externalDocs:
+  description: Product documentation at Camara
+  url: https://github.com/camaraproject/CarrierBillingCheckOut

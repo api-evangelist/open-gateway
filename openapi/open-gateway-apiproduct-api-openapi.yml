@@ -1,0 +1,1857 @@
+openapi: 3.2.0
+info:
+  title: Open Gateway Operate API Onboarding and Ordering API Product API
+  description: "**TMF931 - API Ordering, Developer & Application Onboarding and Management**   \n\nThis Operate API specification covers the onboarding operations between Channel Partners and Operators as described by GSMA. It offers a consolidation of multiple TM Forum based APIs into a single specification (a component suite). This API specification proposes : \n- Application Owner (Developer) Management (acceptance, onboarding, lifecycle management)  \n- Application Management (acceptance, onboarding, lifecycle management)  \n- Service API Management (ordering, retrieving)\n\nThis API is a composite DCS (Domain Context Specialization) of the following TMF Open APIs for Open Gateway context\n- TMF622 Product Ordering Management v5.0\n- TMF637 Product Inventory Management v5.0\n- TMF669 Party Role Management v5.0\n- TMF639 Resource Inventory v5.0\n\nCopyright © TM Forum 2025. All Rights Reserved\n"
+  version: 5.2.1
+  x-generation-tooling-version: v8.5.15
+  x-generation-data-model-version: unknown
+  x-generation-date: '2025-12-11T09:49:01.463Z'
+  x-api-id: TMF931
+  license:
+    name: Apache License 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+- url: '{apiRoot}/openGatewayOperateAPIOnboardingAndOrdering/v5/'
+  variables:
+    apiRoot:
+      default: https://serverRoot/tmf-api/openGatewayOperateAPIOnboardingAndOrdering/v5
+      enum:
+      - https://serverRoot/tmf-api/openGatewayOperateAPIOnboardingAndOrdering/v5
+tags:
+- name: apiProduct
+  description: Operations for ApiProduct Resource
+paths:
+  /apiProduct:
+    get:
+      tags:
+      - apiProduct
+      summary: List or find ApiProduct objects
+      description: List or find ApiProduct objects
+      operationId: listApiProduct
+      parameters:
+      - $ref: '#/components/parameters/Fields'
+      - $ref: '#/components/parameters/Offset'
+      - $ref: '#/components/parameters/Limit'
+      - $ref: '#/components/parameters/Before'
+      - $ref: '#/components/parameters/After'
+      - $ref: '#/components/parameters/Sort'
+      - $ref: '#/components/parameters/Filter'
+      responses:
+        '200':
+          $ref: '#/components/responses/200ApiProductArray'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '405':
+          $ref: '#/components/responses/405'
+        '500':
+          $ref: '#/components/responses/500'
+        '501':
+          $ref: '#/components/responses/501'
+        '503':
+          $ref: '#/components/responses/503'
+  /apiProduct/{id}:
+    get:
+      tags:
+      - apiProduct
+      summary: Retrieves a ApiProduct by ID
+      description: This operation retrieves a ApiProduct entity. Attribute selection enabled for all first level attributes.
+      operationId: retrieveApiProduct
+      parameters:
+      - $ref: '#/components/parameters/Id'
+      - $ref: '#/components/parameters/Fields'
+      responses:
+        '200':
+          $ref: '#/components/responses/200ApiProduct_Get'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '405':
+          $ref: '#/components/responses/405'
+        '500':
+          $ref: '#/components/responses/500'
+        '501':
+          $ref: '#/components/responses/501'
+        '503':
+          $ref: '#/components/responses/503'
+components:
+  schemas:
+    EntityRef:
+      allOf:
+      - $ref: '#/components/schemas/Extensible'
+      - $ref: '#/components/schemas/Addressable'
+      - type: object
+        description: Entity reference schema to be use for all entityRef class.
+        properties:
+          id:
+            type: string
+            description: The identifier of the referred entity.
+          href:
+            type: string
+            description: The URI of the referred entity.
+          name:
+            type: string
+            description: Name of the referred entity.
+          '@referredType':
+            type: string
+            description: The actual type of the target instance when needed for disambiguation.
+        required:
+        - id
+    DpvFrequencyType:
+      enum:
+      - dpv:ContinuousFrequency
+      - dpv:OftenFrequency
+      - dpv:SingularFrequency
+      - dpv:SporadicFrequency
+      type: string
+      description: Valid values for the data processing frequency based on W3C Data Privacy Vocabulary v2 https://w3c.github.io/dpv/2.0/dpv/
+    TargetProductSchema:
+      type: object
+      description: The reference object to the schema and type of target product which is described by product specification
+      properties:
+        '@type':
+          type: string
+          description: Class type of the target product
+        '@schemaLocation':
+          type: string
+          format: uri
+          description: This field provides a link to the schema describing the target product
+    Extensible:
+      type: object
+      description: Base Extensible schema for use in TMForum Open-APIs - When used for in a schema it means that the Entity described by the schema  MUST be extended with the @type
+      properties:
+        '@type':
+          type: string
+          description: When sub-classing, this defines the sub-class Extensible name
+        '@baseType':
+          type: string
+          description: When sub-classing, this defines the super-class
+        '@schemaLocation':
+          type: string
+          description: A URI to a JSON-Schema file that defines additional attributes and relationships
+      required:
+      - '@type'
+    PartyRef:
+      type: object
+      description: A Party reference
+      allOf:
+      - $ref: '#/components/schemas/EntityRef'
+      discriminator:
+        propertyName: '@type'
+        mapping:
+          PartyRef: '#/components/schemas/PartyRef'
+    DpvProcessingOperationType:
+      enum:
+      - dpv:Access
+      - dpv:Acquire
+      - dpv:Adapt
+      - dpv:Aggregate
+      - dpv:Align
+      - dpv:Alter
+      - dpv:Analyse
+      - dpv:Anonymise
+      - dpv:Assess
+      - dpv:Collect
+      - dpv:Combine
+      - dpv:Consult
+      - dpv:Copy
+      - dpv:CrossBorderTransfer
+      - dpv:Delete
+      - dpv:Derive
+      - dpv:Destruct
+      - dpv:Disclose
+      - dpv:DiscloseByTransmission
+      - dpv:Display
+      - dpv:Disseminate
+      - dpv:Download
+      - dpv:Erase
+      - dpv:Export
+      - dpv:Filter
+      - dpv:Format
+      - dpv:Generate
+      - dpv:Infer
+      - dpv:MakeAvailable
+      - dpv:Match
+      - dpv:Modify
+      - dpv:Monitor
+      - dpv:Move
+      - dpv:Observe
+      - dpv:Obtain
+      - dpv:Organise
+      - dpv:Profiling
+      - dpv:Pseudonymise
+      - dpv:Query
+      - dpv:Record
+      - dpv:Reformat
+      - dpv:Remove
+      - dpv:Restrict
+      - dpv:Retrieve
+      - dpv:Screen
+      - dpv:Share
+      - dpv:Store
+      - dpv:Structure
+      - dpv:Transfer
+      - dpv:Transform
+      - dpv:Transmit
+      - dpv:Use
+      type: string
+      description: Valid values for the data processing operation based on W3C Data Privacy Vocabulary v2 https://w3c.github.io/dpv/2.0/dpv/.
+    ISO31661Alpha2StandardIdentifier:
+      allOf:
+      - $ref: '#/components/schemas/Extensible'
+      - type: object
+        description: The corresponding identification of the resource in different standard, regulatory definitions. The standard specification identifier (e.g., ISO 3166-1 Alpha-2) and the corresponding value (e.g., BE) relevant to a particular resource.
+        properties:
+          value:
+            type: string
+            description: The value of the resource in the ISO 3166-1 Alpha 2 standard
+            pattern: '[A-Z]{2}'
+            example: GB
+      discriminator:
+        propertyName: '@type'
+        mapping:
+          ISO31661Alpha2StandardIdentifier: '#/components/schemas/ISO31661Alpha2StandardIdentifier'
+    Entity:
+      type: object
+      description: Base entity schema for use in TMForum Open-APIs. Property.
+      allOf:
+      - $ref: '#/components/schemas/Extensible'
+      - $ref: '#/components/schemas/Addressable'
+    ProductOfferingTermOrCondition:
+      allOf:
+      - $ref: '#/components/schemas/Extensible'
+      - type: object
+        description: Approved Terms or Conditions of the ProductOffering.
+        properties:
+          id:
+            type: string
+            description: Identifier of the ProductOfferingTermOrCondition.
+          name:
+            type: string
+            description: Identifier of the ProductOfferingTermOrCondition.
+          productOfferingTermOrConditionSpecRef:
+            $ref: '#/components/schemas/ProductOfferingTermOrConditionSpecRef'
+          productOfferingTermOrConditionApproval:
+            $ref: '#/components/schemas/ProductOfferingTermOrConditionApproval'
+          product:
+            $ref: '#/components/schemas/ProductRef'
+          applicationLegalBasisForInputData:
+            $ref: '#/components/schemas/DpvLegalBasisType'
+          process:
+            type: array
+            items:
+              $ref: '#/components/schemas/DpvProcess'
+            description: Lists all the operations or 'processing' performed on data by the data consumer.
+          purposeReason:
+            type: string
+            description: Explain the reason justifying the purpose, indicating specifically which is the reason why the API is employed as part of the application's use case.
+          userConsentScreenshot:
+            $ref: '#/components/schemas/SimpleAttachment'
+      discriminator:
+        propertyName: '@type'
+        mapping:
+          ProductOfferingTermOrCondition: '#/components/schemas/ProductOfferingTermOrCondition'
+    ProductOfferingTermOrConditionApproval:
+      type: object
+      description: Approval entity for the ProductOfferingTermOrCondition. Exists when Terms or Conditions are approved.
+      properties:
+        approvalDate:
+          type: string
+          format: date-time
+          description: Date of the approval.
+        authorization:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiAuthorization'
+          deprecated: true
+          description: DEPRECATED not possible yet to have the ID of the individual that made the approval.
+    ProductRelationship:
+      allOf:
+      - $ref: '#/components/schemas/Extensible'
+      - $ref: '#/components/schemas/EntityRef'
+      - type: object
+        description: Used to describe relationship between product.
+        properties:
+          id:
+            type: string
+            description: Id of the related product
+          relationshipType:
+            type: string
+            description: Relationship type as relies on, bundles, etc...
+      discriminator:
+        propertyName: '@type'
+        mapping:
+          OpenGatewayProductRelationship: '#/components/schemas/OpenGatewayProductRelationship'
+          ProductRelationship: '#/components/schemas/ProductRelationship'
+    ApiGrantInformation:
+      allOf:
+      - $ref: '#/components/schemas/Extensible'
+      - type: object
+        description: ApiGrantInformation is a structured set of information regarding the grant of access to an API product, detailing its purpose, scope, grant type, and legal basis for usage.
+        properties:
+          purpose:
+            $ref: '#/components/schemas/DpvPurposeType'
+          scope:
+            type: array
+            items:
+              type: string
+            description: 'One or several scopes of the API, as stated in the API that has been purchased. Examples: "sim-swap:retrieve-date" '
+          grantType:
+            type: array
+            items:
+              type: string
+            description: "One or several grantType of the API, as stated in the API that has been purchased. Examples:\n  \"authorization_code\"   \"client_credentials\"   \"urn:ietf:params:oauth:grant-type:token-exchange\"   \"urn:ietf:params:oauth:grant-type:jwt-bearer\"   \"urn:ietf:params:oauth:grant-type:saml2-bearer\"   \"urn:ietf:params:oauth:grant-type:device_code\"   \"urn:openid:params:grant-type:ciba\""
+          legalBasis:
+            $ref: '#/components/schemas/DpvLegalBasisType'
+      discriminator:
+        propertyName: '@type'
+        mapping:
+          ApiGrantInformation: '#/components/schemas/ApiGrantInformation'
+    SimpleAttachment:
+      allOf:
+      - $ref: '#/components/schemas/Extensible'
+      - type: object
+        description: Complements the description of an element (for instance a product) through video, pictures...
+        properties:
+          content:
+            type: string
+            format: base64
+            description: The actual contents of the attachment object, if embedded, encoded as base64
+          mimeType:
+            type: string
+            enum:
+            - application/pdf
+            description: a technical characterization of the attachment content format using IETF Mime Types
+          url:
+            type: string
+            description: Uniform Resource Locator, is a web page address (a subset of URI)
+      discriminator:
+        propertyName: '@type'
+        mapping:
+          SimpleAttachment: '#/components/schemas/SimpleAttachment'
+    Error:
+      discriminator:
+        propertyName: '@type'
+        mapping:
+          Error: '#/components/schemas/Error'
+      allOf:
+      - $ref: '#/components/schemas/Extensible'
+      - type: object
+        required:
+        - code
+        - reason
+        properties:
+          code:
+            type: string
+            description: Application relevant detail, defined in the API or a common list.
+          reason:
+            type: string
+            description: Explanation of the reason for the error which can be shown to a client user.
+          message:
+            type: string
+            description: More details and corrective actions related to the error which can be shown to a client user.
+          status:
+            type: string
+            description: HTTP Error code extension
+          referenceError:
+            type: string
+            description: URI of documentation describing the error.
+      description: Used when an API throws an Error, typically with a HTTP error response-code (3xx, 4xx, 5xx)
+    RelatedPartyRefOrPartyRoleRef:
+      allOf:
+      - $ref: '#/components/schemas/Extensible'
+      - type: object
+        description: RelatedParty reference. A related party defines party or party role or its reference, linked to a specific entity
+        properties:
+          role:
+            description: Role played by the related party or party role in the context of the specific entity it is linked to. Such as 'initiator', 'customer',  'salesAgent', 'user'
+            type: string
+          partyOrPartyRole:
+            $ref: '#/components/schemas/PartyRefOrPartyRoleRef'
+      discriminator:
+        propertyName: '@type'
+        mapping:
+          RelatedPartyRefOrPartyRoleRef: '#/components/schemas/RelatedPartyRefOrPartyRoleRef'
+    AgreementItemRef:
+      allOf:
+      - $ref: '#/components/schemas/Extensible'
+      - type: object
+        description: It's a Agreement item that has been executed previously.
+        properties:
+          agreementName:
+            type: string
+            description: Name of the related entity.
+          agreementHref:
+            type: string
+            description: Reference of the related entity.
+          '@referredType':
+            type: string
+            description: The actual type of the target instance when needed for disambiguation.
+          agreementId:
+            type: string
+            description: Unique identifier of a related entity.
+          agreementItemId:
+            type: string
+            description: Id of an item of a Agreement
+      discriminator:
+        propertyName: '@type'
+        mapping:
+          AgreementItemRef: '#/components/schemas/AgreementItemRef'
+    ProductSpecificationRef:
+      allOf:
+      - $ref: '#/components/schemas/EntityRef'
+      - type: object
+        description: ProductSpecification reference. A product Specification represents entities that are orderable from the provider of the catalog.
+        properties:
+          version:
+            type: string
+            description: Version of the product specification
+          targetProductSchema:
+            $ref: '#/components/schemas/TargetProductSchema'
+      discriminator:
+        propertyName: '@type'
+        mapping:
+          ProductSpecificationRef: '#/components/schemas/ProductSpecificationRef'
+    ApiProduct_RES:
+      type: object
+      description: Response object for ApiProduct
+      allOf:
+      - $ref: '#/components/schemas/ApiProduct'
+      required:
+      - id
+      - href
+      discriminator:
+        propertyName: '@type'
+        mapping:
+          ApiProduct: '#/components/schemas/ApiProduct'
+          ApiProductDeviceLocationVerification: '#/components/schemas/ApiProductDeviceLocationVerification'
+          ApiProductLocationVerificationAntifraud: '#/components/schemas/ApiProductLocationVerificationAntifraud'
+          UsageVolumeProductLocationVerification: '#/components/schemas/UsageVolumeProductLocationVerification'
+    ProductOfferingTermOrConditionSpecRef:
+      allOf:
+      - $ref: '#/components/schemas/EntityRef'
+      - type: object
+        description: Reference to the ProductOfferingTermOrCondition specification.
+        properties:
+          version:
+            type: string
+            description: Version of the ProductOfferingTermOrCondition specification.
+      discriminator:
+        propertyName: '@type'
+        mapping:
+          ProductOfferingTermOrConditionSpecRef: '#/components/schemas/ProductOfferingTermOrConditionSpecRef'
+    ItemActionType:
+      enum:
+      - add
+      - modify
+      - delete
+      - noChange
+      type: string
+      description: action to be performed on the entity managed by the item
+    PartyRefOrPartyRoleRef:
+      type: object
+      description: ''
+      oneOf:
+      - $ref: '#/components/schemas/PartyRef'
+      - $ref: '#/components/schemas/PartyRoleRef'
+      discriminator:
+        propertyName: '@type'
+        mapping:
+          PartyRef: '#/components/schemas/PartyRef'
+          PartyRoleRef: '#/components/schemas/PartyRoleRef'
+    RelatedOrderItem:
+      allOf:
+      - $ref: '#/components/schemas/Extensible'
+      - type: object
+        description: It's a Order item that has been executed previously.
+        properties:
+          orderItemAction:
+            $ref: '#/components/schemas/ItemActionType'
+          orderHref:
+            type: string
+            description: Reference of the related entity.
+          '@referredType':
+            type: string
+            description: The actual type of the target instance when needed for disambiguation.
+          role:
+            deprecated: true
+            type: string
+            description: Role played by the order
+          orderId:
+            type: string
+            description: Unique identifier of a related  Order.
+          orderItemId:
+            type: string
+            description: Id of an item of a product order
+      discriminator:
+        propertyName: '@type'
+        mapping:
+          RelatedOrderItem: '#/components/schemas/RelatedOrderItem'
+    DpvProcessingContextType:
+      enum:
+      - dpv:AlgorithmicLogic
+      - dpv:AssistiveAutomation
+      - dpv:AutomatedDecisionMaking
+      - dpv:AutomatedScoringOfIndividuals
+      - dpv:AutomationLevel
+      - dpv:Autonomous
+      - dpv:CannotChallengeProcess
+      - dpv:CannotChallengeProcessInput
+      - dpv:CannotChallengeProcessOutput
+      - dpv:CannotCorrectProcess
+      - dpv:CannotCorrectProcessInput
+      - dpv:CannotCorrectProcessOutput
+      - dpv:CannotObjectToProcess
+      - dpv:CannotOptInToProcess
+      - dpv:CannotOptOutFromProcess
+      - dpv:CannotReverseProcessEffects
+      - dpv:CannotReverseProcessInput
+      - dpv:CannotReverseProcessOutput
+      - dpv:CannotWithdrawFromProcess
+      - dpv:ChallengingProcess
+      - dpv:ChallengingProcessInput
+      - dpv:ChallengingProcessOutput
+      - dpv:ConditionalAutomation
+      - dpv:ConsentControl
+      - dpv:CorrectingProcess
+      - dpv:CorrectingProcessInput
+      - dpv:CorrectingProcessOutput
+      - dpv:CompletelyManualProcessing
+      - dpv:DataControllerDataSource
+      - dpv:DataPublishedByDataSubject
+      - dpv:DataSource
+      - dpv:DataSubject
+      - dpv:DataSubjectDataSource
+      - dpv:DataSubjectScale
+      - dpv:DataVolume
+      - dpv:DecisionMaking
+      - dpv:EntityActiveInvolvement
+      - dpv:EntityInvolvement
+      - dpv:EntityNonInvolvement
+      - dpv:EntityNonPermissiveInvolvement
+      - dpv:EntityPassiveInvolvement
+      - dpv:EntityPermissiveInvolvement
+      - dpv:EvaluationOfIndividuals
+      - dpv:EvaluationScoring
+      - dpv:FullAutomation
+      - dpv:GeographicCoverage
+      - dpv:GlobalScale
+      - dpv:HighAutomation
+      - dpv:HugeDataVolume
+      - dpv:HugeScaleOfDataSubjects
+      - dpv:HumanInvolved
+      - dpv:HumanInvolvement
+      - dpv:HumanInvolvementForControl
+      - dpv:HumanInvolvementForDecision
+      - dpv:HumanInvolvementForInput
+      - dpv:HumanInvolvementForIntervention
+      - dpv:HumanInvolvementForOversight
+      - dpv:HumanInvolvementForVerification
+      - dpv:HumanNotInvolved
+      - dpv:InnovativeUseOfExistingTechnology
+      - dpv:InnovativeUseOfNewTechnologies
+      - dpv:InnovativeUseOfTechnology
+      - dpv:LargeDataVolume
+      - dpv:LargeScaleOfDataSubjects
+      - dpv:LargeScaleProcessing
+      - dpv:LocalEnvironmentScale
+      - dpv:LocalityScale
+      - dpv:MediumDataVolume
+      - dpv:MediumScaleOfDataSubjects
+      - dpv:MediumScaleProcessing
+      - dpv:MultiNationalScale
+      - dpv:NationalScale
+      - dpv:NearlyGlobalScale
+      - dpv:NonPublicDataSource
+      - dpv:NotAutomated
+      - dpv:ObjectingToProcess
+      - dpv:ObtainConsent
+      - dpv:OptingInToProcess
+      - dpv:OptingOutFromProcess
+      - dpv:PartialAutomation
+      - dpv:ProcessingCondition
+      - dpv:ProcessingDuration
+      - dpv:ProcessingLocation
+      - dpv:ProcessingScale
+      - dpv:ProvideConsent
+      - dpv:PublicDataSource
+      - dpv:ReaffirmConsent
+      - dpv:RegionalScale
+      - dpv:ReversingProcessEffects
+      - dpv:ReversingProcessInput
+      - dpv:ReversingProcessOutput
+      - dpv:Scale
+      - dpv:ScoringOfIndividuals
+      - dpv:SingularDataVolume
+      - dpv:SingularScaleOfDataSubjects
+      - dpv:SmallDataVolume
+      - dpv:SmallScaleOfDataSubjects
+      - dpv:SmallScaleProcessing
+      - dpv:SporadicDataVolume
+      - dpv:SporadicScaleOfDataSubjects
+      - dpv:StorageCondition
+      - dpv:StorageDeletion
+      - dpv:StorageDuration
+      - dpv:StorageLocation
+      - dpv:StorageRestoration
+      - dpv:SystematicMonitoring
+      - dpv:ThirdPartyDataSource
+      - dpv:WithdrawConsent
+      - dpv:WithdrawingFromProcess
+      type: string
+      description: Valid values for the data processing context classes based on W3C Data Privacy Vocabulary v2 https://w3c.github.io/dpv/2.0/dpv/
+    DpvPurposeType:
+      enum:
+      - dpv:AcademicResearch
+      - dpv:AccountManagement
+      - dpv:Advertising
+      - dpv:AgeVerification
+      - dpv:CombatClimateChange
+      - dpv:CommercialPurpose
+      - dpv:CommercialResearch
+      - dpv:CommunicationForCustomerCare
+      - dpv:CommunicationManagement
+      - dpv:CounterMoneyLaundering
+      - dpv:Counterterrorism
+      - dpv:CreditChecking
+      - dpv:CustomerCare
+      - dpv:CustomerClaimsManagement
+      - dpv:CustomerManagement
+      - dpv:CustomerOrderManagement
+      - dpv:CustomerRelationshipManagement
+      - dpv:CustomerSolvencyMonitoring
+      - dpv:DataAltruism
+      - dpv:DeliveryOfGoods
+      - dpv:DirectMarketing
+      - dpv:DisputeManagement
+      - dpv:EnforceAccessControl
+      - dpv:EnforceSecurity
+      - dpv:EstablishContractualAgreement
+      - dpv:FraudPreventionAndDetection
+      - dpv:FulfilmentOfContractualObligation
+      - dpv:FulfilmentOfObligation
+      - dpv:HumanResourceManagement
+      - dpv:IdentityAuthentication
+      - dpv:IdentityVerification
+      - dpv:ImproveExistingProductsAndServices
+      - dpv:ImproveHealthcare
+      - dpv:ImproveInternalCRMProcesses
+      - dpv:ImprovePublicServices
+      - dpv:ImproveTransportMobility
+      - dpv:IncreaseServiceRobustness
+      - dpv:InternalResourceOptimisation
+      - dpv:LegalCompliance
+      - dpv:MaintainCreditCheckingDatabase
+      - dpv:MaintainCreditRatingDatabase
+      - dpv:MaintainFraudDatabase
+      - dpv:Marketing
+      - dpv:MemberPartnerManagement
+      - dpv:MisusePreventionAndDetection
+      - dpv:NonCommercialPurpose
+      - dpv:NonCommercialResearch
+      - dpv:OptimisationForConsumer
+      - dpv:OptimisationForController
+      - dpv:OptimiseUserInterface
+      - dpv:OrganisationComplianceManagement
+      - dpv:OrganisationGovernance
+      - dpv:OrganisationRiskManagement
+      - dpv:PaymentManagement
+      - dpv:Personalisation
+      - dpv:PersonalisedAdvertising
+      - dpv:PersonalisedBenefits
+      - dpv:PersonnelHiring
+      - dpv:PersonnelManagement
+      - dpv:PersonnelPayment
+      - dpv:ProtectionOfIPR
+      - dpv:ProtectionOfNationalSecurity
+      - dpv:ProtectionOfPublicSecurity
+      - dpv:ProvideEventRecommendations
+      - dpv:ProvideOfficialStatistics
+      - dpv:ProvidePersonalisedRecommendations
+      - dpv:ProvideProductRecommendations
+      - dpv:PublicBenefit
+      - dpv:PublicPolicyMaking
+      - dpv:PublicRelations
+      - dpv:RecordManagement
+      - dpv:RepairImpairments
+      - dpv:RequestedServiceProvision
+      - dpv:ResearchAndDevelopment
+      - dpv:RightsFulfillment
+      - dpv:ScientificResearch
+      - dpv:SearchFunctionalities
+      - dpv:SellDataToThirdParties
+      - dpv:SellInsightsFromData
+      - dpv:SellProducts
+      - dpv:SellProductsToDataSubject
+      - dpv:ServiceOptimisation
+      - dpv:ServicePersonalisation
+      - dpv:ServiceProvision
+      - dpv:ServiceRegistration
+      - dpv:ServiceUsageAnalytics
+      - dpv:SocialMediaMarketing
+      - dpv:TargetedAdvertising
+      - dpv:TechnicalServiceProvision
+      - dpv:UserInterfacePersonalisation
+      - dpv:VendorManagement
+      - dpv:VendorPayment
+      - dpv:VendorRecordsManagement
+      - dpv:VendorSelectionAssessment
+      - dpv:Verification
+      type: string
+      description: 'Valid values for the purpose based on W3C Data Privacy Vocabulary v2 https://w3c.github.io/dpv/2.0/dpv/ '
+    DpvDurationType:
+      enum:
+      - dpv:EndlessDuration
+      - dpv:FixedOccurrencesDuration
+      - dpv:IndeterminateDuration
+      - dpv:TemporalDuration
+      - dpv:UntilEventDuration
+      - dpv:UntilTimeDuration
+      type: string
+      description: Valid values for the data processing duration based on W3C Data Privacy Vocabulary v2 https://w3c.github.io/dpv/2.0/dpv/
+    Addressable:
+      type: object
+      description: Base schema for addressable entities
+      properties:
+        href:
+          type: string
+          description: Hyperlink reference
+        id:
+          type: string
+          description: unique identifier
+    OpenGatewayProductRelationship:
+      allOf:
+      - $ref: '#/components/schemas/ProductRelationship'
+      - type: object
+        description: Used to describe relationship between product in the Open Gateway context.
+        properties:
+          relationshipType:
+            type: string
+            description: Relationship in the Open Gateway context. bundles is used when the id in the productRelationship is the id of a product bundled into the main product. appliesOn is used when the id in the productRelationship is the id of a product to which the main product applies on (like a usage volume product applies on an API product).
+            enum:
+            - bundles
+            - appliesOn
+    DpvContext:
+      allOf:
+      - $ref: '#/components/schemas/Extensible'
+      - type: object
+        description: Describes all the context and conditions within which processing takes place
+        properties:
+          processingContext:
+            type: array
+            items:
+              $ref: '#/components/schemas/DpvProcessingContextType'
+            description: context classes of the data processing of the API.
+          duration:
+            $ref: '#/components/schemas/DpvDurationType'
+          frequency:
+            $ref: '#/components/schemas/DpvFrequencyType'
+      discriminator:
+        propertyName: '@type'
+        mapping:
+          DpvContext: '#/components/schemas/DpvContext'
+    ProductOfferingRef:
+      allOf:
+      - $ref: '#/components/schemas/EntityRef'
+      - type: object
+        description: ProductOffering reference. A product offering represents entities that are orderable from the provider of the catalog, this resource includes pricing information.
+        properties:
+          version:
+            type: string
+            description: Version of the product offering
+      discriminator:
+        propertyName: '@type'
+        mapping:
+          ProductOfferingRef: '#/components/schemas/ProductOfferingRef'
+    ProductRef:
+      type: object
+      description: A Product reference
+      allOf:
+      - $ref: '#/components/schemas/EntityRef'
+      discriminator:
+        propertyName: '@type'
+        mapping:
+          ProductRef: '#/components/schemas/ProductRef'
+    ApiProduct:
+      allOf:
+      - $ref: '#/components/schemas/Entity'
+      - type: object
+        description: ApiProduct is a specialization of a Product being an instance of an atomic ProductOffering or a ProductSpecification that is realized by an API (the Service).
+        properties:
+          name:
+            type: string
+            description: Name of the product. It could be the same as the name of the product offering
+          description:
+            type: string
+            description: Is the description of the product. It could be same description than Product Offering one.
+          productOffering:
+            $ref: '#/components/schemas/ProductOfferingRef'
+          productSpecification:
+            $ref: '#/components/schemas/ProductSpecificationRef'
+          productRelationship:
+            type: array
+            description: Collection of product relationships
+            items:
+              $ref: '#/components/schemas/OpenGatewayProductRelationship'
+          apiName:
+            type: string
+            description: Standardized name of the API.
+          apiVersionDetails:
+            type: array
+            items:
+              $ref: '#/components/schemas/ApiVersionDetails'
+            description: A set of ApiProduct characteristics grouped together by API major version.
+          purpose:
+            $ref: '#/components/schemas/DpvPurposeType'
+          countryCode:
+            type: array
+            items:
+              $ref: '#/components/schemas/ISO31661Alpha2StandardIdentifier'
+            description: One or several countries where API is operated.
+          productOrderItem:
+            type: array
+            items:
+              $ref: '#/components/schemas/RelatedOrderItem'
+            description: A reference to the Product Order items that involved this Product.
+          approvedProductOfferingTermOrCondition:
+            type: array
+            items:
+              $ref: '#/components/schemas/ProductOfferingTermOrCondition'
+            description: Approved Terms or Conditions of the ProductOffering.
+          status:
+            $ref: '#/components/schemas/ProductStatusType'
+          creationDate:
+            type: string
+            format: date-time
+            description: Date and time when the product was created
+          startDate:
+            type: string
+            format: date-time
+            description: Is the date from which the product starts
+          orderDate:
+            type: string
+            format: date-time
+            description: Is the date when the product was ordered
+          terminationDate:
+            type: string
+            format: date-time
+            description: Is the date when the product was terminated
+          channelPartner:
+            $ref: '#/components/schemas/PartyRoleRef'
+          agreementItem:
+            type: array
+            items:
+              $ref: '#/components/schemas/AgreementItemRef'
+            description: Collection of agreement items that involves this Product.
+      discriminator:
+        propertyName: '@type'
+        mapping:
+          ApiProduct: '#/components/schemas/ApiProduct'
+          ApiProductDeviceLocationVerification: '#/components/schemas/ApiProductDeviceLocationVerification'
+          ApiProductLocationVerificationAntifraud: '#/components/schemas/ApiProductLocationVerificationAntifraud'
+          UsageVolumeProductLocationVerification: '#/components/schemas/UsageVolumeProductLocationVerification'
+    DataExportCountry:
+      allOf:
+      - $ref: '#/components/schemas/Extensible'
+      - type: object
+        description: This schema permits to declare the countries and context where some data has been stored or has transited.
+        properties:
+          countryCode:
+            $ref: '#/components/schemas/ISO31661Alpha2StandardIdentifier'
+          commercialActivity:
+            type: boolean
+            description: Flag to indicate if commercial activity applies to these data management.
+          commercialOrganizationName:
+            type: string
+            description: Organization who is managing the data.
+          dataPrivacyFrameworkURL:
+            type: string
+            description: URL to the organization or governmental data privacy framework if applies.
+      discriminator:
+        propertyName: '@type'
+        mapping:
+          DataExportCountry: '#/components/schemas/DataExportCountry'
+    DpvLegalBasisType:
+      enum:
+      - dpv:Consent
+      - dpv:Contract
+      - dpv:ContractPerformance
+      - dpv:DataTransferLegalBasis
+      - dpv:EnterIntoContract
+      - dpv:LegalBasis
+      - dpv:LegalObligation
+      - dpv:LegitimateInterest
+      - dpv:LegitimateInterestOfController
+      - dpv:LegitimateInterestOfDataSubject
+      - dpv:LegitimateInterestOfThirdParty
+      - dpv:OfficialAuthorityOfController
+      - dpv:PublicInterest
+      - dpv:VitalInterest
+      - dpv:VitalInterestOfDataSubject
+      - dpv:VitalInterestOfNaturalPerson
+      - dpv:InformedConsent
+      - dpv:DataControllerContract
+      - dpv:ImpliedConsent
+      - dpv:DataSubjectContract
+      - dpv:ExplicitlyExpressedConsent
+      - dpv:UninformedConsent
+      - dpv:DataProcessorContract
+      - dpv:ExpressedConsent
+      - dpv:ThirdPartyContract
+      type: string
+      description: 'Valid values for Legal Basis based on W3C Data Privacy Vocabulary v2 https://w3c.github.io/dpv/2.0/dpv/ '
+    ApiAuthorization:
+      allOf:
+      - $ref: '#/components/schemas/Extensible'
+      - type: object
+        description: Describes who has been authorized to sign the API ProductOfferingTermOrCondition.
+        properties:
+          name:
+            type: string
+            description: Name of the required authorization
+          approver:
+            $ref: '#/components/schemas/RelatedPartyRefOrPartyRoleRef'
+      discriminator:
+        propertyName: '@type'
+        mapping:
+          ApiAuthorization: '#/components/schemas/ApiAuthorization'
+    ProductStatusType:
+      enum:
+      - created
+      - pendingActive
+      - cancelled
+      - active
+      - pendingTerminate
+      - terminated
+      - suspended
+      - 'aborted '
+      type: string
+      description: Possible values for the status of the product
+    ApiVersionDetails:
+      allOf:
+      - $ref: '#/components/schemas/Extensible'
+      - type: object
+        description: A set of ApiProduct characteristics grouped together by API major version.
+        properties:
+          apiMajorVersion:
+            type: integer
+            description: Major version of the API standard specification.
+          basePath:
+            type: string
+            description: Base path of the API.
+          countryCode:
+            $ref: '#/components/schemas/ISO31661Alpha2StandardIdentifier'
+          apiGrantInformation:
+            type: array
+            items:
+              $ref: '#/components/schemas/ApiGrantInformation'
+            description: Collection of API grant information that describe the Product. ApiGrantInformation is a structured set of information regarding the grant of access to an API product, detailing its purpose, scope, grant type, and legal basis for usage.
+      discriminator:
+        propertyName: '@type'
+        mapping:
+          ApiVersionDetails: '#/components/schemas/ApiVersionDetails'
+    PartyRoleRef:
+      allOf:
+      - $ref: '#/components/schemas/EntityRef'
+      - type: object
+        description: Party role reference. A party role represents the part played by a party in a given context.
+        properties:
+          partyId:
+            type: string
+            description: The identifier of the engaged party that is linked to the PartyRole object.
+          partyName:
+            type: string
+            description: The name of the engaged party that is linked to the PartyRole object.
+      discriminator:
+        propertyName: '@type'
+        mapping:
+          PartyRoleRef: '#/components/schemas/PartyRoleRef'
+    DpvProcess:
+      allOf:
+      - $ref: '#/components/schemas/Extensible'
+      - type: object
+        description: Describes all the operations or 'processing' performed on data
+        properties:
+          processingOperation:
+            type: array
+            items:
+              $ref: '#/components/schemas/DpvProcessingOperationType'
+            description: operations of the data processing of the API.
+          context:
+            $ref: '#/components/schemas/DpvContext'
+          dataExportTransitCountry:
+            type: array
+            description: Field to contain all the traceability of the data until the last storage site.
+            items:
+              $ref: '#/components/schemas/DataExportCountry'
+          dataExportStorageCountry:
+            type: array
+            description: Field to contain all the information related the last data storage site.
+            items:
+              $ref: '#/components/schemas/DataExportCountry'
+      discriminator:
+        propertyName: '@type'
+        mapping:
+          DpvProcess: '#/components/schemas/DpvProcess'
+  headers:
+    X-Total-Count:
+      description: Total number of items matching criteria
+      schema:
+        type: integer
+    X-Result-Count:
+      description: Actual number of items returned in the response body
+      schema:
+        type: integer
+  responses:
+    '501':
+      description: Not Implemented
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            basic:
+              summary: Not Implemented Error
+              value:
+                '@type': Error
+                code: ERR501
+                reason: The requested operation is not implemented
+                message: The requested operation is not implemented. Please contact the system administrator.
+                referenceError: https://host/errors
+    200ApiProductArray:
+      description: Success
+      headers:
+        X-Total-Count:
+          $ref: '#/components/headers/X-Total-Count'
+        X-Result-Count:
+          $ref: '#/components/headers/X-Result-Count'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/ApiProduct_RES'
+          examples:
+            Retrieve_a_list_of_API_Product:
+              $ref: '#/components/examples/Retrieve_a_list_of_API_Product_response'
+            Retrieve_a_list_of_API_Product_with_field_selection_and_filter:
+              $ref: '#/components/examples/Retrieve_a_list_of_API_Product_with_field_selection_and_filter_response'
+    200ApiProduct_Get:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiProduct_RES'
+          examples:
+            Retrieve_an_API_Product_location_verification_standalone:
+              $ref: '#/components/examples/Retrieve_an_API_Product_location_verification_standalone_response'
+            Retrieve_an_API_Product_location_verification_bundle:
+              $ref: '#/components/examples/Retrieve_an_API_Product_location_verification_bundle_response'
+            Retrieve_an_API_Product_location_verification_API_bundled:
+              $ref: '#/components/examples/Retrieve_an_API_Product_location_verification_API_bundled_response'
+            Retrieve_an_API_Product_location_verification_usage_volume_bundled:
+              $ref: '#/components/examples/Retrieve_an_API_Product_location_verification_usage_volume_bundled_response'
+    '503':
+      description: Service Unavailable
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            basic:
+              summary: Service Unavailable Error
+              value:
+                '@type': Error
+                code: ERR503
+                reason: Service Unavailable
+                message: The service is currently unavailable. Please try again later.
+                referenceError: https://host/errors
+    '403':
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            basic:
+              summary: Forbidden Error
+              value:
+                '@type': Error
+                code: ERR403
+                reason: Forbidden
+                message: You don't have the permission to access the requested resource. It is either read-protected or not readable by the server.
+                referenceError: https://host/errors
+    '401':
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            basic:
+              summary: Unauthorized Error
+              value:
+                '@type': Error
+                code: ERR401
+                reason: Unauthorized
+                message: You are not authorized to access the requested resource. Please provide the correct credentials.
+                referenceError: https://host/errors
+    '400':
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            basic:
+              summary: Bad Request Error
+              value:
+                '@type': Error
+                code: ERR400
+                reason: Bad Request
+                message: The server could not understand the request due to invalid syntax. Please correct the syntax and try again.
+                referenceError: https://host/errors
+    '405':
+      description: Method Not allowed
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            basic:
+              summary: Method Not allowed Error
+              value:
+                '@type': Error
+                code: ERR405
+                reason: Method Not allowed
+                message: The method is not allowed for the requested URL.
+                referenceError: https://host/errors
+    '404':
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            basic:
+              summary: Not Found Error
+              value:
+                '@type': Error
+                code: ERR404
+                reason: Not Found
+                message: The requested URL was not found on the server.
+                referenceError: https://host/errors
+    '500':
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            basic:
+              summary: Internal Server Error example
+              value:
+                '@type': Error
+                code: ERR500
+                reason: Internal Server Error
+                message: The server encountered an internal error. Please contact the system administrator.
+                referenceError: https://host/errors
+  examples:
+    Retrieve_an_API_Product_location_verification_API_bundled_response:
+      value:
+        '@type': ApiProductLocationVerificationAntifraud
+        '@baseType': ApiProduct
+        '@schemaLocation': https://mycsp.com/tmf-api/schemas/Tmf/Product/DCS/GSMAOperateAPI/LocationVerificationAntifraudStandalone.schema.json#/definitions/LocationVerificationAntifraudStandalone
+        id: 3be31371-2755-43f7-a6f6-380234910b9b
+        href: https://mycsp.com/tmf-api/openGatewayOperateAPIOnboardingAndOrdering/v5/apiProduct/3be31371-2755-43f7-a6f6-380234910b9b
+        creationDate: '2025-01-01T10:02:00.00Z'
+        startDate: '2025-01-01T10:03:00.00Z'
+        status: active
+        productOffering:
+          '@type': ProductOfferingRef
+          id: ab7792f8-6628-4c4b-a557-699adc26d4ce
+          href: https://mycsp.com/tmf-api/openGatewayOperateAPIProductCatalog/v5/productOffering/ab7792f8-6628-4c4b-a557-699adc26d4ce
+          name: Location Verification Antifraud CAMARA API Bundled
+          '@referredType': OpenGatewayProductOffering
+        productOrderItem:
+        - '@type': RelatedOrderItem
+          orderId: c5c005c5-34f9-4e7d-99df-8a30da246f8b
+          orderHref: https://mycsp.com/tmf-api/openGatewayOperateAPIOnboardingAndOrdering/v5/apiProductOrder/c5c005c5-34f9-4e7d-99df-8a30da246f8b
+          orderItemId: '2'
+          orderItemAction: add
+        productSpecification:
+          '@type': ProductSpecificationRef
+          id: 4b6591ef-5ede-4885-9543-0c5e9070ade9
+          href: https://mycsp.com/tmf-api/openGatewayOperateAPIProductCatalog/v5/productSpecification/4b6591ef-5ede-4885-9543-0c5e9070ade9
+          name: Location Verification Antifraud CAMARA API
+          version: 1.0.0
+          '@referredType': ApiProductSpecification
+        apiName: location-verification
+        apiVersionDetails:
+        - '@type': ApiVersionDetails
+          apiMajorVersion: 0
+          basePath: location-verification
+          apiGrantInformation:
+          - '@type': ApiGrantInformation
+            purpose: dpv:FraudPreventionAndDetection
+            scope:
+            - location-verification:verify
+            grantType:
+            - urn:openid:params:grant-type:ciba
+            - authorization_code
+            legalBasis: dpv:Consent
+          - '@type': ApiGrantInformation
+            scope:
+            - location-verification:read
+            grantType:
+            - client_credentials
+        purpose: dpv:FraudPreventionAndDetection
+        bestAccuracy: 500
+        approvedProductOfferingTermOrCondition:
+        - '@type': ProductOfferingTermOrCondition
+          productOfferingTermOrConditionSpecRef:
+            '@type': ProductOfferingTermOrConditionSpecRef
+            id: ab7792f8-6628-4c4b-a557-699adc26d4ce_terms_1
+            '@referredType': OpenGatewayProductOfferingTermOrConditionSpecification
+          productOfferingTermOrConditionApproval:
+            approvalDate: '2023-11-20T00:00:00.000Z'
+          applicationLegalBasisForInputData: dpv:Consent
+          process:
+          - '@type': DpvProcess
+            processingOperation:
+            - dpv:Assess
+            context:
+              '@type': DpvContext
+              processingContext:
+              - dpv:AutomatedDecisionMaking
+              - dpv:AutomatedScoringOfIndividuals
+              duration: dpv:FixedOccurrencesDuration
+              frequency: dpv:SingularFrequency
+            dataExportTransitCountry:
+            - '@type': DataExportCountry
+              countryCode:
+                '@type': ISO31661Alpha2StandardIdentifier
+                value: US
+              commercialOrganizationName: Globy Corporation
+              dataPrivacyFrameworkURL: https://www.dataprivacyframework.gov/participant/abcde
+          - '@type': DpvProcess
+            processingOperation:
+            - dpv:Profiling
+            context:
+              '@type': DpvContext
+              processingContext:
+              - dpv:AutomatedScoringOfIndividuals
+              duration: dpv:EndlessDuration
+              frequency: dpv:SingularFrequency
+            dataExportTransitCountry:
+            - '@type': DataExportCountry
+              countryCode:
+                '@type': ISO31661Alpha2StandardIdentifier
+                value: US
+              commercialOrganizationName: Globy Corporation
+              dataPrivacyFrameworkURL: https://www.dataprivacyframework.gov/participant/abcde
+            dataExportStorageCountry:
+            - '@type': DataExportCountry
+              countryCode:
+                '@type': ISO31661Alpha2StandardIdentifier
+                value: US
+              commercialOrganizationName: Globy Corporation
+              dataPrivacyFrameworkURL: https://www.dataprivacyframework.gov/participant/abcde
+          userConsentScreenshot:
+            '@type': SimpleAttachment
+            content: JVBERi...JSVFT0Y=
+            mimeType: application/pdf
+        channelPartner:
+          '@type': PartyRoleRef
+          id: '15'
+          '@referredType': PartyRole
+      description: API Order representation.
+    Retrieve_an_API_Product_location_verification_bundle_response:
+      value:
+        '@type': ApiProduct
+        id: 33944716-d86f-4122-827b-307d74e6ca50
+        href: https://mycsp.com/tmf-api/openGatewayOperateAPIOnboardingAndOrdering/v5/apiProduct/33944716-d86f-4122-827b-307d74e6ca50
+        creationDate: '2025-01-01T10:02:00.00Z'
+        startDate: '2025-01-01T10:03:00.00Z'
+        status: active
+        productOffering:
+          '@type': ProductOfferingRef
+          href: https://mycsp.com/tmf-api/openGatewayOperateAPIProductCatalog/v5/productOffering/5e9b10e5-d707-4a16-89d1-687c7f0bf81a
+          id: 5e9b10e5-d707-4a16-89d1-687c7f0bf81a
+          name: Open Gateway Location Verification bundle offer
+          '@referredType': OpenGatewayProductOffering
+        productOrderItem:
+        - '@type': RelatedOrderItem
+          orderId: c5c005c5-34f9-4e7d-99df-8a30da246f8b
+          orderHref: https://mycsp.com/tmf-api/openGatewayOperateAPIOnboardingAndOrdering/v5/apiProductOrder/c5c005c5-34f9-4e7d-99df-8a30da246f8b
+          orderItemId: '1'
+          orderItemAction: add
+        productRelationship:
+        - '@type': OpenGatewayProductRelationship
+          id: 3be31371-2755-43f7-a6f6-380234910b9b
+          relationshipType: bundles
+        - '@type': OpenGatewayProductRelationship
+          id: fea0c794-d62d-40bb-a9a4-934336194dca
+          relationshipType: bundles
+        apiName: ''
+        approvedProductOfferingTermOrCondition:
+        - '@type': ProductOfferingTermOrCondition
+          productOfferingTermOrConditionSpecRef:
+            '@type': ProductOfferingTermOrConditionSpecRef
+            id: 5e9b10e5-d707-4a16-89d1-687c7f0bf81a_terms_1
+            '@referredType': OpenGatewayProductOfferingTermOrConditionSpecification
+          productOfferingTermOrConditionApproval:
+            approvalDate: '2023-11-20T00:00:00.000Z'
+        channelPartner:
+          '@type': PartyRoleRef
+          id: '15'
+          '@referredType': PartyRole
+      description: API Order representation.
+    Retrieve_a_list_of_API_Product_with_field_selection_and_filter_response:
+      value:
+      - '@type': ApiProductDeviceLocationVerification
+        id: 8bb8bcdb-9fcf-4b4f-8b27-2dda848404fb
+        href: https://mycsp.com/tmf-api/openGatewayOperateAPIOnboardingAndOrdering/v5/apiProduct/8bb8bcdb-9fcf-4b4f-8b27-2dda848404fb
+        status: active
+      - '@type': ApiProduct
+        id: 33944716-d86f-4122-827b-307d74e6ca50
+        href: https://mycsp.com/tmf-api/openGatewayOperateAPIOnboardingAndOrdering/v5/apiProduct/33944716-d86f-4122-827b-307d74e6ca50
+        status: active
+      - '@type': ApiProductLocationVerificationAntifraud
+        id: 3be31371-2755-43f7-a6f6-380234910b9b
+        href: https://mycsp.com/tmf-api/openGatewayOperateAPIOnboardingAndOrdering/v5/apiProduct/3be31371-2755-43f7-a6f6-380234910b9b
+        status: active
+      - '@type': UsageVolumeProductLocationVerification
+        id: fea0c794-d62d-40bb-a9a4-934336194dca
+        href: https://mycsp.com/tmf-api/openGatewayOperateAPIOnboardingAndOrdering/v5/apiProduct/fea0c794-d62d-40bb-a9a4-934336194dca
+        status: active
+      description: A collection of API Product with field selection and filter
+    Retrieve_an_API_Product_location_verification_usage_volume_bundled_response:
+      value:
+        '@type': UsageVolumeProductLocationVerification
+        '@baseType': ApiProduct
+        id: fea0c794-d62d-40bb-a9a4-934336194dca
+        href: https://mycsp.com/tmf-api/openGatewayOperateAPIOnboardingAndOrdering/v5/apiProduct/fea0c794-d62d-40bb-a9a4-934336194dca
+        creationDate: '2025-01-01T10:02:00.00Z'
+        startDate: '2025-01-01T10:03:00.00Z'
+        status: active
+        productOffering:
+          '@type': ProductOfferingRef
+          id: 0a2782b7-81a7-4af9-9e4f-d51bc690ec2d
+          href: https://mycsp.com/tmf-api/openGatewayOperateAPIProductCatalog/v5/productOffering/0a2782b7-81a7-4af9-9e4f-d51bc690ec2d
+          name: Location Verification Verify Usage Volume Recurring Bundled
+          '@referredType': OpenGatewayProductOffering
+        productOrderItem:
+        - '@type': RelatedOrderItem
+          orderId: c5c005c5-34f9-4e7d-99df-8a30da246f8b
+          orderHref: https://mycsp.com/tmf-api/openGatewayOperateAPIOnboardingAndOrdering/v5/apiProductOrder/c5c005c5-34f9-4e7d-99df-8a30da246f8b
+          orderItemId: '3'
+          orderItemAction: add
+        productSpecification:
+          '@type': ProductSpecificationRef
+          id: a7b90fdb-00f7-498b-944e-88115d00626b
+          href: https://mycsp.com/tmf-api/openGatewayOperateAPIProductCatalog/v5/productSpecification/a7b90fdb-00f7-498b-944e-88115d00626b
+          name: Location Verification Verify Usage Volume Recurring
+          version: 1.0.0
+          '@referredType': UsageVolumeProductSpecification
+        productRelationship:
+        - '@type': OpenGatewayProductRelationship
+          id: 3be31371-2755-43f7-a6f6-380234910b9b
+          relationshipType: appliesOn
+        apiName: ''
+        usageVolume:
+          volumeUnit: apiCall
+          volumeInitialAmount: 10000
+        isBlocked: false
+        isRecurring: true
+        validityDuration:
+          amount: 1
+          units: month
+        approvedProductOfferingTermOrCondition:
+        - '@type': ProductOfferingTermOrCondition
+          productOfferingTermOrConditionSpecRef:
+            '@type': ProductOfferingTermOrConditionSpecRef
+            id: 0a2782b7-81a7-4af9-9e4f-d51bc690ec2d_terms_1
+            '@referredType': OpenGatewayProductOfferingTermOrConditionSpecification
+          productOfferingTermOrConditionApproval:
+            approvalDate: '2023-11-20T00:00:00.000Z'
+        channelPartner:
+          '@type': PartyRoleRef
+          id: '15'
+          '@referredType': PartyRole
+      description: API Order representation.
+    Retrieve_a_list_of_API_Product_response:
+      value:
+      - '@type': ApiProductDeviceLocationVerification
+        '@baseType': ApiProduct
+        '@schemaLocation': https://mycsp.com/tmf-api/schema/Product/ApiProductDeviceLocationVerification.schema.json
+        id: 8bb8bcdb-9fcf-4b4f-8b27-2dda848404fb
+        href: https://mycsp.com/tmf-api/openGatewayOperateAPIOnboardingAndOrdering/v5/apiProduct/8bb8bcdb-9fcf-4b4f-8b27-2dda848404fb
+        name: device_location_verification
+        description: Open Gateway Device Location Verify
+        creationDate: '2025-02-02T12:02:00.00Z'
+        startDate: '2025-02-02T12:00:03.00Z'
+        status: active
+        productOffering:
+          '@type': ProductOfferingRef
+          id: 2d4ef4d3-08ce-441d-ac76-133b6dad0ccb
+          name: Location Verification Antifraud CAMARA API Standalone
+          '@referredType': OpenGatewayProductOffering
+        productOrderItem:
+        - '@type': RelatedOrderItem
+          orderId: 86387671-0997-461b-99c7-d624ffb0640c
+          orderHref: https://mycsp.com/tmf-api/openGatewayOperateAPIOnboardingAndOrdering/v5/apiProductOrder/86387671-0997-461b-99c7-d624ffb0640c
+          orderItemId: '1'
+          orderItemAction: add
+        productSpecification:
+          '@type': ProductSpecificationRef
+          id: 4b6591ef-5ede-4885-9543-0c5e9070ade9
+          '@referredType': ApiProductSpecification
+        apiName: location-verification
+        apiVersionDetails:
+        - '@type': ApiVersionDetails
+          apiMajorVersion: 0
+          basePath: location-verification
+          apiGrantInformation:
+          - '@type': ApiGrantInformation
+            purpose: dpv:FraudPreventionAndDetection
+            scope:
+            - location-verification:verify
+            grantType:
+            - urn:openid:params:grant-type:ciba
+            - authorization_code
+            legalBasis: dpv:Consent
+          - '@type': ApiGrantInformation
+            scope:
+            - location-verification:read
+            grantType:
+            - client_credentials
+        purpose: dpv:FraudPreventionAndDetection
+        bestAccuracy: 500
+        approvedProductOfferingTermOrCondition:
+        - '@type': ProductOfferingTermOrCondition
+          productOfferingTermOrConditionSpecRef:
+            '@type': ProductOfferingTermOrConditionSpecRef
+            id: 2d4ef4d3-08ce-441d-ac76-133b6dad0ccb_terms_1
+            name: device_location_verification_terms
+            '@referredType': OpenGatewayProductOfferingTermOrConditionSpecification
+          productOfferingTermOrConditionApproval:
+            approvalDate: '2023-11-20T00:00:00.000Z'
+          applicationLegalBasisForInputData: dpv:Consent
+          process:
+          - '@type': DpvProcess
+            processingOperation:
+            - dpv:Assess
+            context:
+              '@type': DpvContext
+              processingContext:
+              - dpv:AutomatedDecisionMaking
+              - dpv:AutomatedScoringOfIndividuals
+              duration: dpv:FixedOccurrencesDuration
+              frequency: dpv:SingularFrequency
+            dataExportTransitCountry:
+            - '@type': DataExportCountry
+              countryCode:
+                '@type': ISO31661Alpha2StandardIdentifier
+                value: US
+              commercialOrganizationName: Globy Corporation
+              dataPrivacyFrameworkURL: https://www.dataprivacyframework.gov/participant/abcde
+          - '@type': DpvProcess
+            processingOperation:
+            - dpv:Profiling
+            context:
+              '@type': DpvContext
+              processingContext:
+              - dpv:AutomatedScoringOfIndividuals
+              duration: dpv:EndlessDuration
+              frequency: dpv:SingularFrequency
+            dataExportTransitCountry:
+            - '@type': DataExportCountry
+              countryCode:
+                '@type': ISO31661Alpha2StandardIdentifier
+                value: US
+              commercialOrganizationName: Globy Corporation
+              dataPrivacyFrameworkURL: https://www.dataprivacyframework.gov/participant/abcde
+            dataExportStorageCountry:
+            - '@type': DataExportCountry
+              countryCode:
+                '@type': ISO31661Alpha2StandardIdentifier
+                value: US
+              commercialOrganizationName: Globy Corporation
+              dataPrivacyFrameworkURL: https://www.dataprivacyframework.gov/participant/abcde
+          userConsentScreenshot:
+            '@type': SimpleAttachment
+            content: JVBERi...JSVFT0Y=
+            mimeType: application/pdf
+        channelPartner:
+          '@type': PartyRoleRef
+          id: '15'
+          '@referredType': PartyRole
+      - '@type': ApiProduct
+        id: 33944716-d86f-4122-827b-307d74e6ca50
+        href: https://mycsp.com/tmf-api/openGatewayOperateAPIOnboardingAndOrdering/v5/apiProduct/33944716-d86f-4122-827b-307d74e6ca50
+        creationDate: '2025-01-01T10:02:00.00Z'
+        startDate: '2025-01-01T10:03:00.00Z'
+        status: active
+        productOffering:
+          '@type': ProductOfferingRef
+          href: https://mycsp.com/tmf-api/openGatewayOperateAPIProductCatalog/v5/productOffering/5e9b10e5-d707-4a16-89d1-687c7f0bf81a
+          id: 5e9b10e5-d707-4a16-89d1-687c7f0bf81a
+          name: Open Gateway Location Verification bundle offer
+          '@referredType': OpenGatewayProductOffering
+        productOrderItem:
+        - '@type': RelatedOrderItem
+          orderId: c5c005c5-34f9-4e7d-99df-8a30da246f8b
+          orderHref: https://mycsp.com/tmf-api/openGatewayOperateAPIOnboardingAndOrdering/v5/apiProductOrder/c5c005c5-34f9-4e7d-99df-8a30da246f8b
+          orderItemId: '1'
+          orderItemAction: add
+        productRelationship:
+        - '@type': OpenGatewayProductRelationship
+          id: 3be31371-2755-43f7-a6f6-380234910b9b
+          relationshipType: bundles
+        - '@type': OpenGatewayProductRelationship
+          id: fea0c794-d62d-40bb-a9a4-934336194dca
+          relationshipType: bundles
+        apiName: ''
+        approvedProductOfferingTermOrCondition:
+        - '@type': ProductOfferingTermOrCondition
+          productOfferingTermOrConditionSpecRef:
+            '@type': ProductOfferingTermOrConditionSpecRef
+            id: 5e9b10e5-d707-4a16-89d1-687c7f0bf81a_terms_1
+            '@referredType': OpenGatewayProductOfferingTermOrConditionSpecification
+          productOfferingTermOrConditionApproval:
+            approvalDate: '2023-11-20T00:00:00.000Z'
+        channelPartner:
+          '@type': PartyRoleRef
+          id: '15'
+          '@referredType': PartyRole
+      - '@type': ApiProductLocationVerificationAntifraud
+        '@baseType': ApiProduct
+        '@schemaLocation': https://mycsp.com/tmf-api/schemas/Tmf/Product/DCS/GSMAOperateAPI/LocationVerificationAntifraudStandalone.schema.json#/definitions/LocationVerificationAntifraudStandalone
+        id: 3be31371-2755-43f7-a6f6-380234910b9b
+        href: https://mycsp.com/tmf-api/openGatewayOperateAPIOnboardingAndOrdering/v5/apiProduct/3be31371-2755-43f7-a6f6-380234910b9b
+        creationDate: '2025-01-01T10:02:00.00Z'
+        startDate: '2025-01-01T10:03:00.00Z'
+        status: active
+        productOffering:
+          '@type': ProductOfferingRef
+          id: ab7792f8-6628-4c4b-a557-699adc26d4ce
+          href: https://mycsp.com/tmf-api/openGatewayOperateAPIProductCatalog/v5/productOffering/ab7792f8-6628-4c4b-a557-699adc26d4ce
+          name: Location Verification Antifraud CAMARA API Bundled
+          '@referredType': OpenGatewayProductOffering
+        productOrderItem:
+        - '@type': RelatedOrderItem
+          orderId: c5c005c5-34f9-4e7d-99df-8a30da246f8b
+          orderHref: https://mycsp.com/tmf-api/openGatewayOperateAPIOnboardingAndOrdering/v5/apiProductOrder/c5c005c5-34f9-4e7d-99df-8a30da246f8b
+          orderItemId: '2'
+          orderItemAction: add
+        productSpecification:
+          '@type': ProductSpecificationRef
+          id: 4b6591ef-5ede-4885-9543-0c5e9070ade9
+          href: https://mycsp.com/tmf-api/openGatewayOperateAPIProductCatalog/v5/productSpecification/4b6591ef-5ede-4885-9543-0c5e9070ade9
+          name: Location Verification Antifraud CAMARA API
+          version: 1.0.0
+          '@referredType': ApiProductSpecification
+        apiName: location-verification
+        apiVersionDetails:
+        - '@type': ApiVersionDetails
+          apiMajorVersion: 0
+          basePath: location-verification
+          apiGrantInformation:
+          - '@type': ApiGrantInformation
+            purpose: dpv:FraudPreventionAndDetection
+            scope:
+            - location-verification:verify
+            grantType:
+            - urn:openid:params:grant-type:ciba
+            - authorization_code
+            legalBasis: dpv:Consent
+          - '@type': ApiGrantInformation
+            scope:
+            - location-verification:read
+            grantType:
+            - client_credentials
+        purpose: dpv:FraudPreventionAndDetection
+        bestAccuracy: 500
+        approvedProductOfferingTermOrCondition:
+        - '@type': ProductOfferingTermOrCondition
+          productOfferingTermOrConditionSpecRef:
+            '@type': ProductOfferingTermOrConditionSpecRef
+            id: ab7792f8-6628-4c4b-a557-699adc26d4ce_terms_1
+            '@referredType': OpenGatewayProductOfferingTermOrConditionSpecification
+          productOfferingTermOrConditionApproval:
+            approvalDate: '2023-11-20T00:00:00.000Z'
+          applicationLegalBasisForInputData: dpv:Consent
+          process:
+          - '@type': DpvProcess
+            processingOperation:
+            - dpv:Assess
+            context:
+              '@type': DpvContext
+              processingContext:
+              - dpv:AutomatedDecisionMaking
+              - dpv:AutomatedScoringOfIndividuals
+              duration: dpv:FixedOccurrencesDuration
+              frequency: dpv:SingularFrequency
+            dataExportTransitCountry:
+            - '@type': DataExportCountry
+              countryCode:
+                '@type': ISO31661Alpha2StandardIdentifier
+                value: US
+              commercialOrganizationName: Globy Corporation
+              dataPrivacyFrameworkURL: https://www.dataprivacyframework.gov/participant/abcde
+          - '@type': DpvProcess
+            processingOperation:
+            - dpv:Profiling
+            context:
+              '@type': DpvContext
+              processingContext:
+              - dpv:AutomatedScoringOfIndividuals
+              duration: dpv:EndlessDuration
+              frequency: dpv:SingularFrequency
+            dataExportTransitCountry:
+            - '@type': DataExportCountry
+              countryCode:
+                '@type': ISO31661Alpha2StandardIdentifier
+                value: US
+              commercialOrganizationName: Globy Corporation
+              dataPrivacyFrameworkURL: https://www.dataprivacyframework.gov/participant/abcde
+            dataExportStorageCountry:
+            - '@type': DataExportCountry
+              countryCode:
+                '@type': ISO31661Alpha2StandardIdentifier
+                value: US
+              commercialOrganizationName: Globy Corporation
+              dataPrivacyFrameworkURL: https://www.dataprivacyframework.gov/participant/abcde
+          userConsentScreenshot:
+            '@type': SimpleAttachment
+            content: JVBERi...JSVFT0Y=
+            mimeType: application/pdf
+        channelPartner:
+          '@type': PartyRoleRef
+          id: '15'
+          '@referredType': PartyRole
+      - '@type': UsageVolumeProductLocationVerification
+        '@baseType': ApiProduct
+        id: fea0c794-d62d-40bb-a9a4-934336194dca
+        href: https://mycsp.com/tmf-api/openGatewayOperateAPIOnboardingAndOrdering/v5/apiProduct/fea0c794-d62d-40bb-a9a4-934336194dca
+        creationDate: '2025-01-01T10:02:00.00Z'
+        startDate: '2025-01-01T10:03:00.00Z'
+        status: active
+        productOffering:
+          '@type': ProductOfferingRef
+          id: 0a2782b7-81a7-4af9-9e4f-d51bc690ec2d
+          href: https://mycsp.com/tmf-api/openGatewayOperateAPIProductCatalog/v5/productOffering/0a2782b7-81a7-4af9-9e4f-d51bc690ec2d
+          name: Location Verification Verify Usage Volume Recurring Bundled
+          '@referredType': OpenGatewayProductOffering
+        productOrderItem:
+        - '@type': RelatedOrderItem
+          orderId: c5c005c5-34f9-4e7d-99df-8a30da246f8b
+          orderHref: https://mycsp.com/tmf-api/openGatewayOperateAPIOnboardingAndOrdering/v5/apiProductOrder/c5c005c5-34f9-4e7d-99df-8a30da246f8b
+          orderItemId: '3'
+          orderItemAction: add
+        productSpecification:
+          '@type': ProductSpecificationRef
+          id: a7b90fdb-00f7-498b-944e-88115d00626b
+          href: https://mycsp.com/tmf-api/openGatewayOperateAPIProductCatalog/v5/productSpecification/a7b90fdb-00f7-498b-944e-88115d00626b
+          name: Location Verification Verify Usage Volume Recurring
+          version: 1.0.0
+          '@referredType': UsageVolumeProductSpecification
+        productRelationship:
+        - '@type': OpenGatewayProductRelationship
+          id: 3be31371-2755-43f7-a6f6-380234910b9b
+          relationshipType: appliesOn
+        apiName: ''
+        usageVolume:
+          volumeUnit: apiCall
+          volumeInitialAmount: 10000
+        isBlocked: false
+        isRecurring: true
+        validityDuration:
+          amount: 1
+          units: month
+        approvedProductOfferingTermOrCondition:
+        - '@type': ProductOfferingTermOrCondition
+          productOfferingTermOrConditionSpecRef:
+            '@type': ProductOfferingTermOrConditionSpecRef
+            id: 0a2782b7-81a7-4af9-9e4f-d51bc690ec2d_terms_1
+            '@referredType': OpenGatewayProductOfferingTermOrConditionSpecification
+          productOfferingTermOrConditionApproval:
+            approvalDate: '2023-11-20T00:00:00.000Z'
+        channelPartner:
+          '@type': PartyRoleRef
+          id: '15'
+          '@referredType': PartyRole
+      description: A collection of API representation
+    Retrieve_an_API_Product_location_verification_standalone_response:
+      value:
+        '@type': ApiProductDeviceLocationVerification
+        '@baseType': ApiProduct
+        '@schemaLocation': https://mycsp.com/tmf-api/schema/Product/ApiProductDeviceLocationVerification.schema.json
+        id: 8bb8bcdb-9fcf-4b4f-8b27-2dda848404fb
+        href: https://mycsp.com/tmf-api/openGatewayOperateAPIOnboardingAndOrdering/v5/apiProduct/8bb8bcdb-9fcf-4b4f-8b27-2dda848404fb
+        name: device_location_verification
+        description: Open Gateway Device Location Verify
+        creationDate: '2025-02-02T12:02:00.00Z'
+        startDate: '2025-02-02T12:00:03.00Z'
+        status: active
+        productOffering:
+          '@type': ProductOfferingRef
+          id: 2d4ef4d3-08ce-441d-ac76-133b6dad0ccb
+          name: Location Verification Antifraud CAMARA API Standalone
+          '@referredType': OpenGatewayProductOffering
+        productOrderItem:
+        - '@type': RelatedOrderItem
+          orderId: 86387671-0997-461b-99c7-d624ffb0640c
+          orderHref: https://mycsp.com/tmf-api/openGatewayOperateAPIOnboardingAndOrdering/v5/apiProductOrder/86387671-0997-461b-99c7-d624ffb0640c
+          orderItemId: '1'
+          orderItemAction: add
+        productSpecification:
+          '@type': ProductSpecificationRef
+          id: 4b6591ef-5ede-4885-9543-0c5e9070ade9
+          href: https://mycsp.com/tmf-api/openGatewayOperateAPIProductCatalog/v5/productSpecification/4b6591ef-5ede-4885-9543-0c5e9070ade9
+          name: Location Verification Antifraud CAMARA API
+          version: 1.0.0
+          '@referredType': ApiProductSpecification
+        apiName: location-verification
+        apiVersionDetails:
+        - '@type': ApiVersionDetails
+          apiMajorVersion: 0
+          basePath: location-verification
+          apiGrantInformation:
+          - '@type': ApiGrantInformation
+            purpose: dpv:FraudPreventionAndDetection
+            scope:
+            - location-verification:verify
+            grantType:
+            - urn:openid:params:grant-type:ciba
+            - authorization_code
+            legalBasis: dpv:Consent
+          - '@type': ApiGrantInformation
+            scope:
+            - location-verification:read
+            grantType:
+            - client_credentials
+        purpose: dpv:FraudPreventionAndDetection
+        bestAccuracy: 500
+        approvedProductOfferingTermOrCondition:
+        - '@type': ProductOfferingTermOrCondition
+          productOfferingTermOrConditionSpecRef:
+            '@type': ProductOfferingTermOrConditionSpecRef
+            id: 2d4ef4d3-08ce-441d-ac76-133b6dad0ccb_terms_1
+            name: device_location_verification_terms
+            '@referredType': OpenGatewayProductOfferingTermOrConditionSpecification
+          productOfferingTermOrConditionApproval:
+            approvalDate: '2023-11-20T00:00:00.000Z'
+          applicationLegalBasisForInputData: dpv:Consent
+          process:
+          - '@type': DpvProcess
+            processingOperation:
+            - dpv:Assess
+            context:
+              '@type': DpvContext
+              processingContext:
+              - dpv:AutomatedDecisionMaking
+              - dpv:AutomatedScoringOfIndividuals
+              duration: dpv:FixedOccurrencesDuration
+              frequency: dpv:SingularFrequency
+            dataExportTransitCountry:
+            - '@type': DataExportCountry
+              countryCode:
+                '@type': ISO31661Alpha2StandardIdentifier
+                value: US
+              commercialOrganizationName: Globy Corporation
+              dataPrivacyFrameworkURL: https://www.dataprivacyframework.gov/participant/abcde
+          - '@type': DpvProcess
+            processingOperation:
+            - dpv:Profiling
+            context:
+              '@type': DpvContext
+              processingContext:
+              - dpv:AutomatedScoringOfIndividuals
+              duration: dpv:EndlessDuration
+              frequency: dpv:SingularFrequency
+            dataExportTransitCountry:
+            - '@type': DataExportCountry
+              countryCode:
+                '@type': ISO31661Alpha2StandardIdentifier
+                value: US
+              commercialOrganizationName: Globy Corporation
+              dataPrivacyFrameworkURL: https://www.dataprivacyframework.gov/participant/abcde
+            dataExportStorageCountry:
+            - '@type': DataExportCountry
+              countryCode:
+                '@type': ISO31661Alpha2StandardIdentifier
+                value: US
+              commercialOrganizationName: Globy Corporation
+              dataPrivacyFrameworkURL: https://www.dataprivacyframework.gov/participant/abcde
+          userConsentScreenshot:
+            '@type': SimpleAttachment
+            content: JVBERi...JSVFT0Y=
+            mimeType: application/pdf
+        channelPartner:
+          '@type': PartyRoleRef
+          id: '15'
+          '@referredType': PartyRole
+      description: API Order representation.
+  parameters:
+    Fields:
+      name: fields
+      in: query
+      description: Comma-separated properties to be provided in response
+      schema:
+        type: string
+    Filter:
+      name: filter
+      in: query
+      description: Filter a collection using JSONPath
+      schema:
+        type: string
+        example: attachment[?(@size==300)]
+    Offset:
+      name: offset
+      in: query
+      description: Requested index for start of resources to be provided in response
+      schema:
+        type: integer
+    Id:
+      name: id
+      required: true
+      schema:
+        type: string
+      in: path
+      description: Identifier of the Resource
+    Limit:
+      name: limit
+      in: query
+      description: Requested number of resources to be provided in response
+      schema:
+        type: integer
+    Sort:
+      name: sort
+      in: query
+      description: The default direction is Ascending order, the use of the modifier in front of the sort field name, “-“, changes the sort order direction.
+      schema:
+        type: string
+    After:
+      name: after
+      in: query
+      description: An opaque string value representing the page results after the cursor value
+      schema:
+        type: string
+    Before:
+      name: before
+      in: query
+      description: An opaque string value representing the page results before the cursor value
+      schema:
+        type: string

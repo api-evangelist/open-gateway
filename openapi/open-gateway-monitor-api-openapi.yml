@@ -1,0 +1,621 @@
+openapi: 3.2.0
+info:
+  title: Open Gateway Operate API Onboarding and Ordering Monitor API
+  description: "**TMF931 - API Ordering, Developer & Application Onboarding and Management**   \n\nThis Operate API specification covers the onboarding operations between Channel Partners and Operators as described by GSMA. It offers a consolidation of multiple TM Forum based APIs into a single specification (a component suite). This API specification proposes : \n- Application Owner (Developer) Management (acceptance, onboarding, lifecycle management)  \n- Application Management (acceptance, onboarding, lifecycle management)  \n- Service API Management (ordering, retrieving)\n\nThis API is a composite DCS (Domain Context Specialization) of the following TMF Open APIs for Open Gateway context\n- TMF622 Product Ordering Management v5.0\n- TMF637 Product Inventory Management v5.0\n- TMF669 Party Role Management v5.0\n- TMF639 Resource Inventory v5.0\n\nCopyright © TM Forum 2025. All Rights Reserved\n"
+  version: 5.2.1
+  x-generation-tooling-version: v8.5.15
+  x-generation-data-model-version: unknown
+  x-generation-date: '2025-12-11T09:49:01.463Z'
+  x-api-id: TMF931
+  license:
+    name: Apache License 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+- url: '{apiRoot}/openGatewayOperateAPIOnboardingAndOrdering/v5/'
+  variables:
+    apiRoot:
+      default: https://serverRoot/tmf-api/openGatewayOperateAPIOnboardingAndOrdering/v5
+      enum:
+      - https://serverRoot/tmf-api/openGatewayOperateAPIOnboardingAndOrdering/v5
+tags:
+- name: monitor
+  description: Operations for Monitor Resource
+paths:
+  /monitor:
+    get:
+      tags:
+      - monitor
+      summary: List or find Monitor objects
+      description: List or find Monitor objects
+      operationId: listMonitor
+      parameters:
+      - $ref: '#/components/parameters/Fields'
+      - $ref: '#/components/parameters/Offset'
+      - $ref: '#/components/parameters/Limit'
+      - $ref: '#/components/parameters/Before'
+      - $ref: '#/components/parameters/After'
+      - $ref: '#/components/parameters/Sort'
+      - $ref: '#/components/parameters/Filter'
+      responses:
+        '200':
+          $ref: '#/components/responses/200MonitorArray'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '405':
+          $ref: '#/components/responses/405'
+        '500':
+          $ref: '#/components/responses/500'
+        '501':
+          $ref: '#/components/responses/501'
+        '503':
+          $ref: '#/components/responses/503'
+  /monitor/{id}:
+    get:
+      tags:
+      - monitor
+      summary: Retrieves a Monitor by ID
+      description: This operation retrieves a Monitor entity. Attribute selection enabled for all first level attributes.
+      operationId: retrieveMonitor
+      parameters:
+      - $ref: '#/components/parameters/Id'
+      - $ref: '#/components/parameters/Fields'
+      responses:
+        '200':
+          $ref: '#/components/responses/200Monitor_Get'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '405':
+          $ref: '#/components/responses/405'
+        '500':
+          $ref: '#/components/responses/500'
+        '501':
+          $ref: '#/components/responses/501'
+        '503':
+          $ref: '#/components/responses/503'
+components:
+  headers:
+    X-Total-Count:
+      description: Total number of items matching criteria
+      schema:
+        type: integer
+    X-Result-Count:
+      description: Actual number of items returned in the response body
+      schema:
+        type: integer
+  schemas:
+    Request:
+      type: object
+      description: A response to a request
+      properties:
+        method:
+          description: The protocol of the request, e.g. http
+          type: string
+        to:
+          description: The target of the request, e.g. a URL for an HTTP request
+          type: string
+        body:
+          description: The body of the request. For example for an HTTP request might contain content of a form .
+          type: object
+        header:
+          type: array
+          description: Items included in the header of the request. For example for an HTTP request might contain requested locale, basic authentication.
+          items:
+            $ref: '#/components/schemas/HeaderItem'
+          title: header
+    Extensible:
+      type: object
+      description: Base Extensible schema for use in TMForum Open-APIs - When used for in a schema it means that the Entity described by the schema  MUST be extended with the @type
+      properties:
+        '@type':
+          type: string
+          description: When sub-classing, this defines the sub-class Extensible name
+        '@baseType':
+          type: string
+          description: When sub-classing, this defines the super-class
+        '@schemaLocation':
+          type: string
+          description: A URI to a JSON-Schema file that defines additional attributes and relationships
+      required:
+      - '@type'
+    Entity:
+      type: object
+      description: Base entity schema for use in TMForum Open-APIs. Property.
+      allOf:
+      - $ref: '#/components/schemas/Extensible'
+      - $ref: '#/components/schemas/Addressable'
+    Error:
+      discriminator:
+        propertyName: '@type'
+        mapping:
+          Error: '#/components/schemas/Error'
+      allOf:
+      - $ref: '#/components/schemas/Extensible'
+      - type: object
+        required:
+        - code
+        - reason
+        properties:
+          code:
+            type: string
+            description: Application relevant detail, defined in the API or a common list.
+          reason:
+            type: string
+            description: Explanation of the reason for the error which can be shown to a client user.
+          message:
+            type: string
+            description: More details and corrective actions related to the error which can be shown to a client user.
+          status:
+            type: string
+            description: HTTP Error code extension
+          referenceError:
+            type: string
+            description: URI of documentation describing the error.
+      description: Used when an API throws an Error, typically with a HTTP error response-code (3xx, 4xx, 5xx)
+    Response:
+      type: object
+      description: A response to a request
+      properties:
+        statusCode:
+          description: The status of the response. For example for an HTTP response would be codes such as 200, 400, etc.
+          type: string
+        body:
+          description: The body of the response.
+          type: object
+        header:
+          description: Items included in the header of the response. For example for an HTTP response might contain negotiated locale.
+          type: array
+          items:
+            $ref: '#/components/schemas/HeaderItem'
+          title: header
+    Addressable:
+      type: object
+      description: Base schema for addressable entities
+      properties:
+        href:
+          type: string
+          description: Hyperlink reference
+        id:
+          type: string
+          description: unique identifier
+    Monitor_RES:
+      type: object
+      description: Response object for Monitor
+      allOf:
+      - $ref: '#/components/schemas/Monitor'
+      required:
+      - id
+      - href
+      discriminator:
+        propertyName: '@type'
+        mapping:
+          Monitor: '#/components/schemas/Monitor'
+    Monitor:
+      allOf:
+      - $ref: '#/components/schemas/Entity'
+      - type: object
+        description: Monitoring of resources
+        properties:
+          request:
+            $ref: '#/components/schemas/Request'
+          response:
+            $ref: '#/components/schemas/Response'
+          sourceHref:
+            type: string
+            description: The monitored resource href
+          state:
+            type: string
+            description: The Monitor state of the resource.  inProgress, inError, completed
+      discriminator:
+        propertyName: '@type'
+        mapping:
+          Monitor: '#/components/schemas/Monitor'
+    HeaderItem:
+      type: object
+      description: An item typically included in a request or response
+      properties:
+        name:
+          description: The name of the header item, e.g. locale
+          type: string
+        value:
+          description: The value of the header item, e.g. en-us
+          type: string
+  responses:
+    '501':
+      description: Not Implemented
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            basic:
+              summary: Not Implemented Error
+              value:
+                '@type': Error
+                code: ERR501
+                reason: The requested operation is not implemented
+                message: The requested operation is not implemented. Please contact the system administrator.
+                referenceError: https://host/errors
+    '503':
+      description: Service Unavailable
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            basic:
+              summary: Service Unavailable Error
+              value:
+                '@type': Error
+                code: ERR503
+                reason: Service Unavailable
+                message: The service is currently unavailable. Please try again later.
+                referenceError: https://host/errors
+    '403':
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            basic:
+              summary: Forbidden Error
+              value:
+                '@type': Error
+                code: ERR403
+                reason: Forbidden
+                message: You don't have the permission to access the requested resource. It is either read-protected or not readable by the server.
+                referenceError: https://host/errors
+    '401':
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            basic:
+              summary: Unauthorized Error
+              value:
+                '@type': Error
+                code: ERR401
+                reason: Unauthorized
+                message: You are not authorized to access the requested resource. Please provide the correct credentials.
+                referenceError: https://host/errors
+    200MonitorArray:
+      description: Success
+      headers:
+        X-Total-Count:
+          $ref: '#/components/headers/X-Total-Count'
+        X-Result-Count:
+          $ref: '#/components/headers/X-Result-Count'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Monitor_RES'
+          examples:
+            Retrieve_a_list_of_Monitor:
+              $ref: '#/components/examples/Retrieve_a_list_of_Monitor_response'
+            Retrieve_a_list_of_Monitor_with_field_selection_and_filter:
+              $ref: '#/components/examples/Retrieve_a_list_of_Monitor_with_field_selection_and_filter_response'
+    '400':
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            basic:
+              summary: Bad Request Error
+              value:
+                '@type': Error
+                code: ERR400
+                reason: Bad Request
+                message: The server could not understand the request due to invalid syntax. Please correct the syntax and try again.
+                referenceError: https://host/errors
+    200Monitor_Get:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Monitor_RES'
+          examples:
+            Retrieve_a_Monitor_from_its_identifier:
+              $ref: '#/components/examples/Retrieve_a_Monitor_from_its_identifier_response'
+    '405':
+      description: Method Not allowed
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            basic:
+              summary: Method Not allowed Error
+              value:
+                '@type': Error
+                code: ERR405
+                reason: Method Not allowed
+                message: The method is not allowed for the requested URL.
+                referenceError: https://host/errors
+    '404':
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            basic:
+              summary: Not Found Error
+              value:
+                '@type': Error
+                code: ERR404
+                reason: Not Found
+                message: The requested URL was not found on the server.
+                referenceError: https://host/errors
+    '500':
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            basic:
+              summary: Internal Server Error example
+              value:
+                '@type': Error
+                code: ERR500
+                reason: Internal Server Error
+                message: The server encountered an internal error. Please contact the system administrator.
+                referenceError: https://host/errors
+  examples:
+    Retrieve_a_Monitor_from_its_identifier_response:
+      value:
+        '@type': Monitor
+        id: 77795e7f-5213-4b9c-b672-6838a6b76152
+        href: https://mycsp.com/tmf-api/openGatewayOperateAPIOnboardingAndOrdering/v5/monitor/77795e7f-5213-4b9c-b672-6838a6b76152
+        state: Completed
+        request:
+          method: POST
+          to: https://mycsp.com/tmf-api/openGatewayOperateAPIOnboardingAndOrdering/v5/application
+          body:
+            '@type': Application
+            '@baseType': LogicalResource
+            name: Evolve Quest
+            commercialName: Evolve Quest
+            logoUrl: https://channelpartner.com/opengateway/application/evolvequest/logo.jpg
+            privacyPolicyURL: https://channelpartner.com/opengateway/application/evolvequest/privacyPolicy.html
+            description: Evolve Quest mobile application
+            redirectUrl:
+            - https://channelpartner.com/opengateway/application/evolvequest/redirect
+            jwksUri: https://channelpartner.com/opengateway/application/evolvequest/jwk
+            category: games
+            applicationOwner:
+              '@type': PartyRoleRef
+              id: e05b75dc-f843-40d9-8d16-112275a28385
+              '@referredType': PartyRole
+            privacyRightsRequestContact:
+            - '@type': WebFormContactMedium
+              '@baseType': ContactMedium
+              id: '1'
+              preferred: false
+              url: https://contact.evolvequest.com
+            - '@type': EmailContactMedium
+              '@baseType': ContactMedium
+              id: '2'
+              preferred: true
+              emailAddress: contact@evolvequest.com
+            externalIdentifier:
+            - '@type': ExternalIdentifier
+              id: application_123
+              owner: ChannelPartner
+              externalIdentifierType: Application
+        response:
+          statusCode: '201'
+          body:
+            '@type': Application
+            '@baseType': LogicalResource
+            id: f1cba17d-789a-4037-b3e3-2c96e887576c
+            href: https://mycsp.com/tmf-api/openGatewayOperateAPIOnboardingAndOrdering/v5/application/f1cba17d-789a-4037-b3e3-2c96e887576c
+            name: Evolve Quest
+            commercialName: Evolve Quest
+            logoUrl: https://channelpartner.com/opengateway/application/evolvequest/logo.jpg
+            privacyPolicyURL: https://channelpartner.com/opengateway/application/evolvequest/privacyPolicy.html
+            description: Evolve Quest mobile application
+            redirectUrl:
+            - https://channelpartner.com/opengateway/application/evolvequest/redirect
+            jwksUri: https://channelpartner.com/opengateway/application/evolvequest/jwk
+            category: games
+            operationalState: enable
+            approvalStatus: approved
+            digitalIdentity:
+              '@type': ApiDigitalIdentity
+              clientId: evolve_quest_channelPartner15
+              validFor:
+                startDateTime: '2024-12-02T14:01:00.00Z'
+            applicationOwner:
+              '@type': PartyRoleRef
+              id: e05b75dc-f843-40d9-8d16-112275a28385
+              '@referredType': PartyRole
+            privacyRightsRequestContact:
+            - '@type': WebFormContactMedium
+              '@baseType': ContactMedium
+              id: '1'
+              preferred: false
+              url: https://contact.evolvequest.com
+            - '@type': EmailContactMedium
+              '@baseType': ContactMedium
+              id: '2'
+              preferred: true
+              emailAddress: contact@evolvequest.com
+            externalIdentifier:
+            - '@type': ExternalIdentifier
+              id: application_123
+              owner: ChannelPartner
+              externalIdentifierType: Application
+            channelPartner:
+              '@type': PartyRoleRef
+              id: '15'
+              '@referredType': PartyRole
+        sourceHref: https://mycsp.com/tmf-api/openGatewayOperateAPIOnboardingAndOrdering/v5/application/f1cba17d-789a-4037-b3e3-2c96e887576c
+      description: Monitor representation.
+    Retrieve_a_list_of_Monitor_with_field_selection_and_filter_response:
+      value:
+      - '@type': Monitor
+        id: 77795e7f-5213-4b9c-b672-6838a6b76152
+        href: https://mycsp.com/tmf-api/openGatewayOperateAPIOnboardingAndOrdering/v5/monitor/77795e7f-5213-4b9c-b672-6838a6b76152
+        state: Completed
+        sourceHref: https://mycsp.com/tmf-api/openGatewayOperateAPIOnboardingAndOrdering/v5/application/f1cba17d-789a-4037-b3e3-2c96e887576c
+      description: A collection of Monitor with field selection and filter
+    Retrieve_a_list_of_Monitor_response:
+      value:
+      - '@type': Monitor
+        id: 77795e7f-5213-4b9c-b672-6838a6b76152
+        href: https://mycsp.com/tmf-api/openGatewayOperateAPIOnboardingAndOrdering/v5/monitor/77795e7f-5213-4b9c-b672-6838a6b76152
+        state: Completed
+        request:
+          method: POST
+          to: https://mycsp.com/tmf-api/openGatewayOperateAPIOnboardingAndOrdering/v5/application
+          body:
+            '@type': Application
+            '@baseType': LogicalResource
+            name: Evolve Quest
+            commercialName: Evolve Quest
+            logoUrl: https://channelpartner.com/opengateway/application/evolvequest/logo.jpg
+            privacyPolicyURL: https://channelpartner.com/opengateway/application/evolvequest/privacyPolicy.html
+            description: Evolve Quest mobile application
+            redirectUrl:
+            - https://channelpartner.com/opengateway/application/evolvequest/redirect
+            jwksUri: https://channelpartner.com/opengateway/application/evolvequest/jwk
+            category: games
+            applicationOwner:
+              '@type': PartyRoleRef
+              id: e05b75dc-f843-40d9-8d16-112275a28385
+              '@referredType': PartyRole
+            privacyRightsRequestContact:
+            - '@type': WebFormContactMedium
+              '@baseType': ContactMedium
+              id: '1'
+              preferred: false
+              url: https://contact.evolvequest.com
+            - '@type': EmailContactMedium
+              '@baseType': ContactMedium
+              id: '2'
+              preferred: true
+              emailAddress: contact@evolvequest.com
+            externalIdentifier:
+            - '@type': ExternalIdentifier
+              id: application_123
+              owner: ChannelPartner
+              externalIdentifierType: Application
+        response:
+          statusCode: '201'
+          body:
+            '@type': Application
+            '@baseType': LogicalResource
+            id: f1cba17d-789a-4037-b3e3-2c96e887576c
+            href: https://mycsp.com/tmf-api/openGatewayOperateAPIOnboardingAndOrdering/v5/application/f1cba17d-789a-4037-b3e3-2c96e887576c
+            name: Evolve Quest
+            commercialName: Evolve Quest
+            logoUrl: https://channelpartner.com/opengateway/application/evolvequest/logo.jpg
+            privacyPolicyURL: https://channelpartner.com/opengateway/application/evolvequest/privacyPolicy.html
+            description: Evolve Quest mobile application
+            redirectUrl:
+            - https://channelpartner.com/opengateway/application/evolvequest/redirect
+            jwksUri: https://channelpartner.com/opengateway/application/evolvequest/jwk
+            category: games
+            operationalState: enable
+            approvalStatus: approved
+            digitalIdentity:
+              '@type': ApiDigitalIdentity
+              clientId: evolve_quest_channelPartner15
+              validFor:
+                startDateTime: '2024-12-02T14:01:00.00Z'
+            applicationOwner:
+              '@type': PartyRoleRef
+              id: e05b75dc-f843-40d9-8d16-112275a28385
+              '@referredType': PartyRole
+            privacyRightsRequestContact:
+            - '@type': WebFormContactMedium
+              '@baseType': ContactMedium
+              id: '1'
+              preferred: false
+              url: https://contact.evolvequest.com
+            - '@type': EmailContactMedium
+              '@baseType': ContactMedium
+              id: '2'
+              preferred: true
+              emailAddress: contact@evolvequest.com
+            externalIdentifier:
+            - '@type': ExternalIdentifier
+              id: application_123
+              owner: ChannelPartner
+              externalIdentifierType: Application
+            channelPartner:
+              '@type': PartyRoleRef
+              id: '15'
+              '@referredType': PartyRole
+        sourceHref: https://mycsp.com/tmf-api/openGatewayOperateAPIOnboardingAndOrdering/v5/application/f1cba17d-789a-4037-b3e3-2c96e887576c
+      description: A collection of Monitor representation
+  parameters:
+    Fields:
+      name: fields
+      in: query
+      description: Comma-separated properties to be provided in response
+      schema:
+        type: string
+    Filter:
+      name: filter
+      in: query
+      description: Filter a collection using JSONPath
+      schema:
+        type: string
+        example: attachment[?(@size==300)]
+    Offset:
+      name: offset
+      in: query
+      description: Requested index for start of resources to be provided in response
+      schema:
+        type: integer
+    Id:
+      name: id
+      required: true
+      schema:
+        type: string
+      in: path
+      description: Identifier of the Resource
+    Limit:
+      name: limit
+      in: query
+      description: Requested number of resources to be provided in response
+      schema:
+        type: integer
+    Sort:
+      name: sort
+      in: query
+      description: The default direction is Ascending order, the use of the modifier in front of the sort field name, “-“, changes the sort order direction.
+      schema:
+        type: string
+    After:
+      name: after
+      in: query
+      description: An opaque string value representing the page results after the cursor value
+      schema:
+        type: string
+    Before:
+      name: before
+      in: query
+      description: An opaque string value representing the page results before the cursor value
+      schema:
+        type: string

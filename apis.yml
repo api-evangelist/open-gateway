@@ -108,6 +108,8 @@ apis:
   description: Operations for ApiProduct Resource
   humanURL: https://github.com/camaraproject/NumberVerification
   tags:
+  - ApiProduct
+  tags_raw:
   - apiProduct
   properties:
   - type: OpenAPI
@@ -159,7 +161,8 @@ apis:
   name: GSMA Open Gateway API Product Order API
   description: Operations for ApiProductOrder Resource
   humanURL: https://github.com/camaraproject/NumberVerification
-  tags:
+  tags: []
+  tags_raw:
   - apiProductOrder
   properties:
   - type: OpenAPI
@@ -212,6 +215,8 @@ apis:
   description: Operations for Application Resource
   humanURL: https://github.com/camaraproject/NumberVerification
   tags:
+  - Application
+  tags_raw:
   - application
   properties:
   - type: OpenAPI
@@ -263,7 +268,8 @@ apis:
   name: GSMA Open Gateway Application Owner API
   description: Operations for ApplicationOwner Resource
   humanURL: https://github.com/camaraproject/NumberVerification
-  tags:
+  tags: []
+  tags_raw:
   - applicationOwner
   properties:
   - type: OpenAPI
@@ -317,6 +323,8 @@ apis:
     Provides information on Call Forwarding settings for the provided phone number (PhoneNumber).
   humanURL: https://github.com/camaraproject/NumberVerification
   tags:
+  - Call Forwarding Information Retrieval
+  tags_raw:
   - Call Forwarding information retrieval
   properties:
   - type: OpenAPI
@@ -942,6 +950,8 @@ apis:
   description: Verification of the location of a device
   humanURL: https://github.com/camaraproject/NumberVerification
   tags:
+  - Location Verification
+  tags_raw:
   - Location verification
   properties:
   - type: OpenAPI
@@ -1047,6 +1057,8 @@ apis:
   description: Operations for Monitor Resource
   humanURL: https://github.com/camaraproject/NumberVerification
   tags:
+  - Monitors
+  tags_raw:
   - monitor
   properties:
   - type: OpenAPI
@@ -1780,6 +1792,8 @@ apis:
     Provides information on Unconditional Call Forwarding settings for the provided phone number (PhoneNumber)
   humanURL: https://github.com/camaraproject/NumberVerification
   tags:
+  - Unconditional Call Forwarding Information Retrieval
+  tags_raw:
   - Unconditional Call Forwarding information retrieval
   properties:
   - type: OpenAPI

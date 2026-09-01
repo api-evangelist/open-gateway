@@ -323,7 +323,7 @@ apis:
     Provides information on Call Forwarding settings for the provided phone number (PhoneNumber).
   humanURL: https://github.com/camaraproject/NumberVerification
   tags:
-  - Call Forwarding Information Retrieval
+  - Call Forwarding information retrieval
   tags_raw:
   - Call Forwarding information retrieval
   properties:
@@ -1792,7 +1792,7 @@ apis:
     Provides information on Unconditional Call Forwarding settings for the provided phone number (PhoneNumber)
   humanURL: https://github.com/camaraproject/NumberVerification
   tags:
-  - Unconditional Call Forwarding Information Retrieval
+  - Unconditional Call Forwarding information retrieval
   tags_raw:
   - Unconditional Call Forwarding information retrieval
   properties:

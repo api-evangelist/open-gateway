@@ -66,60 +66,6 @@ created: '2026-07-25'
 modified: '2026-07-25'
 specificationVersion: '0.23'
 apis:
-- aid: open-gateway:open-gateway-apiproduct-api
-  name: GSMA Open Gateway API Product API
-  description: Operations for ApiProduct Resource
-  humanURL: https://github.com/camaraproject/NumberVerification
-  tags:
-  - ApiProduct
-  tags_raw:
-  - apiProduct
-  properties:
-  - type: OpenAPI
-    url: openapi/open-gateway-apiproduct-api-openapi.yml
-  - type: Documentation
-    url: https://github.com/camaraproject/NumberVerification
-  - type: APIReference
-    url: https://camaraproject.github.io/swagger-ui/
-  - type: Documentation
-    url: >-
-      https://www.gsma.com/solutions-and-impact/gsma-open-gateway/gsma-open-gateway-api-descriptions/
-  - type: Documentation
-    url: https://github.com/camaraproject/SimSwap
-  - type: Documentation
-    url: https://github.com/camaraproject/DeviceSwap
-  - type: Documentation
-    url: https://github.com/camaraproject/CallForwardingSignal
-  - type: Documentation
-    url: https://github.com/camaraproject/KnowYourCustomerMatch
-  - type: Documentation
-    url: https://github.com/camaraproject/KnowYourCustomerAgeVerification
-  - type: Documentation
-    url: https://github.com/camaraproject/Tenure
-  - type: Documentation
-    url: https://github.com/camaraproject/OTPValidation
-  - type: Documentation
-    url: https://github.com/camaraproject/QualityOnDemand
-  - type: Documentation
-    url: https://github.com/camaraproject/DeviceReachabilityStatus
-  - type: Documentation
-    url: https://github.com/camaraproject/DeviceIdentifier
-  - type: Documentation
-    url: https://github.com/camaraproject/DeviceStatus
-  - type: Documentation
-    url: https://github.com/camaraproject/PopulationDensityData
-  - type: Documentation
-    url: https://github.com/camaraproject/DeviceLocation
-  - type: Documentation
-    url: https://github.com/camaraproject/SimpleEdgeDiscovery
-  - type: Documentation
-    url: https://github.com/camaraproject/CarrierBillingCheckOut
-  - type: Documentation
-    url: https://github.com/camaraproject/HomeDevicesQoD
-  - type: Documentation
-    url: https://github.com/tmforum-apis/TMF931_OpenGatewayOnboardingAndOrderingComponentSuite
-  - type: APIReference
-    url: https://github.com/tmforum-apis/TMF931_OpenGatewayOnboardingAndOrderingComponentSuite
 - aid: open-gateway:open-gateway-apiproductorder-api
   name: GSMA Open Gateway API Product Order API
   description: Operations for ApiProductOrder Resource
@@ -1393,6 +1339,58 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/open-gateway-unconditional-call-forwarding-information-retrieval-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/camaraproject/NumberVerification
+  - type: APIReference
+    url: https://camaraproject.github.io/swagger-ui/
+  - type: Documentation
+    url: >-
+      https://www.gsma.com/solutions-and-impact/gsma-open-gateway/gsma-open-gateway-api-descriptions/
+  - type: Documentation
+    url: https://github.com/camaraproject/SimSwap
+  - type: Documentation
+    url: https://github.com/camaraproject/DeviceSwap
+  - type: Documentation
+    url: https://github.com/camaraproject/CallForwardingSignal
+  - type: Documentation
+    url: https://github.com/camaraproject/KnowYourCustomerMatch
+  - type: Documentation
+    url: https://github.com/camaraproject/KnowYourCustomerAgeVerification
+  - type: Documentation
+    url: https://github.com/camaraproject/Tenure
+  - type: Documentation
+    url: https://github.com/camaraproject/OTPValidation
+  - type: Documentation
+    url: https://github.com/camaraproject/QualityOnDemand
+  - type: Documentation
+    url: https://github.com/camaraproject/DeviceReachabilityStatus
+  - type: Documentation
+    url: https://github.com/camaraproject/DeviceIdentifier
+  - type: Documentation
+    url: https://github.com/camaraproject/DeviceStatus
+  - type: Documentation
+    url: https://github.com/camaraproject/PopulationDensityData
+  - type: Documentation
+    url: https://github.com/camaraproject/DeviceLocation
+  - type: Documentation
+    url: https://github.com/camaraproject/SimpleEdgeDiscovery
+  - type: Documentation
+    url: https://github.com/camaraproject/CarrierBillingCheckOut
+  - type: Documentation
+    url: https://github.com/camaraproject/HomeDevicesQoD
+  - type: Documentation
+    url: https://github.com/tmforum-apis/TMF931_OpenGatewayOnboardingAndOrderingComponentSuite
+  - type: APIReference
+    url: https://github.com/tmforum-apis/TMF931_OpenGatewayOnboardingAndOrderingComponentSuite
+- aid: open-gateway:open-gateway-api-product-api
+  name: GSMA Open Gateway Api Product API
+  description: Operations for ApiProduct Resource
+  humanURL: https://github.com/camaraproject/NumberVerification
+  tags:
+  - Api Product
+  properties:
+  - type: OpenAPI
+    url: openapi/open-gateway-api-product-api-openapi.yml
   - type: Documentation
     url: https://github.com/camaraproject/NumberVerification
   - type: APIReference

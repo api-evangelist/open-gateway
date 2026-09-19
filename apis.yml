@@ -967,6 +967,8 @@ apis:
   description: Operations to obtain information about payments
   humanURL: https://github.com/camaraproject/NumberVerification
   tags:
+  - Payments
+  tags_raw:
   - Payment
   properties:
   - type: OpenAPI

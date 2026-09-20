@@ -1,0 +1,69 @@
+slug: open-gateway
+provider: GSMA Open Gateway
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Telecommunications
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 5
+edges:
+- tag: One Step Payment
+  spec_file: open-gateway-one-step-payment-api-openapi.yml
+  capability_id: BC-2660.20
+  capability_id_l1: BC-2660
+  capability_name: Charging & Rating Management
+  confidence: 0.8
+  evidence: '"POST /payments  createPayment  Create a new Payment"; "charge an amount on a mobile line
+    ... the payment is processed on current account balance or charged on next bill generated for this
+    line"'
+  reason: Carrier billing charges an amount against the subscriber's prepaid balance or next bill — online
+    charging and balance management within telecom billing and revenue management.
+- tag: Payment
+  spec_file: open-gateway-payment-api-openapi.yml
+  capability_id: BC-2660.20
+  capability_id_l1: BC-2660
+  capability_name: Charging & Rating Management
+  confidence: 0.75
+  evidence: '"GET /payments  retrievePayments  Get a list of payments"; "charge an amount on a mobile
+    line" against "Operator Carrier Billing Systems"'
+  reason: Read operations over carrier-billing payment entities charged to the mobile line; same charging/balance
+    domain as the create-payment surface. Slightly lower because these operations are retrieval only.
+- tag: Two Step Payment
+  spec_file: open-gateway-two-step-payment-api-openapi.yml
+  capability_id: BC-2660.20
+  capability_id_l1: BC-2660
+  capability_name: Charging & Rating Management
+  confidence: 0.75
+  evidence: '"Service Enabling Payments against Operator Carrier Billing Systems"; preparePayment "Prepare
+    (reserve) a payment"'
+  reason: Carrier billing charges an amount on a mobile line against account balance or next bill — telecom
+    charging/balance management, i.e. charging & rating within telecom billing.
+- tag: Get Device Identifiers
+  spec_file: open-gateway-get-device-identifiers-api-openapi.yml
+  capability_id: BC-2640.50
+  capability_id_l1: BC-2640
+  capability_name: Device Identity Management
+  confidence: 0.7
+  evidence: '"The Mobile Device Identifier API returns details of the physical mobile device currently
+    being used by a specified mobile subscriber ... (IMEI SV and IMEI)"; schema "DeviceIdentifier", "DevicePPID",
+    "DeviceType"'
+  reason: Operations retrieve network-held device identifiers (IMEI, TAC, pseudonymous id) tied to a subscriber,
+    which is the device-identity domain of telecom subscriber management. Slightly weakened by the fact
+    that this is read-only exposure rather than registration/blacklisting, hence 0.7.
+- tag: Retrieve SIM swap date
+  spec_file: open-gateway-retrieve-sim-swap-date-api-openapi.yml
+  capability_id: BC-2640.20
+  capability_id_l1: BC-2640
+  capability_name: SIM & eSIM Lifecycle Management
+  confidence: 0.7
+  evidence: retrieveSimSwapDate "Retrieve SIM swap date"; "request the last date of a SIM swap performed
+    on the mobile line"
+  reason: Surface exposes SIM swap lifecycle events on a mobile line, which is the SIM/eSIM lifecycle
+    record (swap) within subscriber management; fraud prevention is the consumer use case rather than
+    what the API performs.

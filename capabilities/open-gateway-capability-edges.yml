@@ -11,7 +11,7 @@ capability_model:
   attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
     CC BY 4.0
   notice: NOTICE
-edge_count: 5
+edge_count: 8
 edges:
 - tag: One Step Payment
   spec_file: open-gateway-one-step-payment-api-openapi.yml
@@ -67,3 +67,42 @@ edges:
   reason: Surface exposes SIM swap lifecycle events on a mobile line, which is the SIM/eSIM lifecycle
     record (swap) within subscriber management; fraud prevention is the consumer use case rather than
     what the API performs.
+- tag: apiProduct
+  spec_file: open-gateway-api-product-api-openapi.yml
+  capability_id: BC-4270
+  capability_id_l1: BC-4270
+  capability_name: Developer Platform & API Ecosystem Management
+  confidence: 0.7
+  evidence: GET /apiProduct listApiProduct List or find ApiProduct objects; 'Service API Management (ordering,
+    retrieving)'
+  reason: Catalogue of API products (with ProductSpecificationRef, ProductOfferingTermOrCondition, ApiGrantInformation)
+    exposed so channel partners/developers can discover and order network APIs — squarely Developer Platform
+    & API Ecosystem Management. Left at L1 because the evidence spans catalogue/commercial-tier and lifecycle
+    aspects without naming one L2.
+  recovered_from: sweep-20260829T005356Z-edges.json
+  reanchored_from: open-gateway-apiproduct-api-openapi.yml
+- tag: application
+  spec_file: open-gateway-application-api-openapi.yml
+  capability_id: BC-4270.40
+  capability_id_l1: BC-4270
+  capability_name: Developer Identity & Credential Management
+  confidence: 0.7
+  evidence: POST /application createApplication; schemas OAuth2ClientCredential, ApiDigitalIdentity_FVO,
+    ApiConsumerPermission
+  reason: Registers and maintains developer applications together with their OAuth2 client credentials
+    and API consumer permissions — issuance and stewardship of developer credentials/OAuth clients. Some
+    chance it is better read as partner app programme management, hence 0.7.
+  recovered_from: sweep-20260829T005356Z-edges.json
+- tag: applicationOwner
+  spec_file: open-gateway-applicationowner-api-openapi.yml
+  capability_id: BC-4270
+  capability_id_l1: BC-4270
+  capability_name: Developer Platform & API Ecosystem Management
+  confidence: 0.7
+  evidence: '''Application Owner (Developer) Management (acceptance, onboarding, lifecycle management)'';
+    POST /applicationOwner createApplicationOwner'
+  reason: Onboarding and lifecycle of the developer/application-owner party (organisation identification,
+    contact media, approval status) in the operator API ecosystem — Developer Platform & API Ecosystem
+    Management. Kept at L1 since the record is a party/organisation profile rather than specifically credentials
+    or portal content.
+  recovered_from: sweep-20260829T005356Z-edges.json

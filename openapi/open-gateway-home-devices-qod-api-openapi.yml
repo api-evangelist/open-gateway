@@ -1,7 +1,7 @@
 openapi: 3.2.0
 info:
   title: Home Devices QoD API
-  description: "Service Enabling Network Function API for *QoS-on-demand* (QoD) control applied to devices connected to the user's home network. API clients can request to change, on demand, the desired QoS behaviour for the IP traffic corresponding to a specific user home device. The QoS behaviour is determined by the Service Class provided by the API Client, which is mapped to a DSCP value according to [RFC4594](https://datatracker.ietf.org/doc/html/rfc4594) guidelines.\n\n# Introduction\n\nIt may be useful for application developers to request on-demand QoS behaviours (service classes) to be configured at the user's home WiFi access point to ensure the required quality of experience for those services/applications running on a specific home device.\n\nFor example, the QoD control capability could be useful in scenarios such as:\n\n- A user using head-mounted display device for VR/AR applications. VR/AR applications require high bandwidth for the big amount of data to be streamed.\n- A user using VoIP application in a home device. Lower latency improves call quality or avoids dropped calls.\n\nGenerally speaking, QoS on demand may improve the qualty of experience for real time services like Videocomms, Cloud Gaming and Virtual Reality.\n\n![Videocomms DSCP usage example](https://raw.githubusercontent.com/camaraproject/HomeDevicesQoD/main/documentation/API_documentation/resources/videocomm_dscp_example.png)\n\n# Relevant terms and definitions\n\n- **Home Device**:\nUser device connected to the user's home network.\n\n- **Service Class**:\nA statement of the required QoS characteristics of a traffic aggregate. Conceptually, a service class refers to applications with similar characteristics and performance requirements.\n\n- **DSCP**:\n*Differentiated Services (DiffServ) Code Point*. DiffServ is a simple and scalable mechanism for classifying and managing network traffic and providing quality of service (QoS) on IP networks. The DSCP value will be used to classify the traffic of the target home device in order to be treated accordingly.\n\n# API Functionality\n\nThis API allows to third party clients to set, on demand, the desired QoS behaviour (service class) associated to the traffic of the device connected to the user's home network that matches the input criteria provided. The device traffic is classified (by DSCP) and treated accordingly.\n\n- **NOTE: The scope of the API is as follows**:\n  - QoS treatment is applied to a target user device **only within the user's home network** (i.e., between the device and the home router)\n  - QoS treatment **only applies to downstream IP traffic** (i.e., from the home router to the target device)\n  - QoS treatment **only applies to home devices using WiFi access** (i.e., home router WiFi interface)\n\nThe API provides a single endpoint/operation:\n\n- Set the desired QoS behaviour for a user home device.\n\n# Authorization and authentication\n\nThe \"Camara Security and Interoperability Profile\" provides details on how a client requests an access token. Please refer to Identify and Consent Management (https://github.com/camaraproject/IdentityAndConsentManagement/) for the released version of the Profile.\n\nWhich specific authorization flows are to be used will be determined during onboarding process, happening between the API Client and the Telco Operator exposing the API, taking into account the declared purpose for accessing the API, while also being subject to the prevailing legal framework dictated by local legislation.\n\nIt is important to remark that in cases where personal user data is processed by the API, and users can exercise their rights through mechanisms such as opt-in and/or opt-out, the use of 3-legged access tokens becomes mandatory. This measure ensures that the API remains in strict compliance with user privacy preferences and regulatory obligations, upholding the principles of transparency and user-centric data control.\n\nIn the case of the Home Devices QoD API scenario and according to the API definition, 3-legged access tokens must be used by API clients to invoke this API with dedicated scope. The API client must authenticate on behalf of a specific user to use this service. This can be done via IP-based authentication (i.e. using the public IP of the device in this case).\n\nThe 3-legged access of the Home Devices QoD API could also be combined with end-user consent management, depending on the legal basis applied. User consent would be required before personal data is processed by API clients for a specific purpose.\n\n # Further info and support\n\n(FAQs will be added in a later version of the documentation)\n"
+  description: Service Enabling Network Function API for *QoS-on-demand* (QoD) control applied to devices connected to the user's home network.
   license:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0.html
@@ -30,9 +30,7 @@ paths:
 
         - The target user device is identified by the internal IP address of that device in the home network.
 
-        - In case there is no device matching the input criteria, the operation returns a 404 error.
-
-        '
+        - In case there is no device matching the input criteria, the operation returns a 404 error.'
       tags:
       - Home Devices QoD
       operationId: setQos
@@ -71,8 +69,8 @@ paths:
           $ref: '#/components/responses/Generic504'
 components:
   responses:
-    Generic401:
-      description: Unauthorized
+    Generic504:
+      description: Gateway Timeout
       headers:
         x-correlator:
           $ref: '#/components/headers/x-correlator'
@@ -81,9 +79,62 @@ components:
           schema:
             $ref: '#/components/schemas/ErrorInfo'
           example:
-            status: 401
-            code: UNAUTHENTICATED
-            message: Request not authenticated due to missing, invalid, or expired credentials
+            status: 504
+            code: TIMEOUT
+            message: Request timeout exceeded
+    setQosServiceUnavailable503:
+      description: Service Unavailable
+      headers:
+        x-correlator:
+          $ref: '#/components/headers/x-correlator'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorInfo'
+          examples:
+            Unavailable:
+              value:
+                status: 503
+                code: UNAVAILABLE
+                message: Service Unavailable
+            RouterOffline:
+              value:
+                status: 503
+                code: HOME_DEVICES_QOD.ROUTER_OFFLINE
+                message: Router is not online. Try it later
+    setQosPermissionDenied403:
+      description: Forbidden
+      headers:
+        x-correlator:
+          $ref: '#/components/headers/x-correlator'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorInfo'
+          examples:
+            PermissionDenied:
+              value:
+                status: 403
+                code: PERMISSION_DENIED
+                message: Client does not have sufficient permissions to perform this action
+            InvalidTokenContext:
+              value:
+                status: 403
+                code: INVALID_TOKEN_CONTEXT
+                message: User home network cannot be deducted from access token context
+    Generic500:
+      description: Internal Server Error
+      headers:
+        x-correlator:
+          $ref: '#/components/headers/x-correlator'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorInfo'
+          example:
+            status: 500
+            code: INTERNAL
+            message: Server error
     setQosConflict409:
       description: Conflict
       headers:
@@ -134,72 +185,6 @@ components:
                 status: 409
                 code: HOME_DEVICES_QOD.QOS_ALREADY_SET_TO_DEFAULT
                 message: Device QoS is already set to default value
-    setQosServiceUnavailable503:
-      description: Service Unavailable
-      headers:
-        x-correlator:
-          $ref: '#/components/headers/x-correlator'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorInfo'
-          examples:
-            Unavailable:
-              value:
-                status: 503
-                code: UNAVAILABLE
-                message: Service Unavailable
-            RouterOffline:
-              value:
-                status: 503
-                code: HOME_DEVICES_QOD.ROUTER_OFFLINE
-                message: Router is not online. Try it later
-    Generic500:
-      description: Internal Server Error
-      headers:
-        x-correlator:
-          $ref: '#/components/headers/x-correlator'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorInfo'
-          example:
-            status: 500
-            code: INTERNAL
-            message: Server error
-    setQosPermissionDenied403:
-      description: Forbidden
-      headers:
-        x-correlator:
-          $ref: '#/components/headers/x-correlator'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorInfo'
-          examples:
-            PermissionDenied:
-              value:
-                status: 403
-                code: PERMISSION_DENIED
-                message: Client does not have sufficient permissions to perform this action
-            InvalidTokenContext:
-              value:
-                status: 403
-                code: INVALID_TOKEN_CONTEXT
-                message: User home network cannot be deducted from access token context
-    Generic504:
-      description: Gateway Timeout
-      headers:
-        x-correlator:
-          $ref: '#/components/headers/x-correlator'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorInfo'
-          example:
-            status: 504
-            code: TIMEOUT
-            message: Request timeout exceeded
     Generic400:
       description: Bad Request
       headers:
@@ -233,7 +218,36 @@ components:
                 status: 404
                 code: DEVICE_NOT_FOUND
                 message: No connected device found for the input criteria provided
+    Generic401:
+      description: Unauthorized
+      headers:
+        x-correlator:
+          $ref: '#/components/headers/x-correlator'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorInfo'
+          example:
+            status: 401
+            code: UNAUTHENTICATED
+            message: Request not authenticated due to missing, invalid, or expired credentials
   schemas:
+    ErrorInfo:
+      type: object
+      required:
+      - message
+      - status
+      - code
+      properties:
+        message:
+          type: string
+          description: A human readable description of what the event represent
+        status:
+          type: integer
+          description: HTTP response status code
+        code:
+          type: string
+          description: Friendly Code to describe the error
     QosOnDemandUpdate:
       type: object
       description: Payload to change the QoS behaviour associated to a home device.
@@ -282,31 +296,15 @@ components:
           format: ipv4
           description: Internal IP address of the connected device in the LAN.
           example: 192.168.1.27
-    ErrorInfo:
-      type: object
-      required:
-      - message
-      - status
-      - code
-      properties:
-        message:
-          type: string
-          description: A human readable description of what the event represent
-        status:
-          type: integer
-          description: HTTP response status code
-        code:
-          type: string
-          description: Friendly Code to describe the error
+  headers:
+    x-correlator:
+      description: Correlation id for the different services
+      schema:
+        type: string
   parameters:
     x-correlator:
       name: x-correlator
       in: header
-      description: Correlation id for the different services
-      schema:
-        type: string
-  headers:
-    x-correlator:
       description: Correlation id for the different services
       schema:
         type: string
